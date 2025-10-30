@@ -1,0 +1,2 @@
+# content-publisher
+A unified publishing application for content on the Publishing Platform
