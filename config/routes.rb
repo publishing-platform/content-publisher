@@ -3,5 +3,5 @@ Rails.application.routes.draw do
 
   root to: redirect("/documents")
 
-  resources :documents, only: %i[index new create]  
+  resources :documents, only: %i[index new create]
 end
