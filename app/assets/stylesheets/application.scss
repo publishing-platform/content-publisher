@@ -1,0 +1,38 @@
+@import "bootstrap/scss/bootstrap";
+@import "components/page-preview";
+
+.container {
+  max-width: 960px;
+}
+
+.index-button-group {
+  @include media-breakpoint-up(sm) {
+    float: right;
+  }
+}
+
+.btn {
+  @include media-breakpoint-down(sm) {
+    width: 100%;
+  }  
+}
+
+.formatted-text {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.app-side {
+  margin-bottom: 30px;
+
+  @include clearfix;
+
+  padding: 15px;;
+  background: #f3f2f1;
+}
+
+.app-side__actions {
+  .btn {
+    width: 100%;
+  }
+}
