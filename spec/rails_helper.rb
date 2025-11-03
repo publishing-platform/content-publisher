@@ -1,6 +1,9 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require "spec_helper"
+
 ENV["RAILS_ENV"] ||= "test"
+ENV["PUBLISHING_PLATFORM_APP_DOMAIN"] = "test.publishing-platform.co.uk"
+
 require_relative "../config/environment"
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
@@ -9,6 +12,25 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 # return unless Rails.env.test?
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
+
+require "webmock/rspec"
+WebMock.disable_net_connect!(allow_localhost: true)
+
+require "json_matchers/rspec"
+
+require "publishing_platform_test"
+PublishingPlatformTest.configure
+
+Capybara.register_driver :headless_chrome do |app|
+  chrome_options = PublishingPlatformTest.headless_chrome_selenium_options
+  chrome_options.add_argument("--no-sandbox")
+
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    options: chrome_options,
+  )
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -23,7 +45,9 @@ require "rspec/rails"
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-# Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
+Rails.root.glob("spec/support/**/*.rb").sort_by(&:to_s).each { |f| require f }
+
+JsonMatchers.schema_root = "spec/support/schemas"
 
 # Ensures that the test database schema matches the current schema file.
 # If there are pending migrations it will invoke `db:test:prepare` to
@@ -63,10 +87,25 @@ RSpec.configure do |config|
   # behaviour is considered legacy and will be removed in a future version.
   #
   # To enable this behaviour uncomment the line below.
-  # config.infer_spec_type_from_file_location!
+  config.infer_spec_type_from_file_location!
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.include ActiveSupport::Testing::TimeHelpers
+  config.include AuthenticationHelper, type: ->(spec) { spec.in?(%i[system request]) }
+
+  config.before(:all) do
+    DocumentType.clear
+  end
+
+  config.after :each, type: ->(spec) { spec.in?(%i[system request]) } do
+    reset_authentication
+  end
+
+  config.before(:each, type: :system) do
+    driven_by :headless_chrome
+  end
 end

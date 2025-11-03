@@ -1,0 +1,16 @@
+en:
+  document_type_selections:
+    root:
+      label: "What is the content for?"
+    news:
+      label: News and communications
+      description: To tell users about something has been or will be done
+      guidance:
+        markdown: |
+          For example, news stories, press releases, speeches, or statements
+    news_story:
+      label: News story
+      description: "News written for Publishing Platform which users need, can act on, and cannot get from other sources."
+    press_release:
+      label: Press release
+      description: "Unedited press releases as sent to the media, and official statements from the organisation."      
