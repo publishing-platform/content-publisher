@@ -1,0 +1,59 @@
+<%= form_tag(documents_path, method: :get) do %>
+  <div class="mb-3">
+    <%= label_tag :title_or_url, t("documents.index.filter.title_or_url"), class: "form-label" %>
+    <%= search_field_tag :title_or_url, nil, value: @filter_params[:title_or_url], class: "form-control" %>    
+  </div>   
+
+  <div class="mb-3">
+    <% organisation_select_options = begin
+      Linkables.new("organisation").select_options
+    rescue PublishingPlatformApi::BaseError => e
+      PublishingPlatformError.notify(e)
+      []
+    end %>
+ 
+    <%= label_tag :organisation, t("documents.index.filter.organisation"), class: "form-label" %>
+    <%= select_tag :organisation, 
+      options_for_select(organisation_select_options, @filter_params[:organisation]), 
+      include_blank: true, 
+      id: "organisation",
+      class: "form-control" %>        
+  </div>    
+
+  <div class="mb-3">
+    <% document_types = DocumentType.all.map { |d| [d.label, d.id] } %>    
+    <%= label_tag :document_type, t("documents.index.filter.document_type"), class: "form-label" %>
+    <%= select_tag :document_type, 
+      options_for_select(document_types, @filter_params[:document_type]), 
+      include_blank: true, 
+      id: "document_type",
+      class: "form-control" %>        
+  </div>    
+ 
+  <div class="mb-3">
+    <% selectable_states = %w[draft
+                              submitted_for_review
+                              published
+                              published_but_needs_2i
+                              removed
+                              failed_to_publish]
+
+      states = selectable_states.map do |state|
+        [t("user_facing_states.#{state}.name"), state]
+      end
+    %>    
+    <%= label_tag :state, t("documents.index.filter.state"), class: "form-label" %>
+    <%= select_tag :state, 
+      options_for_select(states, @filter_params[:state]), 
+      include_blank: true, 
+      id: "state",
+      class: "form-control" %>        
+  </div>     
+
+  <%= submit_tag "Filter", class: "btn btn-primary mb-3" %>  
+
+  <p>
+    <%= link_to "Clear all filters",
+                documents_path %>
+  </p>  
+<% end %>

@@ -1,0 +1,23 @@
+<% content_for :title, t("documents.index.title") %>
+
+<% content_for :top_right do %>
+  <div class="index-button-group">
+    <%= link_to "Create new document", new_document_path, class: "btn btn-primary mb-3" %>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-4">
+    <%= render "documents/index/filters" %>
+  </div>
+  <% if false %>
+  <div class="col-xs-12 col-md-8">
+    <p>
+      <%= t("documents.index.search_results.summary_html", count: @editions.count) %>
+    </p>
+    <div style="overflow-x:auto">
+      <%= render "documents/index/results" %>           
+    </div>
+  </div>  
+  <% end %>
+</div>

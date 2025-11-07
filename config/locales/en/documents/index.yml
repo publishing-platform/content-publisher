@@ -1,0 +1,18 @@
+en:
+  documents:
+    index:
+      title: Documents
+      search_results:
+        headings:
+          title: Document title
+          status: Status
+          last_updated: Last updated
+        last_edited_by: "Last edited by: %{user}"
+        summary_html:
+          one: "<strong>1</strong> document"
+          other: "<strong>%{count}</strong> documents"
+      filter:
+        title_or_url: Title or URL
+        document_type: Document type
+        state: Status
+        organisation: Organisation
