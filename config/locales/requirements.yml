@@ -1,0 +1,39 @@
+en:
+  requirements:
+    document_type_selection:
+      not_selected:
+        form_message: Select a document type
+    review_status:
+      not_selected:
+        form_message: Select an option    
+    title:
+      blank:
+        form_message: Enter a title
+        summary_message: Enter a title  
+      too_long:
+        form_message: "Enter a title that is fewer than %{max_length} characters long"
+      multiline:
+        form_message: Remove line breaks from the title
+      conflict:
+        form_message: "Enter a title that hasn't been used before - the system cannot create a unique URL otherwise"                  
+    summary:
+      blank:
+        summary_message: Enter a summary
+      too_long:
+        form_message: "Enter a summary that is fewer than %{max_length} characters long"
+      multiline:
+        form_message: Remove line breaks from the summary   
+    body:
+      blank:
+        summary_message: Enter a body  
+    redirect_url:
+      invalid:
+        form_message: Enter a valid redirect path
+    change_note:
+      blank:
+        form_message: Enter a change note
+        summary_message: Enter a change note      
+    primary_publishing_organisation:
+      blank:
+        summary_message: Select a primary organisation
+        form_message: Select a primary organisation          

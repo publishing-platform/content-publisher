@@ -1,0 +1,14 @@
+<%
+  field ||= nil
+  id = "#{field}-errors"
+  classes ||= ""
+  css_classes = %w(invalid-feedback)
+  css_classes << classes if classes
+%>
+
+<% if @issues&.has_key?(field) %>
+  <%= tag.div id: id, class: css_classes do %>
+    <% errors = @issues.items_for(field).map { |item| item[:text] } %>
+      <%= raw(errors.join("<br />")) %>
+  <% end %>
+<% end %>

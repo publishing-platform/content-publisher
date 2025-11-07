@@ -1,0 +1,28 @@
+<% if false  %>
+<% content_for :title, t("documents.new.title")  %>
+<% content_for :back_link, documents_path %>
+<% end  %>
+
+<%= form_tag documents_path(type: @document_type_selection.id) do %>
+
+  <% has_error = @issues&.has_key?(:document_type_selection) %>
+
+  <%= field_set_tag nil, aria: { describedby: has_error ? "document_type-errors" : nil }, class: "mb-3" do %>
+    <% @document_type_selection.options.each do |option| %>
+      <%= tag.div class: "form-check #{(has_error ? "is-invalid" : nil)}" do %>
+        <%= radio_button_tag :selected_option_id, 
+            option.id,
+            false,
+            class: "form-check-input #{(has_error ? "is-invalid" : nil)}"  %>
+
+        <%= label_tag "selected_option_id_#{option.id}", t("document_type_selections.#{option.id}.label"), class: "form-check-label" %>
+      <% end %>
+    <% end %>
+
+    <%= render "components/errors", {
+      field: :selected_option_id
+    } %>    
+  <% end %>
+
+  <%= submit_tag "Continue", class: "btn btn-primary" %>   
+<% end %>

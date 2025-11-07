@@ -1,0 +1,25 @@
+---
+news_article: &news_article
+  path_prefix: /news
+  lead_image: true
+  attachments: inline_file_only
+  publishing_metadata:
+    schema_name: news_article
+    rendering_app: frontend  
+  contents:
+    - title_and_base_path
+    - summary
+    - body
+  tags:
+    - primary_publishing_organisation
+
+document_types:
+  - id: news_story
+    <<: *news_article 
+    label: News story
+
+  - id: press_release
+    <<: *news_article 
+    label: Press release
+    
+  

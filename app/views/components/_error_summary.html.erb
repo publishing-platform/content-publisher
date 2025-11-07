@@ -1,0 +1,30 @@
+<%
+  title ||= false
+  description ||= false
+  items ||= []
+%>
+<%= tag.div(class: "alert alert-danger", role: "alert") do %>
+  <% if title %>
+    <h2 class="alert-heading"><%= title %></h2>
+  <% end %>
+  
+  <% if description %>
+    <p><%= description %></p>
+  <% end %>    
+  
+  <% if items.present? %>
+    <ul class="list-unstyled mb-0">
+      <% items.each_with_index do |item, index| %>
+        <li>
+          <% if item[:href] %>
+            <%= link_to item[:text], item[:href] %>
+          <% else %>
+            <%= tag.span do %>
+              <%= item[:text] %>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
