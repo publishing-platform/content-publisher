@@ -1,0 +1,13 @@
+en:
+  document_types:
+    default:
+      fields:
+        title_and_base_path:
+          label: Title
+        summary:
+          label: Summary
+        body:
+          label: Body
+        primary_publishing_organisation:
+          label: Primary organisation
+          hint: The organisation responsible for publishing and maintaining this content.
