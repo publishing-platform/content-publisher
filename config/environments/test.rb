@@ -56,5 +56,8 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
 
+  # Store uploaded files on the local file system in a temporary directory.
+  config.active_storage.service = ENV.fetch("ACTIVE_STORAGE_SERVICE", "local")    
+
   credentials.jwt_auth_secret = ENV.fetch("JWT_AUTH_SECRET", "secret")
 end

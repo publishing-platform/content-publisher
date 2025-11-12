@@ -39,6 +39,25 @@ module ContentPublisher
     # Don't generate system test files.
     config.generators.system_tests = nil
 
+    # Rails 7 defaults to using libvips instead of ImageMagick for processing
+    # ActiveStorage variants - we'd need to install vips on our production
+    # hosts and update variant config to use this.
+    Rails.application.config.active_storage.variant_processor = :mini_magick
+
+    # Rails 6.1 introduced this new configuration option that has compatibility
+    # problems with Content Publisher. It uploads an ActiveStorage variant
+    # after a transaction is commited [1]. This causes problems for us when
+    # we want to create a variant to be sent to Asset Manager during a
+    # transaction [2]. For now this option is switched off.
+    #
+    # [1]: https://github.com/rails/rails/blob/6ce14ee4bc6b6d0ca4a4e8f9a235b00daeb9bab1/activestorage/lib/active_storage/attached/model.rb#L77
+    # [2]: https://github.com/alphagov/content-publisher/blob/3c3c5bf489a75c9ef7041eece6d6bbb03a280642/app/models/image/blob_revision.rb#L37-L51
+    config.active_storage.track_variants = false
+
+    # We don't utilise the JS assets for activestorage and thus don't want them
+    # compiled - they also cause an error as they use ES6 syntax
+    config.active_storage.precompile_assets = false    
+
     config.assets.css_compressor = nil
 
     config.assets.prefix = "/assets/content-publisher"

@@ -10,6 +10,8 @@ class Revision < ApplicationRecord
 
   belongs_to :created_by, class_name: "User", optional: true
 
+  belongs_to :lead_image_revision, class_name: "Image::Revision", optional: true
+
   belongs_to :document
 
   belongs_to :content_revision
@@ -25,6 +27,12 @@ class Revision < ApplicationRecord
   has_and_belongs_to_many :statuses, -> { order("statuses.created_at DESC") }
 
   has_and_belongs_to_many :editions, -> { order("editions.number DESC") }
+
+  has_and_belongs_to_many :image_revisions,
+                          -> { order("image_revisions.image_id ASC") },
+                          class_name: "Image::Revision",
+                          association_foreign_key: "image_revision_id",
+                          join_table: "revisions_image_revisions"  
 
   delegate :title,
            :base_path,
@@ -48,4 +56,12 @@ class Revision < ApplicationRecord
   def readonly?
     !new_record?
   end
+
+  def image_revisions_without_lead
+    image_revisions.reject { |i| i.id == lead_image_revision_id }
+  end
+
+  def assets
+    image_revisions.flat_map(&:assets)
+  end  
 end

@@ -4,6 +4,7 @@ gem "rails", "8.0.3"
 
 gem "bootsnap", require: false
 gem "dartsass-rails"
+gem "image_processing"
 gem "interactor"
 gem "jbuilder"
 gem "jsbundling-rails"
