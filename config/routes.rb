@@ -4,4 +4,9 @@ Rails.application.routes.draw do
   root to: redirect("/documents")
 
   resources :documents, only: %i[index new create]
+
+  scope "/documents/:document_id" do
+    get "/content" => "content#edit", as :content
+    patch "/content" => "content#update"
+  end  
 end

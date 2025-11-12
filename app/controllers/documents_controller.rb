@@ -15,12 +15,26 @@ class DocumentsController < ApplicationController
   end
 
   def create
-    Rails.logger.debug params[:selected_option_id]
+    result = Documents::CreateInteractor.call(params:, user: current_user)
 
-    document_type_selection = DocumentTypeSelection.find(params[:type])
-    selected_option = document_type_selection.find_option(params[:selected_option_id])
+    if result.issues
+      flash.now["requirements"] = { "items" => result.issues.items }
 
-    redirect_to new_document_path(type: selected_option.id)
+      render :new,
+             assigns: {
+              issues: result.issues,
+              document_type_selection: result.document_type_selection
+             },
+             status: :unprocessable_entity
+    else
+      destination = if result.document
+                      content_path(document)
+                    else
+                      new_document_path(type: result.selected_option.id)
+                    end
+                    
+      redirect_to destination
+    end
   end
 
 private
