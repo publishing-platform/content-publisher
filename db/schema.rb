@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_12_155806) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_12_171711) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -177,13 +177,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_12_155806) do
     t.bigint "metadata_revision_id", null: false
     t.bigint "tags_revision_id", null: false
     t.bigint "preceded_by_id"
+    t.bigint "lead_image_revision_id"
     t.index ["content_revision_id"], name: "index_revisions_on_content_revision_id"
     t.index ["created_by_id"], name: "index_revisions_on_created_by_id"
     t.index ["document_id"], name: "index_revisions_on_document_id"
+    t.index ["lead_image_revision_id"], name: "index_revisions_on_lead_image_revision_id"
     t.index ["metadata_revision_id"], name: "index_revisions_on_metadata_revision_id"
     t.index ["number", "document_id"], name: "index_revisions_on_number_and_document_id", unique: true
     t.index ["preceded_by_id"], name: "index_revisions_on_preceded_by_id"
     t.index ["tags_revision_id"], name: "index_revisions_on_tags_revision_id"
+  end
+
+  create_table "revisions_image_revisions", id: false, force: :cascade do |t|
+    t.bigint "revision_id", null: false
+    t.bigint "image_revision_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.index ["image_revision_id"], name: "index_revisions_image_revisions_on_image_revision_id"
+    t.index ["revision_id"], name: "index_revisions_image_revisions_on_revision_id"
   end
 
   create_table "revisions_statuses", id: false, force: :cascade do |t|
@@ -253,10 +263,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_12_155806) do
   add_foreign_key "metadata_revisions", "users", column: "created_by_id", on_delete: :restrict
   add_foreign_key "revisions", "content_revisions", on_delete: :restrict
   add_foreign_key "revisions", "documents", on_delete: :restrict
+  add_foreign_key "revisions", "image_revisions", column: "lead_image_revision_id", on_delete: :restrict
   add_foreign_key "revisions", "metadata_revisions", on_delete: :restrict
   add_foreign_key "revisions", "revisions", column: "preceded_by_id", on_delete: :restrict
   add_foreign_key "revisions", "tags_revisions", on_delete: :restrict
   add_foreign_key "revisions", "users", column: "created_by_id", on_delete: :restrict
+  add_foreign_key "revisions_image_revisions", "image_revisions", on_delete: :restrict
+  add_foreign_key "revisions_image_revisions", "revisions", on_delete: :cascade
   add_foreign_key "revisions_statuses", "revisions", on_delete: :restrict
   add_foreign_key "revisions_statuses", "statuses", on_delete: :cascade
   add_foreign_key "statuses", "editions", on_delete: :cascade
