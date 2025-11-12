@@ -10,9 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_06_155518) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_12_155806) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "content_revisions", force: :cascade do |t|
     t.string "title"
@@ -72,6 +100,62 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_06_155518) do
     t.index ["edition_id", "revision_id"], name: "index_editions_revisions_on_edition_id_and_revision_id"
     t.index ["edition_id"], name: "index_editions_revisions_on_edition_id"
     t.index ["revision_id"], name: "index_editions_revisions_on_revision_id"
+  end
+
+  create_table "image_assets", force: :cascade do |t|
+    t.bigint "blob_revision_id", null: false
+    t.bigint "superseded_by_id"
+    t.string "variant", null: false
+    t.string "file_url"
+    t.string "state", default: "absent", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blob_revision_id", "variant"], name: "index_image_assets_on_blob_revision_id_and_variant", unique: true
+    t.index ["blob_revision_id"], name: "index_image_assets_on_blob_revision_id"
+    t.index ["file_url"], name: "index_image_assets_on_file_url", unique: true
+    t.index ["superseded_by_id"], name: "index_image_assets_on_superseded_by_id"
+  end
+
+  create_table "image_blob_revisions", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.bigint "created_by_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.integer "width", null: false
+    t.integer "height", null: false
+    t.integer "crop_x", null: false
+    t.integer "crop_y", null: false
+    t.integer "crop_width", null: false
+    t.integer "crop_height", null: false
+    t.string "filename", null: false
+    t.index ["blob_id"], name: "index_image_blob_revisions_on_blob_id"
+    t.index ["created_by_id"], name: "index_image_blob_revisions_on_created_by_id"
+  end
+
+  create_table "image_metadata_revisions", force: :cascade do |t|
+    t.string "caption"
+    t.string "alt_text"
+    t.string "credit"
+    t.bigint "created_by_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.index ["created_by_id"], name: "index_image_metadata_revisions_on_created_by_id"
+  end
+
+  create_table "image_revisions", force: :cascade do |t|
+    t.bigint "image_id", null: false
+    t.bigint "created_by_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.bigint "blob_revision_id", null: false
+    t.bigint "metadata_revision_id", null: false
+    t.index ["blob_revision_id"], name: "index_image_revisions_on_blob_revision_id"
+    t.index ["created_by_id"], name: "index_image_revisions_on_created_by_id"
+    t.index ["image_id"], name: "index_image_revisions_on_image_id"
+    t.index ["metadata_revision_id"], name: "index_image_revisions_on_metadata_revision_id"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.bigint "created_by_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.index ["created_by_id"], name: "index_images_on_created_by_id"
   end
 
   create_table "metadata_revisions", force: :cascade do |t|
@@ -143,6 +227,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_06_155518) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "content_revisions", "users", column: "created_by_id", on_delete: :restrict
   add_foreign_key "documents", "users", column: "created_by_id", on_delete: :restrict
   add_foreign_key "edition_editors", "editions", on_delete: :cascade
@@ -154,6 +240,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_06_155518) do
   add_foreign_key "editions", "users", column: "last_edited_by_id", on_delete: :restrict
   add_foreign_key "editions_revisions", "editions", on_delete: :cascade
   add_foreign_key "editions_revisions", "revisions", on_delete: :restrict
+  add_foreign_key "image_assets", "image_assets", column: "superseded_by_id", on_delete: :nullify
+  add_foreign_key "image_assets", "image_blob_revisions", column: "blob_revision_id", on_delete: :cascade
+  add_foreign_key "image_blob_revisions", "active_storage_blobs", column: "blob_id", on_delete: :restrict
+  add_foreign_key "image_blob_revisions", "users", column: "created_by_id", on_delete: :restrict
+  add_foreign_key "image_metadata_revisions", "users", column: "created_by_id", on_delete: :restrict
+  add_foreign_key "image_revisions", "image_blob_revisions", column: "blob_revision_id", on_delete: :restrict
+  add_foreign_key "image_revisions", "image_metadata_revisions", column: "metadata_revision_id", on_delete: :restrict
+  add_foreign_key "image_revisions", "images", on_delete: :restrict
+  add_foreign_key "image_revisions", "users", column: "created_by_id", on_delete: :restrict
+  add_foreign_key "images", "users", column: "created_by_id", on_delete: :restrict
   add_foreign_key "metadata_revisions", "users", column: "created_by_id", on_delete: :restrict
   add_foreign_key "revisions", "content_revisions", on_delete: :restrict
   add_foreign_key "revisions", "documents", on_delete: :restrict
