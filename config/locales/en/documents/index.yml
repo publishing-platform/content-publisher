@@ -5,6 +5,7 @@ en:
       search_results:
         headings:
           title: Document title
+          document_type: Document type
           status: Status
           last_updated: Last updated
         last_edited_by: "Last edited by: %{user}"

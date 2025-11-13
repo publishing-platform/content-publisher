@@ -28,7 +28,7 @@ class DocumentsController < ApplicationController
              status: :unprocessable_entity
     else
       destination = if result.document
-                      content_path(document)
+                      content_path(result.document)
                     else
                       new_document_path(type: result.selected_option.id)
                     end

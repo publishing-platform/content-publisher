@@ -1,0 +1,21 @@
+<table class="table">
+  <caption class="visually-hidden">Document list</caption>
+  <thead>
+    <tr>
+      <th scope="col"><%= t("documents.index.search_results.headings.title") %></th>
+      <th scope="col"><%= t("documents.index.search_results.headings.document_type") %></th>
+      <th scope="col"><%= t("documents.index.search_results.headings.status") %></th>
+      <th scope="col"><%= t("documents.index.search_results.headings.last_updated") %></th>
+    </tr>
+  </thead>  
+  <tbody>
+    <% @editions.each do |edition| %>
+      <tr>
+        <td><%= link_to edition.title_or_fallback, edition.document %></td>
+        <td><%= edition.document_type.label %></td>
+        <td><%= t("user_facing_states.#{edition.state}.name") %></td>
+        <td><%= edition.last_edited_at.to_fs(:time_on_date) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

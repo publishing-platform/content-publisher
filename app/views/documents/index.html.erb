@@ -10,7 +10,6 @@
   <div class="col-xs-12 col-md-4">
     <%= render "documents/index/filters" %>
   </div>
-  <% if false %>
   <div class="col-xs-12 col-md-8">
     <p>
       <%= t("documents.index.search_results.summary_html", count: @editions.count) %>
@@ -18,6 +17,5 @@
     <div style="overflow-x:auto">
       <%= render "documents/index/results" %>           
     </div>
-  </div>  
-  <% end %>
+  </div>
 </div>
