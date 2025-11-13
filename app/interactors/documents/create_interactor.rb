@@ -20,4 +20,20 @@ private
     context.selected_option = document_type_selection.find_option(params[:selected_option_id])
   end
 
+  def check_for_issues
+    issues = Requirements::CheckerIssues.new
+    issues.create(:document_type_selection, :not_selected) unless selected_option
+
+    context.fail!(issues:) if issues.any?
+  end
+
+  def create_document
+    context.document = CreateDocumentService.call(
+      document_type_id: selected_option.id, tags: default_tags, user:,
+    )
+  end
+
+  def default_tags
+    user.organisation_content_id ? { primary_publishing_organisation: [user.organisation_content_id] } : {}
+  end
 end
