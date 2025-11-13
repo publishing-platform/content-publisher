@@ -36,4 +36,27 @@ en:
     primary_publishing_organisation:
       blank:
         summary_message: Select a primary organisation
-        form_message: Select a primary organisation          
+        form_message: Select a primary organisation   
+    image_alt_text:
+      blank:
+        form_message: Enter alt text
+        summary_message: "Enter alt text for ‘%{filename}’"
+      too_long:
+        form_message: "Enter alt text that is fewer than %{max_length} characters long"
+    image_caption:
+      too_long:
+        form_message: "Enter an image caption that is fewer than %{max_length} characters long"
+    image_credit:
+      too_long:
+        form_message: "Enter an image credit that is fewer than %{max_length} characters long"
+    image_upload:
+      no_file:
+        form_message: Select a file to upload
+      unsupported_type:
+        form_message: Select a jpg, png or gif image file
+      animated_image:
+        form_message: Select an image file that is not animated
+      too_big:
+        form_message: "Select an image file under %{max_size} in size"
+      too_small:
+        form_message: "Select an image at least %{width} pixels wide by %{height} pixels high"               
