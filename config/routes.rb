@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   scope "/documents/:document_id" do
     get "/content" => "content#edit", as: :content
     patch "/content" => "content#update"
-  end  
+  end
 end

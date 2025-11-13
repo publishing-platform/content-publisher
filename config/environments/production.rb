@@ -93,7 +93,7 @@ Rails.application.configure do
   config.assets.js_compressor = :terser
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = ENV.fetch("ACTIVE_STORAGE_SERVICE", "amazon")  
+  config.active_storage.service = ENV.fetch("ACTIVE_STORAGE_SERVICE", "amazon")
 
   credentials.jwt_auth_secret = ENV["JWT_AUTH_SECRET"]
 end

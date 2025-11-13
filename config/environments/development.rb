@@ -73,7 +73,7 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system in a temporary directory.
   config.active_storage.service = ENV.fetch("ACTIVE_STORAGE_SERVICE", "local")
-    
+
   # Allow requests for all domains e.g. <app>.dev.publishing-platform.co.uk
   config.hosts.clear
 

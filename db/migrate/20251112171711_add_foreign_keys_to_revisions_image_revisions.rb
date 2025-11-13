@@ -4,6 +4,6 @@ class AddForeignKeysToRevisionsImageRevisions < ActiveRecord::Migration[8.0]
     add_foreign_key :revisions_image_revisions, :image_revisions, on_delete: :restrict
 
     add_index :revisions_image_revisions, :revision_id
-    add_index :revisions_image_revisions, :image_revision_id    
+    add_index :revisions_image_revisions, :image_revision_id
   end
 end

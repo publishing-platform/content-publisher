@@ -15,7 +15,7 @@ FactoryBot.define do
       document_type { build(:document_type, path_prefix: "/prefix") }
       state { "draft" }
       lead_image_revision { nil }
-      image_revisions { [] }      
+      image_revisions { [] }
       first_published_at { nil }
       change_history { [] }
     end
@@ -34,11 +34,11 @@ FactoryBot.define do
 
       unless edition.revision
         image_revisions = if evaluator.image_revisions.any?
-          evaluator.image_revisions
-        else
-          [evaluator.lead_image_revision].compact
-        end
-                
+                            evaluator.image_revisions
+                          else
+                            [evaluator.lead_image_revision].compact
+                          end
+
         edition.revision = evaluator.association(
           :revision,
           created_by: edition.created_by,
@@ -53,7 +53,7 @@ FactoryBot.define do
           change_note: evaluator.change_note,
           change_history: evaluator.change_history,
           lead_image_revision: evaluator.lead_image_revision,
-          image_revisions:,          
+          image_revisions:,
         )
       end
 

@@ -66,7 +66,7 @@ class Edition < ApplicationRecord
            :tags,
            :lead_image_revision,
            :image_revisions,
-           :image_revisions_without_lead,           
+           :image_revisions_without_lead,
            :assets,
            :primary_publishing_organisation_id,
            to: :revision

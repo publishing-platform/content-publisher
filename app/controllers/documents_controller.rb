@@ -22,8 +22,8 @@ class DocumentsController < ApplicationController
 
       render :new,
              assigns: {
-              issues: result.issues,
-              document_type_selection: result.document_type_selection
+               issues: result.issues,
+               document_type_selection: result.document_type_selection,
              },
              status: :unprocessable_entity
     else
@@ -32,7 +32,7 @@ class DocumentsController < ApplicationController
                     else
                       new_document_path(type: result.selected_option.id)
                     end
-                    
+
       redirect_to destination
     end
   end

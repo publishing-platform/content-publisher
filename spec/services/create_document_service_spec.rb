@@ -54,7 +54,7 @@ RSpec.describe CreateDocumentService do
       expect(document.content_id).to eq(content_id)
     end
 
-    it "is attributed to a user" do      
+    it "is attributed to a user" do
       document = described_class.call(document_type_id: document_type.id,
                                       user:)
 
@@ -71,11 +71,11 @@ RSpec.describe CreateDocumentService do
     end
 
     it "fails if no user provided" do
-      expect { 
+      expect {
         described_class.call(document_type_id: document_type.id,
-          user: nil)
-        }.to raise_error(ActiveRecord::RecordInvalid)
-    end    
+                             user: nil)
+      }.to raise_error(ActiveRecord::RecordInvalid)
+    end
 
     it "can set tags on the current edition" do
       tags = { "primary_publishing_organisation" => [SecureRandom.uuid] }

@@ -36,7 +36,7 @@ private
       last_edited_by: user,
       number: 1,
     )
-    
+
     edition.save!
 
     edition

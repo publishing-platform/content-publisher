@@ -32,7 +32,7 @@ class Revision < ApplicationRecord
                           -> { order("image_revisions.image_id ASC") },
                           class_name: "Image::Revision",
                           association_foreign_key: "image_revision_id",
-                          join_table: "revisions_image_revisions"  
+                          join_table: "revisions_image_revisions"
 
   delegate :title,
            :base_path,
@@ -63,5 +63,5 @@ class Revision < ApplicationRecord
 
   def assets
     image_revisions.flat_map(&:assets)
-  end  
+  end
 end

@@ -12,9 +12,9 @@ class Image::Asset < ApplicationRecord
              optional: true
 
   enum :state, { absent: "absent",
-                draft: "draft",
-                live: "live",
-                superseded: "superseded" }
+                 draft: "draft",
+                 live: "live",
+                 superseded: "superseded" }
 
   delegate :filename, :content_type, to: :blob_revision
 

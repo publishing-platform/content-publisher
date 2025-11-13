@@ -56,7 +56,7 @@ module ContentPublisher
 
     # We don't utilise the JS assets for activestorage and thus don't want them
     # compiled - they also cause an error as they use ES6 syntax
-    config.active_storage.precompile_assets = false    
+    config.active_storage.precompile_assets = false
 
     config.assets.css_compressor = nil
 

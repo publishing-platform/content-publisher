@@ -10,7 +10,7 @@ class CreateImageBlobRevisions < ActiveRecord::Migration[8.0]
       t.integer :crop_y, null: false
       t.integer :crop_width, null: false
       t.integer :crop_height, null: false
-      t.string :filename, null: false      
+      t.string :filename, null: false
     end
   end
 end
