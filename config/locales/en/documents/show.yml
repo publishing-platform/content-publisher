@@ -1,0 +1,10 @@
+en:
+  documents:
+    show:
+      flashes:
+        pre_preview_issues:
+          warning: To preview this document you need to
+          error: Before you can preview this document you need to
+        pre_publish_issues:
+          warning: To publish this document you need to
+          error: Before you can publish this document you need to
