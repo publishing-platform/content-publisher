@@ -71,7 +71,7 @@ class Edition < ApplicationRecord
            :primary_publishing_organisation_id,
            to: :revision
 
-  scope :find_current, lambda { |document_id|
+  scope :find_current, lambda { |document_id: nil|
     join_tables = %i[document revision status]
     where(current: true)
       .joins(join_tables)
