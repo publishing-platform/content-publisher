@@ -1,0 +1,38 @@
+<%
+  title ||= false
+  description ||= false
+  items ||= []
+  id ||= nil
+
+  heading_level = [*1..6].include?(heading_level) ? "h#{heading_level}" : "h2"
+
+  classes ||= ""
+  root_classes = %w[app-c-callout] 
+  root_classes << classes if classes  
+%>
+
+<%= tag.div class: root_classes, id: id do %>
+  <% if title %>
+    <%= content_tag(heading_level, title, class: "h4") %>
+  <% end %>
+
+  <%= tag.div do %>
+    <%= description if description %>
+
+    <% if items.any? %>
+      <%= tag.ul class: "list-unstyled mb-0" do %>
+        <% items.each_with_index do |item, index| %>
+          <%= tag.li do %>
+            <% if item[:href] %>
+              <%= link_to(item[:text], item[:href]) %>
+            <% else %>
+              <%= tag.span do %>
+                <%= item[:text] %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
