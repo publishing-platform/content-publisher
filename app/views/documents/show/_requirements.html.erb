@@ -1,0 +1,54 @@
+<% issue_params = {
+  style: "summary",
+  link_options: {
+    title: { href: content_path(@edition.document, anchor: "title") },
+    summary: { href: content_path(@edition.document, anchor: "summary") },
+    body: { href: content_path(@edition.document, anchor: "body") },
+    change_note: { href: content_path(@edition.document, anchor: "change-note") }
+  }
+} %>
+
+<% unless @edition.revision_synced? %>
+  <% draft_issues = Requirements::Preview::EditionChecker.call(@edition) %>
+
+  <% if draft_issues.any? %>
+    <% if flash[:tried_to_preview] %>
+
+      <%= render "components/error_summary", {
+        title: t("documents.show.flashes.pre_preview_issues.error"),
+        items: draft_issues.items(issue_params)
+      } %>   
+
+    <% else %>
+      <%= render "/components/callout", {
+        title: t("documents.show.flashes.pre_preview_issues.warning"),
+        items: draft_issues.items(issue_params),
+        classes: "app-c-callout-warning"
+      } %>  
+
+    <% end %>
+  <% end %>
+<% end %>
+
+<% if @edition.editable? %>
+  <% publish_issues = Requirements::Publish::EditionChecker.call(@edition) %>
+
+  <% if publish_issues.any? %>
+    <% if flash[:tried_to_publish] %>
+
+      <%= render "components/error_summary", {
+        title: t("documents.show.flashes.pre_publish_issues.error"),
+        items: publish_issues.items(issue_params)
+      } %>  
+
+    <% else %>
+      <%= render "/components/callout", {
+        title: t("documents.show.flashes.pre_publish_issues.warning"),
+        items: publish_issues.items(issue_params),
+        classes: "app-c-callout-warning",
+        heading_level: 4
+      } %>        
+
+    <% end %>
+  <% end %>
+<% end %>
