@@ -1,0 +1,32 @@
+<% contents = @edition.document_type.contents.map { |field|
+  {
+    field: t_doctype_field(@edition, "#{field.id}.label"),
+    value: render("documents/show/contents/#{field.id}_field", edition: @edition)
+  }
+} %>
+
+<% edition_metadata = [] %>
+
+<% unless @edition.first? %>
+  <% edition_metadata << {
+      field: t("documents.show.contents.items.update_type"),
+      value: t("documents.show.contents.update_type.#{@edition.update_type}"),
+  } %>
+<% end %>
+
+<% if !@edition.first? && @edition.major? %>
+  <% edition_metadata << {
+    field: t("documents.show.contents.items.change_note"),
+    value: @edition.change_note,
+  } %>
+<% end %>
+
+<%= render "components/summary_list", {
+  title: t("documents.show.contents.title"),
+  edit: (
+    if @edition.editable?
+      { href: content_path(@edition.document) }
+    end
+  ),
+  items: contents + edition_metadata
+} %>

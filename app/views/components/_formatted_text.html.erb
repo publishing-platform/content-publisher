@@ -1,0 +1,4 @@
+<%# Don't indent elements inside the pre tag %>
+<%= tag.pre class: "formatted-text" do %>
+<%= text[0..chars] %> <% if text.length > chars %>…<% end %>
+<% end %>

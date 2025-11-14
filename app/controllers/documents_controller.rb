@@ -10,6 +10,11 @@ class DocumentsController < ApplicationController
     @filter_params = filter.filter_params
   end
 
+  def show
+    Rails.logger.debug params[:document_id]
+    @edition = Edition.find_current(document_id: params[:document_id])
+  end
+
   def new
     @document_type_selection = DocumentTypeSelection.find(params[:type] || "root")
   end

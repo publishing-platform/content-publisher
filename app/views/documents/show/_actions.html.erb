@@ -1,0 +1,31 @@
+<div class="app-side">
+  <div class="app-side__actions">   
+    <% if @edition.published_but_needs_2i? %>
+      <%= approve_button(@edition) %>
+      <%= create_edition_button(@edition, secondary: true) %>
+      <%= remove_link(@edition) %>      
+    <% elsif @edition.published? %>   
+      <%= create_edition_button(@edition) %>  
+      <%= remove_link(@edition) %>          
+    <% elsif @edition.removed? %>
+      <%= create_edition_button(@edition) %>         
+    <% elsif @edition.submitted_for_review? || @edition.failed_to_publish? %>    
+      <%= publish_link(@edition, %w(btn btn-primary mb-3)) %>
+      <%= preview_link(@edition, %w(btn btn-secondary mb-3)) %>
+      <%= delete_draft_link(@edition) %>        
+    <% elsif !@edition.revision_synced? %>
+      <%= create_preview_button(@edition) %>
+      <%= delete_draft_link(@edition) %>     
+    <% elsif @edition.draft? %>
+      <%= submit_for_2i_button(@edition) %>
+      <%= preview_link(@edition, %w(btn btn-secondary mb-3)) %>
+      <%= publish_link(@edition, "d-block") %>  
+      <%= delete_draft_link(@edition) %>
+    <% end %>  
+
+    <% if @edition.document.live_edition %>
+      <hr />
+      <%= link_to "View on Publishing Platform", edition_public_url(@edition.document.live_edition) %>     
+    <% end %>
+  </div>
+</div>    

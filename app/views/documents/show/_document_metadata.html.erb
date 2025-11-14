@@ -1,0 +1,32 @@
+<div class="app-side">
+  <% items = [
+    {
+      field: t("documents.show.metadata.status"),
+      value: t("user_facing_states.#{@edition.state}.name")
+    },
+    {
+      field: t("documents.show.metadata.updated_at"),
+      value: @edition.last_edited_at.to_fs(:time_on_date),
+    },
+    {
+      field: t("documents.show.metadata.created_at"),
+      value: (created_at = @edition.document.created_at) ? created_at.to_fs(:time_on_date) : "",
+    },
+    {
+      field: t("documents.show.metadata.created_by"),
+      value: name_or_fallback(@edition.document.created_by),
+    },
+    {
+      field: t("documents.show.metadata.last_edited_by"),
+      value: name_or_fallback(@edition.last_edited_by)
+    },
+  ] %>
+
+
+  <%= tag.dl do %>
+    <% items.each do |item| %>
+      <%= tag.dt item[:field] %>
+      <%= tag.dd item[:value] %>
+    <% end %>
+  <% end %>
+</div>

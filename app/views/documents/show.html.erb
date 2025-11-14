@@ -1,0 +1,22 @@
+<% content_for :title, @edition.title_or_fallback %>
+<% content_for :back_link, documents_path %>
+<% content_for :context, @edition.document_type.label %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= render "documents/show/requirements" %>  
+    
+    <% if @edition.submitted_for_review? %>
+      <%= render "documents/show/submitted_for_review" %>
+    <% end %>    
+  </div>  
+</div>
+<div class="row">
+  <div class="col-xs-12 col-md-4">    
+    <%= render "documents/show/actions" %>
+    <%= render "documents/show/document_metadata" %>
+  </div>  
+  <div class="col-xs-12 col-md-8">
+    <%= render "documents/show/contents" %> 
+  </div>
+</div>

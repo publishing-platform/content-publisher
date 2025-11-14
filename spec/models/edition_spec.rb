@@ -4,15 +4,15 @@ RSpec.describe Edition do
   describe ".find_current" do
     it "finds an edition by a document_id" do
       edition = create(:edition)
-      param = edition.document.id.to_s
+      document_id = edition.document.id
 
-      expect(described_class.find_current(param)).to eq(edition)
+      expect(described_class.find_current(document_id:)).to eq(edition)
     end
 
     it "only finds a current edition" do
       edition = create(:edition, current: false)
 
-      expect { described_class.find_current(edition.document.id) }
+      expect { described_class.find_current(document_id: edition.document.id) }
         .to raise_error(ActiveRecord::RecordNotFound)
     end
   end

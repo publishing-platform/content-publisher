@@ -1,6 +1,14 @@
 en:
   documents:
     show:
+      contents:
+        title: Content
+        items:
+          update_type: Update type
+          change_note: Change note
+        update_type:
+          minor: There’s no change to the published information. For example, spelling corrections.
+          major: There’s a change to the published information.    
       flashes:
         pre_preview_issues:
           warning: To preview this document you need to
@@ -8,3 +16,12 @@ en:
         pre_publish_issues:
           warning: To publish this document you need to
           error: Before you can publish this document you need to
+      submitted_for_review:
+        title: Content has been marked as ready for 2i review
+        label: Send the Content Publisher link to another publisher for them to review. When content is ready you or they can publish it.  
+      metadata:
+        status: Status
+        updated_at: Last updated
+        created_at: Created
+        created_by: Document created by
+        last_edited_by: Last edited by           

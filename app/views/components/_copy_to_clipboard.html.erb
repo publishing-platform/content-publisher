@@ -1,0 +1,13 @@
+<%
+  name = SecureRandom.hex
+%>
+
+<div data-module="copy-to-clipboard">
+  <div class="mb-3">
+    <%= label_tag name, 
+          "Send this link to someone so they can see a preview of how the document will appear on the Publishing Platform. No password is needed.", 
+          class: "form-label" %> 
+    <%= text_field_tag name, copyable_content, class: "form-control copy-to-clipboard-target", readonly: true %> 
+  </div>
+  <%= button_tag button_text, class: "btn btn-secondary copy-to-clipboard-button mb-3" %> 
+</div>

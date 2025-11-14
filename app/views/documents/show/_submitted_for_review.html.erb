@@ -1,0 +1,10 @@
+<% copy_to_clipboard = render(
+  "components/copy_to_clipboard",
+    label: t("documents.show.submitted_for_review.label"),
+    copyable_content: document_url(@edition.document),
+    button_text: "Copy link"
+) %>
+
+<%= render "components/callout",
+  title: t("documents.show.submitted_for_review.title"),
+  description: copy_to_clipboard %>
