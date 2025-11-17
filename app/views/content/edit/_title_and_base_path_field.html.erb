@@ -1,0 +1,25 @@
+<% has_error = issues&.has_key?(:title) %>
+
+<%= label_tag "title-field", t("content.edit.form_labels.title"), class: "form-label" %>
+<%= text_area_tag :title,
+      params[:title] || edition.title,
+      id: "title-field",
+      rows: 2,
+      aria: { describedby: has_error ? "title-errors" : nil },
+      maxlength: DocumentType::TitleAndBasePathField::TITLE_MAX_LENGTH,
+      data: { "url-preview": "input" },
+      class: "form-control mb-3 #{(has_error ? "is-invalid" : nil)}" %>
+
+<%= render "components/errors", {
+  field: :title,
+  classes: "mb-3"
+} %>      
+
+<%= render "components/url_preview", {
+  title: t("content.edit.url_preview.available"),
+  default_message: t("content.edit.url_preview.no_title"),
+  error_message: t("content.edit.url_preview.error"),
+  website_root: PublishingPlatformLocation.website_root,
+  base_path: edition.base_path,
+  url_preview_path: generate_path_path(edition.document)
+} %>

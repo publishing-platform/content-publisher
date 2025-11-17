@@ -1,0 +1,14 @@
+<% has_error = issues&.has_key?(:body) %>
+
+<%= label_tag "body-field", t_doctype_field(edition, "body.label"), class: "form-label" %>
+<%= text_area_tag :body,
+      params[:body] || edition.contents["body"],
+      id: "body-field",
+      rows: 20,
+      aria: { describedby: has_error ? "body-errors" : nil },
+      class: "form-control mb-3 #{(has_error ? "is-invalid" : nil)}" %>
+
+<%= render "components/errors", {
+  field: :body,
+  classes: "mb-3"
+} %>        

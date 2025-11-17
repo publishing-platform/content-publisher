@@ -18,5 +18,9 @@
   </div>  
   <div class="col-xs-12 col-md-8">
     <%= render "documents/show/contents" %> 
+
+    <% if @edition.document_type.lead_image? %>
+      <%= render "documents/show/lead_image" %>
+    <% end %>    
   </div>
 </div>

@@ -1,0 +1,15 @@
+<% has_error = issues&.has_key?(:summary) %>
+
+<%= label_tag "summary-field", t("content.edit.form_labels.summary"), class: "form-label" %>
+<%= text_area_tag :summary,
+      params[:summary] || edition.summary,
+      id: "summary-field",
+      rows: 4,
+      aria: { describedby: has_error ? "summary-errors" : nil },
+      maxlength: DocumentType::SummaryField::SUMMARY_MAX_LENGTH,
+      class: "form-control mb-3 #{(has_error ? "is-invalid" : nil)}" %>
+
+<%= render "components/errors", {
+  field: :summary,
+  classes: "mb-3"
+} %>        

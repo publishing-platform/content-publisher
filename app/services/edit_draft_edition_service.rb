@@ -1,0 +1,26 @@
+class EditDraftEditionService
+  include Callable
+
+  def initialize(edition, user, **attributes)
+    @edition = edition
+    @user = user
+    @attributes = attributes
+  end
+
+  def call
+    raise "cannot edit a live edition" if edition.live?
+
+    edition.assign_attributes(extended_attributes)
+    edition.add_edition_editor(user)
+  end
+
+private
+
+  attr_reader :edition, :user, :attributes
+
+  def extended_attributes
+    result = attributes.merge(last_edited_by: user, last_edited_at: Time.zone.now)
+    result[:revision_synced] = false if attributes.key?(:revision)
+    result
+  end
+end

@@ -1,0 +1,8 @@
+<div class="url-preview alert alert-light" data-module="url-preview" data-url-preview-path="<%= url_preview_path %>">
+  <h2 class="js-url-preview-title h6"><%= title %></h2>
+  <p class="js-url-preview-default-message mb-0 <%= 'visually-hidden' unless base_path.nil? %>"><%= default_message %></p>
+  <p class="js-url-preview-error-message mb-0 visually-hidden"><%= error_message %></p>
+  <p class="js-url-preview-url mb-0 <%= 'visually-hidden' if base_path.nil? %>">
+    <span><%= website_root %></span><span class="js-url-preview-path"><%= base_path %></span>
+  </p>
+</div>

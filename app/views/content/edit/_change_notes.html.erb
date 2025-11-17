@@ -1,0 +1,28 @@
+<% update_type = params[:update_type] || edition.update_type %>
+
+<%= field_set_tag t("content.edit.update_type.title"), class: "mb-3" do %>
+  <%= tag.div class: "form-check" do %>
+    <%= radio_button_tag :update_type, 
+        "major",
+        checked: update_type == "major",
+        class: "form-check-input"  %>
+
+    <%= label_tag "update_type_major", t("content.edit.update_type.major_name"), class: "form-check-label" %>
+  <% end %>
+
+  <%= tag.div class: "form-check" do %>
+    <%= radio_button_tag :update_type, 
+        "minor",
+        checked: update_type == "minor",
+        class: "form-check-input"  %>
+
+    <%= label_tag "update_type_minor", t("content.edit.update_type.minor_name"), class: "form-check-label" %>
+  <% end %>  
+<% end %>
+
+<%= label_tag "change_note-field", t("content.edit.change_note.title"), class: "form-label" %>
+<%= text_area_tag :change_note,
+      params[:change_note] || edition.change_note,
+      id: "change-note-field",
+      rows: 4,
+      class: "form-control mb-3" %>

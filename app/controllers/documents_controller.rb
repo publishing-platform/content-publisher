@@ -11,7 +11,6 @@ class DocumentsController < ApplicationController
   end
 
   def show
-    Rails.logger.debug params[:document_id]
     @edition = Edition.find_current(document_id: params[:document_id])
   end
 
@@ -40,6 +39,13 @@ class DocumentsController < ApplicationController
 
       redirect_to destination
     end
+  end
+
+  def generate_path
+    edition = Edition.find_current(document_id: params[:document_id])
+    assert_edition_state(edition, &:editable?)
+    base_path = GenerateBasePathService.call(edition, title: params[:title])
+    render plain: base_path
   end
 
 private
