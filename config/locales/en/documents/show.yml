@@ -16,12 +16,37 @@ en:
         pre_publish_issues:
           warning: To publish this document you need to
           error: Before you can publish this document you need to
+        preview_error:
+          title: Something has gone wrong
+          description: Something went wrong when creating the preview page. Please try again.
+        publish_error:
+          title: Something has gone wrong
+          description: Something went wrong when publishing. Please try again.
+        2i_error:
+          title: Something has gone wrong
+          description: Something went wrong when submitting your content for 2i review. Please try again.
+        approved: Content has been reviewed and approved
+        delete_draft_error:
+          title: Something has gone wrong
+          description: Something went wrong when deleting your draft. Please try again.
+        lead_image:
+          selected: "Image ‘%{file}’ has been selected as the lead image"
       submitted_for_review:
         title: Content has been marked as ready for 2i review
-        label: Send the Content Publisher link to another publisher for them to review. When content is ready you or they can publish it.  
+        label: Send the Content Publisher link to another publisher for them to review. When content is ready you or they can publish it.          
+      lead_image:
+        title: Lead image
+        no_lead_image: No image selected. The default image for your organisation will be used.
+        alt_text: Alt text
+        caption: Caption
+        credit: Credit        
       metadata:
         status: Status
         updated_at: Last updated
         created_at: Created
         created_by: Document created by
-        last_edited_by: Last edited by           
+        last_edited_by: Last edited by       
+      tags:
+        title: Tags
+        api_down: This content isn’t available right now. We’re having trouble getting the data we need to show you this content.
+        none: None            
