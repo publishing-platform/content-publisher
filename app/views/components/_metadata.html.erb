@@ -1,0 +1,19 @@
+<%
+  items ||= []
+  inline ||= false
+  list_classes = %w(app-c-metadata__list)
+  list_classes << 'app-c-metadata__list--inline' if inline
+  margin_bottom ||= 0
+  component_classes = %w(app-c-metadata)
+  component_classes << "mb-#{margin_bottom}" unless margin_bottom.zero?
+%>
+<%= tag.div class: component_classes do %>
+  <% if items.any? %>
+    <%= tag.dl class: list_classes do %>
+      <% items.each do |item| %>
+        <%= tag.dt item[:field] + ':', class: 'app-c-metadata__title' %>
+        <%= tag.dd item[:value], class: 'app-c-metadata__description' %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,13 +1,8 @@
 .app-c-summary-list {
-  border-bottom: 1px solid $border-color;
   margin-top: 1rem;
 
   &:nth-of-type(1) {
     margin-top: 0;
-  }
-
-  &:nth-last-of-type(1) {
-    border-bottom: 0;
   }
 }
 
@@ -159,4 +154,12 @@
     float: right;
     width: auto;
   }
+}
+
+.gem-c-summary__block {  
+  margin-bottom: 20px;
+
+  @include media-breakpoint-up(sm) {
+    margin-bottom: 30px;
+  }    
 }

@@ -2,6 +2,9 @@
 @import "components/page-preview";
 @import "components/callout";
 @import "components/summary-list";
+@import "components/metadata";
+@import "components/media-with-actions";
+@import "components/image-with-metadata";
 
 .container {
   max-width: 960px;

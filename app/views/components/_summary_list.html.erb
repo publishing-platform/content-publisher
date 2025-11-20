@@ -3,12 +3,16 @@
   edit ||= {}
   delete ||= {}
   items ||= []
+  block ||= yield
 
   heading_level = [*1..6].include?(heading_level) ? "h#{heading_level}" : "h3"
+  attributes = {}
+  attributes[:class] = "app-c-summary-list"
+  attributes[:id] = id if local_assigns.include?(:id)
 
 %>
 <% if title || items.any? %>
-  <%= tag.div class: "app-c-summary-list" do %>
+  <%= tag.div **attributes do %>
     <% if title %>
 
       <%= content_tag(heading_level, title, class: "h4 app-c-summary-list__group-title") %>
@@ -119,5 +123,7 @@
         <% end %>
       <% end %>
     <% end %>
+
+    <%= tag.div block, class: "gem-c-summary__block" if block %>
   <% end %>
 <% end %>

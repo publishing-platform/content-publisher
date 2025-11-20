@@ -1,0 +1,25 @@
+.app-c-metadata__title {
+  font-weight: $font-weight-bold;
+}
+
+.app-c-metadata__description {
+  margin: 0;
+  margin-bottom: 15px;
+
+  &:last-child {
+    margin: 0;
+  }
+
+  @include clearfix;
+}
+
+.app-c-metadata__list {
+  margin: 0;
+}
+
+.app-c-metadata__list--inline {
+  .app-c-metadata__title,
+  .app-c-metadata__description {
+    display: inline;
+  }
+}

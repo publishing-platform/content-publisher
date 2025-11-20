@@ -1,0 +1,28 @@
+<%
+  id ||= "image-with-metadata-#{SecureRandom.hex(4)}"
+  alt_text ||= nil
+  actions ||= []
+  metadata_items ||= []
+%>
+<div class="app-c-image-with-metadata" id="<%= id %>">
+  <%= render "components/media_with_actions", actions: actions do %>
+    <div class="row">
+      <div class="col-xs-12 col-md-4">
+
+        <%= tag.img class: "app-c-image-with-metadata__image",
+          src: src,
+          alt: alt_text
+        %>
+
+      </div>
+      <div class="col-xs-12 col-md-8">
+        <% if metadata_items.any? %>
+          <%= render "components/metadata", {
+            inline: true,
+            items: metadata_items,
+          } %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
