@@ -1,0 +1,14 @@
+.app-side {
+  margin-bottom: 30px;
+
+  @include clearfix;
+
+  padding: 15px;;
+  background: #f3f2f1;
+}
+
+.app-side__actions {
+  .btn {
+    width: 100%;
+  }
+}

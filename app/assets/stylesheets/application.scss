@@ -1,10 +1,14 @@
 @import "bootstrap/scss/bootstrap";
+@import "objects/side";
+@import "objects/pane";
 @import "components/page-preview";
 @import "components/callout";
 @import "components/summary-list";
 @import "components/metadata";
 @import "components/media-with-actions";
 @import "components/image-with-metadata";
+@import "components/formatted-text";
+@import "components/image-cropper";
 
 .container {
   max-width: 960px;
@@ -22,22 +26,8 @@
   }  
 }
 
-.formatted-text {
+.app-btn--link {
   margin: 0;
-  white-space: pre-wrap;
-}
-
-.app-side {
-  margin-bottom: 30px;
-
-  @include clearfix;
-
-  padding: 15px;;
-  background: #f3f2f1;
-}
-
-.app-side__actions {
-  .btn {
-    width: 100%;
-  }
+  padding: 0;
+  vertical-align: baseline;
 }

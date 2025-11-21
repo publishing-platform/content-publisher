@@ -1,5 +1,5 @@
 <% content_for :title, @edition.title_or_fallback %>
-<% content_for :back_link, documents_path %>
+<% content_for :back_link, render_back_link(href: documents_path) %>
 <% content_for :context, @edition.document_type.label %>
 
 <div class="row">

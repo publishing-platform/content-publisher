@@ -21,7 +21,7 @@
     
       <main>
         <% if yield(:back_link).present? %>
-          <a href="<%= yield(:back_link) %>" class="d-inline-block mb-3">&lt; Back</a>
+          <%= yield(:back_link) %>
         <% elsif yield(:breadcrumbs).present? %>
           <%= yield(:breadcrumbs) %>
         <% end %>    

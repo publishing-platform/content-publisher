@@ -5,10 +5,23 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
+  helper_method :rendering_context
+
   before_action :authenticate_user!
 
   rescue_from EditionAssertions::StateError do |e|
     Rails.logger.warn(e.message)
-    redirect_to document_path(e.edition.document)
+
+    if rendering_context == "modal"
+      raise ActionController::BadRequest
+    elsif e.edition.first? && e.edition.discarded?
+      redirect_to documents_path
+    else
+      redirect_to document_path(e.edition.document)
+    end
+  end
+
+  def rendering_context
+    request.headers["Content-Publisher-Rendering-Context"] || "application"
   end
 end

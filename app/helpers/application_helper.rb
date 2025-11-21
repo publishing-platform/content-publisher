@@ -3,6 +3,10 @@ module ApplicationHelper
     url.sub(/^https?:\/\//, "")
   end
 
+  def render_back_link(options)
+    render("components/back_link", options)
+  end
+
   def render_markdown(content)
     raw(PublishingPlatformMarkdown::Document.new(content).to_html)
   end

@@ -13,8 +13,9 @@
       "selector-class-pattern": null
     }
   },
-  "dependencies": {
+  "dependencies": {    
     "bootstrap": "^5.3.3",
+    "cropperjs": "^1.6.2",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "rollup": "^4.40.0"
   },

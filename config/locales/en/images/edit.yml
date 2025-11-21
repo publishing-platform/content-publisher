@@ -1,0 +1,16 @@
+en:
+  images:
+    edit:
+      title: "Image details for ‘%{title}’"
+      title_modal: "Image details"
+      alt_text_placeholder: Your uploaded image
+      form_labels:
+        alt_text: Alt text
+        caption: Image caption
+        credit: Image credit
+        lead_image: Select as lead image
+      guidance:
+        alt_text_markdown: Optional. A short and specific description of what the image shows. This helps screen-readers and search engines. Use this only when the image provides a reader with additional information.
+        caption_markdown: Optional. A description of what the image shows. Caption appears next to the image.
+        credit_markdown: |
+          Images licensed from a 3rd party must be credited.

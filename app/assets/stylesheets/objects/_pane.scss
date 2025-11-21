@@ -1,0 +1,12 @@
+.app-pane {
+  margin-bottom: 20px;
+
+  @include media-breakpoint-up(sm) {
+    margin-bottom: 30px;
+  }
+
+  @include clearfix;
+
+  padding: 15px;
+  background: #f3f2f1;
+}

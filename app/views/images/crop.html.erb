@@ -1,0 +1,45 @@
+<%
+title_key = @image_revision.at_exact_dimensions? ? "images.crop.title_exact_dimensions" : "images.crop.title"
+content_for :title, t(title_key)
+%>
+
+<% content_for :back_link, render_back_link(
+  href: images_path(@edition.document),
+  data_attributes: {
+    "modal-action": "back",
+  }
+) %>
+
+<%= form_tag(
+  crop_image_path(@edition.document, @image_revision.image_id),
+  method: :patch,
+  data: {
+    "modal-action": "crop"
+  }
+) do %>
+  <%= hidden_field_tag(:wizard, params[:wizard]) %>
+
+  <%= render "/components/image_cropper", {
+    id: "crop-image",
+    src: url_for(@image_revision.blob),
+    exact_dimensions: @image_revision.at_exact_dimensions?,
+    alt_text: @image_revision.alt_text || t("images.edit.alt_text_placeholder"),
+    crop_x: @image_revision.crop_x,
+    crop_y: @image_revision.crop_y,
+    crop_width: @image_revision.crop_width,
+    crop_height: @image_revision.crop_height,
+  } %>
+
+  <% 
+    button_text = if @image_revision.at_exact_dimensions?
+                    "Continue"
+                  elsif params[:wizard] == 'upload'
+                    "Save and continue"
+                  else
+                    "Save"
+                  end
+  %>
+
+  <%= submit_tag button_text, class: "btn btn-primary" %>
+
+<% end %>

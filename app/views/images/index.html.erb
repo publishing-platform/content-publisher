@@ -1,0 +1,48 @@
+<%
+title_key = rendering_context == "modal" ? "images.index.title_modal" : "images.index.title"
+content_for :title, t(title_key, title: @edition.title_or_fallback)
+%>
+
+<% unless rendering_context == "modal" %>  
+  <% content_for :back_link, render_back_link(href: document_path(@edition.document)) %>
+<% end %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <div class="app-pane">
+      <%= form_tag(
+        images_path(@edition.document),
+        multipart: true,
+        data: { "modal-action": "upload" }
+      ) do %>      
+        <h2 class="h4">
+          <%= label_tag :image, t("images.index.upload_image") %>
+        </h2>  
+        
+        <div id="image-hint" class="text-muted mb-3"><%= render_markdown(t("images.index.description_markdown")) %></div>
+
+        <div class="mb-3">        
+          <%= file_field_tag :image, class: "form-control", aria: { describedby: "image-hint" } %>
+        </div>  
+        
+        <%= submit_tag "Upload", class: "btn btn-primary" %>        
+      <% end %>
+    </div>
+
+    <% if lead_image = @edition.lead_image_revision %>
+      <%= render "lead_image", lead_image: lead_image, document: @edition.document %>
+    <% end %>   
+    
+    <% images = @edition.image_revisions_without_lead %>
+
+    <% if images.any? %>
+      <h2 class="h4">
+        <%= t("images.index.other_images") %>
+      </h2>
+
+      <% images.each do |image| %>
+        <%= render "image", image: image, edition: @edition %>
+      <% end %>
+    <% end %>    
+  </div>
+</div>

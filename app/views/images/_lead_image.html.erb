@@ -1,0 +1,47 @@
+<h2 class="h4">
+  <%= t("images.index.lead_image") %>
+</h2>
+
+<% actions = [] %>
+<% actions << link_to("Download 960x640 image", download_image_path(document, lead_image.image_id)) %>
+
+<% unless rendering_context == "modal" %>
+
+  <% actions << link_to("Delete lead image", confirm_delete_image_path(@edition.document, lead_image.image_id),
+                      class: "link-danger",
+                      data: { "modal-action": "delete" }) %>
+
+  <% actions << link_to("Edit details", edit_image_path(document, lead_image.image_id),
+                        data: { "modal-action": "edit" }) %>
+
+  <% actions << link_to("Crop image", crop_image_path(document, lead_image.image_id)) %>
+
+  <% actions << capture do %>
+    <%= form_tag remove_lead_image_path(document),
+        method: :delete,
+        class: "d-inline-block" do %>
+      <button class="btn btn-link">Remove lead image</button>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= render "components/image_with_metadata", {
+  id: "image-#{lead_image.id}",
+  src: url_for(lead_image.thumbnail),
+  alt_text: lead_image.alt_text,
+  actions: actions,
+  metadata_items: [
+    {
+      field: t("images.index.meta.alt_text"),
+      value: lead_image.alt_text,
+    },
+    {
+      field: t("images.index.meta.caption"),
+      value: lead_image.caption,
+    },
+    {
+      field: t("images.index.meta.credit"),
+      value: lead_image.credit,
+    }
+  ]
+} %>

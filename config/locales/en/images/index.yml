@@ -1,0 +1,21 @@
+en:
+  images:
+    index:
+      title: "Images for ‘%{title}’"
+      title_modal: "Insert image"
+      description_markdown: Images can be jpg, png or gif files.
+      upload_image: Upload an image
+      lead_image: Lead image
+      other_images: Other images
+      meta:
+        alt_text: Alt text
+        caption: Caption
+        credit: Credit
+        inline_code:
+          label: Markdown code
+          value: "[Image: %{filename}]"
+      flashes:
+        deleted: "Image ‘%{file}’ has been deleted"
+        lead_image:
+          removed: "Image ‘%{file}’ has been deselected. Document will now use the default lead image"
+          deleted: "Image ‘%{file}’ has been deleted. Document will now use the default lead image"

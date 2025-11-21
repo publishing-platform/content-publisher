@@ -1,0 +1,8 @@
+<%
+  attributes = {}
+
+  attributes[:class] = "d-inline-block mb-3"
+  attributes[:data] = data_attributes if local_assigns.include?(:data_attributes)
+  attributes[:href] = href
+%>
+<%= tag.a(**attributes) do %>&lt; Back<% end %>

@@ -1,5 +1,7 @@
 <% content_for :title, t("document_type_selections.#{@document_type_selection.id}.label")  %>
-<% content_for :back_link, @document_type_selection.parent ? new_document_path(type: @document_type_selection.parent.id) : documents_path %>
+<% back_href = @document_type_selection.parent ? new_document_path(type: @document_type_selection.parent.id) : documents_path %>
+<% content_for :back_link, render_back_link(href: back_href) %>
+
 
 <%= form_tag documents_path(type: @document_type_selection.id) do %>
 

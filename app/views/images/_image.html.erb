@@ -1,0 +1,54 @@
+<% actions = [] %>
+
+<% actions << link_to("Edit details", edit_image_path(edition.document, image.image_id),
+                      data: { "modal-action": "edit" }) %>
+
+<% actions << link_to("Crop image", crop_image_path(edition.document, image.image_id),
+                      data: { "modal-action": "edit" }) %>
+
+<% if rendering_context == "modal" %>
+  <% actions << link_to("Insert image markdown", "#",
+                        data: {
+                          "modal-action": "insert",
+                          "modal-data": t("images.index.meta.inline_code.value", filename: image.filename)
+                        }) %>
+<% elsif edition.document_type.lead_image? %>
+  <% actions << capture do %>
+    <%= form_tag choose_lead_image_path(edition.document, image.image_id),
+                 class: "d-inline-block" do %>
+      <button class="btn btn-link app-btn--link">Select as lead image</button>
+    <% end %>
+  <% end %>
+
+<% end %>
+
+<% actions << link_to("Delete image", confirm_delete_image_path(edition.document, image.image_id),
+                      class: "link-danger",
+                      data: { "modal-action": "delete" }) %>
+
+<% metadata_items = [
+  {
+    field: t("images.index.meta.alt_text"),
+    value: image.alt_text,
+  },
+  {
+    field: t("images.index.meta.caption"),
+    value: image.caption,
+  },
+  {
+    field: t("images.index.meta.credit"),
+    value: image.credit,
+  },
+  {
+    field: t("images.index.meta.inline_code.label"),
+    value: t("images.index.meta.inline_code.value", filename: image.filename),
+  },
+] %>
+
+<%= render "components/image_with_metadata", {
+  id: "image-#{image.image_id}",
+  src: url_for(image.thumbnail),
+  alt_text: image.alt_text,
+  actions: actions,
+  metadata_items: metadata_items,
+} %>
