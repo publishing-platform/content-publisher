@@ -41,4 +41,38 @@ class ImagesController < ApplicationController
       redirect_to images_path(params[:document_id])
     end
   end
+
+  def edit
+    @edition = Edition.find_current(document_id: params[:document_id])
+    assert_edition_state(@edition, &:editable?)
+    @image_revision = @edition.image_revisions.find_by!(image_id: params[:image_id])
+  end  
+
+  def update
+    result = Images::UpdateInteractor.call(params:, user: current_user)
+
+    edition = result.edition
+    image_revision = result.image_revision
+    issues = result.issues
+    lead_selected = result.selected_lead_image
+    lead_removed = result.removed_lead_image
+
+    if issues
+      flash.now["requirements"] = { "items" => issues.items }
+
+      render :edit,
+             assigns: { edition:,
+                        image_revision:,
+                        issues: },
+             status: :unprocessable_entity
+    elsif lead_selected
+      redirect_to document_path(params[:document_id]),
+                  notice: t("documents.show.flashes.lead_image.selected", file: image_revision.filename)
+    elsif lead_removed
+      redirect_to images_path(params[:document_id]),
+                  notice: t("images.index.flashes.lead_image.removed", file: image_revision.filename)
+    else
+      redirect_to images_path(params[:document_id])
+    end
+  end  
 end
