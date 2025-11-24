@@ -46,7 +46,7 @@ class ImagesController < ApplicationController
     @edition = Edition.find_current(document_id: params[:document_id])
     assert_edition_state(@edition, &:editable?)
     @image_revision = @edition.image_revisions.find_by!(image_id: params[:image_id])
-  end  
+  end
 
   def update
     result = Images::UpdateInteractor.call(params:, user: current_user)
@@ -74,5 +74,5 @@ class ImagesController < ApplicationController
     else
       redirect_to images_path(params[:document_id])
     end
-  end  
+  end
 end
