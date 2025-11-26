@@ -1,0 +1,17 @@
+<% tags = @edition.document_type.tags.map { |field|
+  {
+    field: t_doctype_field(@edition, "#{field.id}.label"),
+    value: render("documents/show/tags/#{field.id}_field", edition: @edition)
+  }
+} %>
+
+<%= render "components/summary_list", {
+  id: "tags",
+  title: t("documents.show.tags.title"),
+  edit: (
+    if @edition.editable?
+      { href: tags_path(@edition.document) }
+    end
+  ),
+  items: tags
+} %>
