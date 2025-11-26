@@ -1,0 +1,22 @@
+<% content_for :title, t("images.confirm_delete.title", title: @image_revision.filename) %>
+<% content_for :back_link, render_back_link(href: images_path(@edition.document, @image_revision.image_id), data_attributes: { "modal-action": "back" }) %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <%= form_tag(
+      destroy_image_path(@edition.document, @image_revision.image_id),
+      method: :delete,
+      data: {
+        "modal-action": "confirmDelete"
+      },
+    ) do %>
+      <%= render_markdown(t("images.confirm_delete.description_markdown")) %>
+
+      <%= submit_tag "Yes, delete image", class: "btn btn-danger me-3 mb-3 mb-md-0" %>
+      <%= link_to "Cancel", 
+        images_path(@edition.document, @image_revision.image_id),  
+        data: { "modal-action": "back" 
+      } %>
+    <% end %>      
+  </div>
+</div>

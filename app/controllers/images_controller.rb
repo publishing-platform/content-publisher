@@ -75,4 +75,25 @@ class ImagesController < ApplicationController
       redirect_to images_path(params[:document_id])
     end
   end
+
+  def confirm_delete
+    @edition = Edition.find_current(document_id: params[:document_id])
+    assert_edition_state(@edition, &:editable?)
+    @image_revision = @edition.image_revisions.find_by!(image_id: params[:image_id])
+  end
+
+  def destroy
+    result = Images::DestroyInteractor.call(params:, user: current_user)
+    image_revision, removed_lead = result.to_h.values_at(:image_revision, :removed_lead_image)
+
+    if removed_lead
+      redirect_to images_path(params[:document_id]),
+                  notice: t("images.index.flashes.lead_image.deleted",
+                            file: image_revision.filename)
+    else
+      redirect_to images_path(params[:document_id]),
+                  notice: t("images.index.flashes.deleted",
+                            file: image_revision.filename)
+    end
+  end
 end
