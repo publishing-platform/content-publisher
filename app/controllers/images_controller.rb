@@ -96,4 +96,17 @@ class ImagesController < ApplicationController
                             file: image_revision.filename)
     end
   end
+
+  def download
+    edition = Edition.find_current(document_id: params[:document_id])
+    assert_edition_state(edition, &:editable?)
+    image_revision = edition.image_revisions.find_by!(image_id: params[:image_id])
+    variant = image_revision.crop_variant("960x640!").processed
+
+    send_data(
+      image_revision.blob.service.download(variant.key),
+      filename: image_revision.filename,
+      type: image_revision.content_type,
+    )
+  end
 end
