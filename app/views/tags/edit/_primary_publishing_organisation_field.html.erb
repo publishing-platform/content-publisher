@@ -1,0 +1,17 @@
+<% tag_field_id = "primary_publishing_organisation" %>
+
+<% has_error = issues&.has_key?(tag_field_id.to_sym) %>
+
+<%= label_tag "#{tag_field_id}-field", t_doctype_field(edition, "#{tag_field_id}.label"), class: "form-label" %>
+<%= select_tag "#{tag_field_id}[]", 
+      options_for_select(Linkables.new("organisation").select_options, 
+                        (params.key?(tag_field_id) ? params : edition.tags)[tag_field_id]), 
+      include_blank: true, 
+      id: "#{tag_field_id}-field",
+      aria: { describedby: has_error ? "#{tag_field_id}-errors" : nil },
+      class: "form-control mb-3 #{(has_error ? "is-invalid" : nil)}" %>   
+
+<%= render "components/errors", {
+  field: tag_field_id.to_sym,
+  classes: "mb-3"
+} %>        
