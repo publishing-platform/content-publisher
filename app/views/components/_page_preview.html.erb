@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <div data-module="copy-to-clipboard">
+      <div class="mb-3">
+        <%= label_tag :url, 
+              "Send this link to someone so they can see a preview of how the document will appear on the Publishing Platform. No password is needed.", 
+              class: "form-label" %> 
+        <%= text_field_tag :url, url, class: "form-control copy-to-clipboard-target", readonly: true %> 
+      </div>
+      <%= button_tag "Copy link", class: "btn btn-secondary copy-to-clipboard-button mb-3" %> 
+    </div>
+  </div>
+</div>
+
+<div class="app-c-preview">
+  <% mobile_preview = capture do %>
+    <%= tag.div class: "app-c-preview__mobile" do %>
+      <%= tag.iframe class: "app-c-preview__mobile-iframe", src: url, title: "Preview of the page on mobile" %>
+    <% end %>
+  <% end %>
+
+  <% desktop_preview = capture do %>
+    <%= tag.iframe class: "app-c-preview__desktop-preview", src: url, title: "Preview of the page on desktop or tablet" %>
+  <% end %>
+
+  <% snippet_preview = capture do %>
+    <%= tag.div class: "app-c-preview__google" do %>
+      <%= link_to "#{title} - Publishing Platform", base_path, class: "app-c-preview__google-title" %>
+      <%= tag.div "https://www.publishing-platform.co.uk#{base_path}", class: "app-c-preview__google-url" %>
+      <%= tag.div truncate(description, length: 280), class: "app-c-preview__google-description" %>
+    <% end %>
+  <% end %>
+
+
+  <ul class="nav nav-tabs mb-3" id="preview-tabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="mobile-tab" data-bs-toggle="tab" data-bs-target="#mobile-tab-pane" type="button" role="tab" aria-controls="mobile-tab-pane" aria-selected="true">Mobile</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="desktop-tab" data-bs-toggle="tab" data-bs-target="#desktop-tab-pane" type="button" role="tab" aria-controls="desktop-tab-pane" aria-selected="false">Desktop and tablet</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="search-engine-tab" data-bs-toggle="tab" data-bs-target="#search-engine-tab-pane" type="button" role="tab" aria-controls="search-engine-tab-pane" aria-selected="false">Search engine snippet</button>
+    </li>    
+  </ul>
+  
+  <div class="tab-content" id="preview-tabs-content">
+    <div class="tab-pane fade show active" id="mobile-tab-pane" role="tabpanel" aria-labelledby="mobile-tab" tabindex="0">
+      <%= mobile_preview %>
+    </div>
+    <div class="tab-pane fade" id="desktop-tab-pane" role="tabpanel" aria-labelledby="desktop-tab" tabindex="0">
+      <%= desktop_preview %>
+    </div>
+    <div class="tab-pane fade" id="search-engine-tab-pane" role="tabpanel" aria-labelledby="search-engine-tab" tabindex="0">
+      <%= snippet_preview %>
+    </div>    
+  </div>  
+</div>
