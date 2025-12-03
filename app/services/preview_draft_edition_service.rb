@@ -1,0 +1,32 @@
+class PreviewDraftEditionService
+  include Callable
+
+  def initialize(edition, republish: false)
+    @edition = edition
+    @republish = republish
+  end
+
+  def call
+    put_draft_assets
+    put_draft_content
+  rescue PublishingPlatformApi::BaseError
+    edition.update!(revision_synced: false)
+    raise
+  end
+
+private
+
+  attr_reader :edition, :republish
+
+  def put_draft_content
+    payload = PublishingApiPayload.new(edition, republish:).payload
+    PublishingPlatformApi.publishing_api.put_content(edition.content_id, payload)
+    edition.update!(revision_synced: true)
+  end
+
+  def put_draft_assets
+    edition.image_revisions.each(&:ensure_assets)
+    # TODO
+    # edition.assets.each { |asset| PreviewAssetService.call(edition, asset) }
+  end
+end

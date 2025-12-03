@@ -1,0 +1,114 @@
+RSpec.describe PublishingApiPayload::History do
+  describe "#public_updated_at" do
+    it "returns current time when a major change has not been published before" do
+      first_edition = build(:edition)
+      second_edition = build(:edition, document: first_edition.document, update_type: "major")
+
+      freeze_time do
+        expect(described_class.new(second_edition).public_updated_at).to eq(Time.zone.now)
+      end
+    end
+
+    it "returns published_at time when an edition has already been published with a major change" do
+      first_edition = create(:edition,
+                             current: false,
+                             first_published_at: "2020-02-22 11:00:00")
+      second_edition = build(:edition,
+                             :published,
+                             document: first_edition.document,
+                             update_type: "major",
+                             change_note: "Content updated",
+                             published_at: "2020-03-01 12:00:00")
+
+      expect(described_class.new(second_edition).public_updated_at).to eq("2020-03-01 12:00:00")
+    end
+
+    it "returns most recent change history time if a minor change is published" do
+      first_edition = build(:edition, first_published_at: "2020-02-22 11:00:00")
+      second_edition = build(:edition, document: first_edition.document, update_type: "minor")
+
+      expect(described_class.new(second_edition).public_updated_at).to eq("2020-02-22 11:00:00")
+    end
+  end
+
+  describe "#first_published_at" do
+    it "returns first published date" do
+      edition = build(:edition, first_published_at: "2020-02-22 11:00:00")
+
+      expect(described_class.new(edition).first_published_at).to eq("2020-02-22 11:00:00")
+    end
+  end
+
+  describe "#change_history" do
+    let(:first_edition) { build(:edition, first_published_at: "2020-02-22 11:00:00") }
+    let(:first_change_note) do
+      {
+        note: "First published.",
+        public_timestamp: "2020-02-22 11:00:00",
+      }
+    end
+
+    it "appends first change note to end of history array" do
+      expect(described_class.new(first_edition).change_history).to eq([first_change_note])
+    end
+
+    it "adds change note to start of array for major changes" do
+      freeze_time do
+        second_edition = build(:edition, document: first_edition.document, number: 2, update_type: "major", change_note: "Some changes")
+
+        expected_change_note = {
+          note: "Some changes",
+          public_timestamp: Time.zone.now,
+        }
+
+        expect(described_class.new(second_edition).change_history).to eq([expected_change_note, first_change_note])
+      end
+    end
+
+    it "does not add change note to start of array for minor changes" do
+      second_edition = build(:edition, document: first_edition.document, number: 2, update_type: "minor", change_note: "A minor change")
+
+      expect(described_class.new(second_edition).change_history).to eq([first_change_note])
+    end
+
+    it "returns change notes in reverse chronological order" do
+      change_history = [
+        {
+          note: "First update",
+          public_timestamp: "2020-02-23 09:00:00",
+        },
+        {
+          note: "Third update",
+          public_timestamp: "2020-02-25 21:00:00",
+        },
+        {
+          note: "Second update",
+          public_timestamp: "2020-02-24 12:00:00",
+        },
+      ]
+
+      second_edition = build(:edition, document: first_edition.document, change_history:)
+
+      expected_change_notes = [
+        {
+          note: "Third update",
+          public_timestamp: "2020-02-25 21:00:00",
+        },
+        {
+          note: "Second update",
+          public_timestamp: "2020-02-24 12:00:00",
+        },
+        {
+          note: "First update",
+          public_timestamp: "2020-02-23 09:00:00",
+        },
+        {
+          note: "First published.",
+          public_timestamp: "2020-02-22 11:00:00",
+        },
+      ]
+
+      expect(described_class.new(second_edition).change_history).to eq(expected_change_notes)
+    end
+  end
+end
