@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_12_171711) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_03_113744) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -102,6 +102,56 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_12_171711) do
     t.index ["revision_id"], name: "index_editions_revisions_on_revision_id"
   end
 
+  create_table "file_attachment_assets", force: :cascade do |t|
+    t.bigint "blob_revision_id", null: false
+    t.bigint "superseded_by_id"
+    t.string "file_url"
+    t.string "state", default: "absent", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blob_revision_id"], name: "index_file_attachment_assets_on_blob_revision_id", unique: true
+    t.index ["file_url"], name: "index_file_attachment_assets_on_file_url", unique: true
+    t.index ["superseded_by_id"], name: "index_file_attachment_assets_on_superseded_by_id"
+  end
+
+  create_table "file_attachment_blob_revisions", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.bigint "created_by_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.string "filename", null: false
+    t.integer "number_of_pages"
+    t.index ["blob_id"], name: "index_file_attachment_blob_revisions_on_blob_id"
+    t.index ["created_by_id"], name: "index_file_attachment_blob_revisions_on_created_by_id"
+  end
+
+  create_table "file_attachment_metadata_revisions", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "isbn"
+    t.string "unique_reference"
+    t.string "paper_number"
+    t.bigint "created_by_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.index ["created_by_id"], name: "index_file_attachment_metadata_revisions_on_created_by_id"
+  end
+
+  create_table "file_attachment_revisions", force: :cascade do |t|
+    t.bigint "file_attachment_id", null: false
+    t.bigint "created_by_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.bigint "blob_revision_id", null: false
+    t.bigint "metadata_revision_id", null: false
+    t.index ["blob_revision_id"], name: "index_file_attachment_revisions_on_blob_revision_id"
+    t.index ["created_by_id"], name: "index_file_attachment_revisions_on_created_by_id"
+    t.index ["file_attachment_id"], name: "index_file_attachment_revisions_on_file_attachment_id"
+    t.index ["metadata_revision_id"], name: "index_file_attachment_revisions_on_metadata_revision_id"
+  end
+
+  create_table "file_attachments", force: :cascade do |t|
+    t.bigint "created_by_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.index ["created_by_id"], name: "index_file_attachments_on_created_by_id"
+  end
+
   create_table "image_assets", force: :cascade do |t|
     t.bigint "blob_revision_id", null: false
     t.bigint "superseded_by_id"
@@ -188,6 +238,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_12_171711) do
     t.index ["tags_revision_id"], name: "index_revisions_on_tags_revision_id"
   end
 
+  create_table "revisions_file_attachment_revisions", id: false, force: :cascade do |t|
+    t.bigint "revision_id", null: false
+    t.bigint "file_attachment_revision_id", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.index ["file_attachment_revision_id"], name: "idx_on_file_attachment_revision_id_444fe5aace"
+    t.index ["revision_id"], name: "index_revisions_file_attachment_revisions_on_revision_id"
+  end
+
   create_table "revisions_image_revisions", id: false, force: :cascade do |t|
     t.bigint "revision_id", null: false
     t.bigint "image_revision_id", null: false
@@ -250,6 +308,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_12_171711) do
   add_foreign_key "editions", "users", column: "last_edited_by_id", on_delete: :restrict
   add_foreign_key "editions_revisions", "editions", on_delete: :cascade
   add_foreign_key "editions_revisions", "revisions", on_delete: :restrict
+  add_foreign_key "file_attachment_assets", "file_attachment_assets", column: "superseded_by_id", on_delete: :nullify
+  add_foreign_key "file_attachment_assets", "file_attachment_blob_revisions", column: "blob_revision_id", on_delete: :cascade
+  add_foreign_key "file_attachment_blob_revisions", "active_storage_blobs", column: "blob_id", on_delete: :restrict
+  add_foreign_key "file_attachment_blob_revisions", "users", column: "created_by_id", on_delete: :restrict
+  add_foreign_key "file_attachment_metadata_revisions", "users", column: "created_by_id", on_delete: :restrict
+  add_foreign_key "file_attachment_revisions", "file_attachment_blob_revisions", column: "blob_revision_id", on_delete: :restrict
+  add_foreign_key "file_attachment_revisions", "file_attachment_metadata_revisions", column: "metadata_revision_id", on_delete: :restrict
+  add_foreign_key "file_attachment_revisions", "file_attachments", on_delete: :restrict
+  add_foreign_key "file_attachment_revisions", "users", column: "created_by_id", on_delete: :restrict
+  add_foreign_key "file_attachments", "users", column: "created_by_id", on_delete: :restrict
   add_foreign_key "image_assets", "image_assets", column: "superseded_by_id", on_delete: :nullify
   add_foreign_key "image_assets", "image_blob_revisions", column: "blob_revision_id", on_delete: :cascade
   add_foreign_key "image_blob_revisions", "active_storage_blobs", column: "blob_id", on_delete: :restrict
@@ -268,6 +336,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_12_171711) do
   add_foreign_key "revisions", "revisions", column: "preceded_by_id", on_delete: :restrict
   add_foreign_key "revisions", "tags_revisions", on_delete: :restrict
   add_foreign_key "revisions", "users", column: "created_by_id", on_delete: :restrict
+  add_foreign_key "revisions_file_attachment_revisions", "file_attachment_revisions", on_delete: :restrict
+  add_foreign_key "revisions_file_attachment_revisions", "revisions", on_delete: :cascade
   add_foreign_key "revisions_image_revisions", "image_revisions", on_delete: :restrict
   add_foreign_key "revisions_image_revisions", "revisions", on_delete: :cascade
   add_foreign_key "revisions_statuses", "revisions", on_delete: :restrict
