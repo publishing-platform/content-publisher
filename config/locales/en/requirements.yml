@@ -59,4 +59,22 @@ en:
       too_big:
         form_message: "Select an image file under %{max_size} in size"
       too_small:
-        form_message: "Select an image at least %{width} pixels wide by %{height} pixels high"               
+        form_message: "Select an image at least %{width} pixels wide by %{height} pixels high"  
+    file_attachment_upload:
+      no_file:
+        form_message: Select a file to upload
+      unsupported_type:
+        form_message: Select a supported file type
+      zip_unsupported_type:
+        form_message: Select a zip that contains supported file types
+    file_attachment_title:
+      blank:
+        form_message: Enter a title
+      too_long:
+        form_message: "Enter a title that is fewer than %{max_length} characters long"
+    file_attachment_isbn:
+      invalid:
+        form_message: "Enter a valid ISBN"
+    file_attachment_unique_reference:
+      too_long:
+        form_message: "Enter a unique reference that is fewer than %{max_length} characters long"                 
