@@ -11,4 +11,11 @@
 <%= render "components/errors", {
   field: :body,
   classes: "mb-3"
-} %>        
+} %>      
+
+<!-- TODO: this should be a proper markdown editor and the links below should open a modal -->
+<div class="mb-3">
+  <%= link_to "Insert image", images_path(edition.document), target: "_blank" %>   |
+  <%= link_to "Insert attachment", file_attachments_path(edition.document), target: "_blank" %>  
+</div>
+
