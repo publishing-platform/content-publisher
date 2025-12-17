@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_03_113744) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_05_152700) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -215,6 +215,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_03_113744) do
     t.string "document_type_id", null: false
     t.datetime "created_at", precision: nil, null: false
     t.bigint "created_by_id", null: false
+    t.bigint "featured_attachment_ordering", default: [], null: false, array: true
     t.index ["created_by_id"], name: "index_metadata_revisions_on_created_by_id"
   end
 

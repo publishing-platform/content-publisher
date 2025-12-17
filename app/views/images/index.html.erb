@@ -8,7 +8,7 @@ content_for :title, t(title_key, title: @edition.title_or_fallback)
 <% end %>
 
 <div class="row">
-  <div class="col-xs-12 col-md-8">
+  <div class="<%= rendering_context == 'modal' ? 'col-xs-12' : 'col-xs-12 col-md-8' %>">
     <div class="app-pane">
       <%= form_tag(
         images_path(@edition.document),

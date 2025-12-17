@@ -1,0 +1,53 @@
+<% content_for :title, t("file_attachments.edit.title", title: @edition.title_or_fallback) %>
+
+<% back_link_path = if params[:wizard] == 'featured-attachment-upload'
+                      replace_file_attachment_path(@edition.document,
+                                                   @attachment.file_attachment_id,
+                                                   wizard: params[:wizard])
+                    else
+                      featured_attachments_path(@edition.document)
+                    end %>
+
+<% content_for :back_link, render_back_link(href: back_link_path) %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <%= form_tag(
+      edit_file_attachment_path(@edition.document, @attachment.file_attachment_id),
+      method: :patch,
+      multipart: true
+    ) do %>
+      <%= render_markdown(t("file_attachments.edit.description_markdown")) %>
+
+      <% has_error = @issues&.has_key?(:file_attachment_isbn) %>
+
+      <%= label_tag "file-attachment-isbn", t("file_attachments.edit.isbn.heading"), class: "form-label" %>
+      <%= text_field_tag "file_attachment[isbn]",
+            params.dig(:file_attachment, :isbn) || @attachment.isbn,
+            id: "file-attachment-isbn",
+            aria: { describedby: has_error ? "file_attachment_isbn-errors" : nil },
+            class: "form-control mb-3 #{(has_error ? "is-invalid" : nil)}" %>
+      
+      <%= render "components/errors", {
+        field: :file_attachment_isbn,
+        classes: "mb-3"
+      } %>
+
+      <% has_error = @issues&.has_key?(:file_attachment_unique_reference) %>
+
+      <%= label_tag "file-attachment-unique-reference", t("file_attachments.edit.unique_reference.heading"), class: "form-label" %>
+      <%= text_field_tag "file_attachment[unique_reference]",
+            params.dig(:file_attachment, :unique_reference) || @attachment.unique_reference,
+            id: "file-attachment-unique-reference",
+            aria: { describedby: has_error ? "file_attachment_unique_reference-errors" : nil },
+            class: "form-control mb-3 #{(has_error ? "is-invalid" : nil)}" %>
+      
+      <%= render "components/errors", {
+        field: :file_attachment_unique_reference,
+        classes: "mb-3"
+      } %>  
+
+      <%= submit_tag "Save", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

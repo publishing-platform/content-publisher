@@ -14,7 +14,7 @@
   <% if draft_issues.any? %>
     <% if flash[:tried_to_preview] %>
 
-      <%= render "components/error_summary", {
+      <%= render "publishing_platform_publishing_components/components/error_summary", {
         title: t("documents.show.flashes.pre_preview_issues.error"),
         items: draft_issues.items(issue_params)
       } %>   
@@ -36,7 +36,7 @@
   <% if publish_issues.any? %>
     <% if flash[:tried_to_publish] %>
 
-      <%= render "components/error_summary", {
+      <%= render "publishing_platform_publishing_components/components/error_summary", {
         title: t("documents.show.flashes.pre_publish_issues.error"),
         items: publish_issues.items(issue_params)
       } %>  

@@ -1,0 +1,28 @@
+RSpec.describe CreateFileAttachmentBlobService do
+  let(:file) { fixture_file_upload("text-file-74bytes.txt") }
+  let(:revision) { build(:revision) }
+  let(:user) { build(:user) }
+
+  describe ".call" do
+    it "creates a file attachment blob revision" do
+      expect(described_class.call(file:, filename: "file.txt", user:))
+        .to be_a(FileAttachment::BlobRevision)
+    end
+
+    context "when the upload is a pdf" do
+      let(:file) { fixture_file_upload("13kb-1-page-attachment.pdf", "application/pdf") }
+
+      it "calculates the number of pages" do
+        blob_revision = described_class.call(file:, filename: "file.txt", user:)
+        expect(blob_revision.number_of_pages).to be(1)
+      end
+    end
+
+    context "when the upload is not a pdf" do
+      it "sets nil for the number of pages" do
+        blob_revision = described_class.call(file:, filename: "file.txt", user:)
+        expect(blob_revision.number_of_pages).to be_nil
+      end
+    end
+  end
+end

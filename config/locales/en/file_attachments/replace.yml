@@ -1,0 +1,20 @@
+en:
+  file_attachments:
+    replace:
+      title: Edit attachment
+      attachment_title:
+        heading: Edit title
+        hint_text: Use the official title of the document
+      attachment_file:
+        heading: Replace file
+        description_markdown: |
+          All files must be accessible.
+
+          Files must be uploaded in an open standards file format.
+          For example, .odt not .docx.
+        filename_change_callout_markdown: |
+          If your new file has a different file name or file type to the original you will need to update the attachment markdown in your content.
+
+          Existing file: %{filename}
+      flashes:
+        update_confirmation: Attachment has been updated. If your new file has a different file name or file type to the original then you now need to replace the attachment markdown in your content.

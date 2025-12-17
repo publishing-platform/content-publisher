@@ -13,6 +13,7 @@ FactoryBot.define do
     transient do
       content_id { SecureRandom.uuid }
       document_type { build(:document_type, path_prefix: "/prefix") }
+      featured_attachment_ordering { [] }
       state { "draft" }
       lead_image_revision { nil }
       image_revisions { [] }
@@ -56,6 +57,7 @@ FactoryBot.define do
           lead_image_revision: evaluator.lead_image_revision,
           image_revisions:,
           file_attachment_revisions: evaluator.file_attachment_revisions,
+          featured_attachment_ordering: evaluator.featured_attachment_ordering,
         )
       end
 

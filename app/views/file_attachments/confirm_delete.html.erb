@@ -1,0 +1,27 @@
+<% back_link_path = if params[:wizard] == "featured-attachment-delete"
+                      featured_attachments_path(@edition.document)
+                    else
+                      file_attachments_path(@edition.document)
+                    end %>
+
+<% content_for :back_link, render_back_link(href: back_link_path, data_attributes: { "modal-action": "back" }) %>
+<% content_for :title, t("file_attachments.confirm_delete.title", title: @attachment.title) %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <%= form_tag(
+      file_attachment_path(@edition.document, wizard: params[:wizard]),
+      method: :delete,
+      multipart: true,  
+      data: {
+        "modal-action": "confirmDelete"
+      },
+    ) do %>
+      <%= render_markdown(t("file_attachments.confirm_delete.description_markdown")) %>
+
+      <%= submit_tag "Yes, delete attachment", class: "btn btn-danger me-3 mb-3 mb-md-0" %>
+      <%= link_to "Cancel", back_link_path, data: { "modal-action": "back" } %>            
+    <% end %>
+    </div>
+  </div>
+</div>

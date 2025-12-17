@@ -1,0 +1,38 @@
+<% actions = [] %>
+
+<% actions << link_to(
+  "Insert attachment",
+  file_attachment_path(edition.document, attachment.file_attachment),
+  data: {
+    "modal-action": "insert",
+  },
+) %>
+
+<% actions << link_to(
+  "Download",
+  download_file_attachment_path(edition.document, attachment.file_attachment),
+) %>
+
+<% actions << link_to(
+  "Edit file",
+  replace_file_attachment_path(edition.document, attachment.file_attachment_id),
+  data: {
+    "modal-action": "edit",
+  },
+) %>
+
+<% actions << link_to(
+  "Delete attachment",
+  confirm_delete_file_attachment_path(edition.document, attachment.file_attachment_id),
+  class: "link-danger",
+  data: {
+    "modal-action": "delete",
+  },
+) %>
+
+<%= render "components/media_with_actions", actions: actions do %>
+  <%= render "publishing_platform_publishing_components/components/attachment", {
+    attachment: file_attachment_attributes(attachment, edition),
+    target: "_blank",
+  } %>
+<% end %>

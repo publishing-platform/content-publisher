@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   helper_method :rendering_context
+  layout -> { rendering_context }
 
   before_action :authenticate_user!
 

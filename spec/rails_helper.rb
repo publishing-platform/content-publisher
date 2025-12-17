@@ -19,6 +19,7 @@ WebMock.disable_net_connect!(allow_localhost: true)
 require "json_matchers/rspec"
 
 require "publishing_platform_api/test_helpers/publishing_api"
+require "publishing_platform_api/test_helpers/asset_manager"
 require "publishing_platform_test"
 PublishingPlatformTest.configure
 
@@ -97,6 +98,7 @@ RSpec.configure do |config|
 
   config.include ActiveSupport::Testing::TimeHelpers
   config.include PublishingPlatformApi::TestHelpers::PublishingApi
+  config.include PublishingPlatformApi::TestHelpers::AssetManager
   config.include AuthenticationHelper, type: ->(spec) { spec.in?(%i[system request]) }
 
   config.before(:all) do

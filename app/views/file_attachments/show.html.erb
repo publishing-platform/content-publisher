@@ -1,0 +1,71 @@
+<% content_for :title, t("file_attachments.show.title") %>
+<% content_for :back_link, render_back_link(href: file_attachments_path(@edition.document),
+                                            data_attributes: { "modal-action": "back" }) %>
+
+<div class="row">
+  <div class="<%= rendering_context == 'modal' ? 'col-xs-12' : 'col-xs-12 col-md-8' %>">
+    <%= render "publishing_platform_publishing_components/components/attachment", {
+      attachment: file_attachment_attributes(@attachment, @edition),
+      target: "_blank"
+    } %>    
+
+    <% if rendering_context == "modal" %>
+      <%= content_tag :button, 
+        "Insert attachment",
+        class: "btn btn-primary",
+        data: {
+          "modal-action": "insert-attachment-block",
+          "modal-data": t(
+            "file_attachments.show.attachment_markdown",
+            filename: @attachment.filename
+          ),          
+        }%>
+    <% else %>
+      <%= render "components/metadata", {
+        items: [
+          {
+            field: t("file_attachments.show.markdown_code"),
+            value: t("file_attachments.show.attachment_markdown", filename: @attachment.filename)
+          },
+        ],
+        inline: true,
+        margin_bottom: 3,
+      } %>
+      <p><%= t("file_attachments.show.attachment_instructions") %></p>
+    <% end %>
+
+    <hr />
+
+    <div class="mb-3">
+      <%= render "publishing_platform_publishing_components/components/attachment_link", {
+        attachment: file_attachment_attributes(@attachment, @edition),
+        target: "_blank",
+      } %>   
+    </div> 
+
+    <% if rendering_context == "modal" %>
+      <%= content_tag :button, 
+        "Insert attachment as link",
+        class: "btn btn-primary",
+        data: {
+          "modal-action": "insert-attachment-link",
+          "modal-data": t(
+            "file_attachments.show.attachment_link_markdown",
+            filename: @attachment.filename
+          ),          
+        }%>
+    <% else %>
+      <%= render "components/metadata", {
+        items: [
+          {
+            field: t("file_attachments.show.markdown_code"),
+            value: t("file_attachments.show.attachment_link_markdown", filename: @attachment.filename)
+          },
+        ],
+        inline: true,
+        margin_bottom: 3,
+      } %>
+      <p><%= t("file_attachments.show.attachment_link_instructions") %></p>
+    <% end %>    
+  </div>
+</div>

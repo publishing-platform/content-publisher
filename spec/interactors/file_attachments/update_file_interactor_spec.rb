@@ -1,0 +1,35 @@
+RSpec.describe FileAttachments::UpdateFileInteractor do
+  describe ".call" do
+    let(:user) { create(:user) }
+    let(:attachment) { create(:file_attachment_revision) }
+    let(:file) { fixture_file_upload("13kb-1-page-attachment.pdf") }
+
+    let(:edition) do
+      create :edition, file_attachment_revisions: [attachment]
+    end
+
+    let(:params) do
+      ActionController::Parameters.new(
+        file_attachment: {
+          file:,
+          title: "My title",
+        },
+        document_id: edition.document_id,
+        file_attachment_id: attachment.file_attachment_id,
+      )
+    end
+
+    it "generates a unique filename for the attachment" do
+      other_attachment = create :file_attachment_revision
+      edition = create :edition, file_attachment_revisions: [attachment, other_attachment]
+      params.merge!(document_id: edition.document_id)
+
+      expect(GenerateUniqueFilenameService).to receive(:call)
+        .with(existing_filenames: [other_attachment.filename],
+              filename: file.original_filename)
+        .and_call_original
+
+      described_class.call(params:, user:)
+    end
+  end
+end

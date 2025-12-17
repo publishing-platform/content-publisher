@@ -115,6 +115,13 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@publishing-platform/publishing-platform-publishing-components@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@publishing-platform/publishing-platform-publishing-components/-/publishing-platform-publishing-components-0.6.0.tgz#55607483422296fba26feea5dfb4df4f187f805c"
+  integrity sha512-4AKYKW+3wIEAat6Un9luoDJMLB3AbxsIOINTN9nJmkjvhzmR25VYkTu9NHwzxoMW+QfuhfH7L6eXyRx69241bg==
+  dependencies:
+    bootstrap "^5.3.3"
+
 "@rollup/plugin-node-resolve@^16.0.1":
   version "16.0.3"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-16.0.3.tgz#0988e6f2cbb13316b0f5e7213f757bc9ed44928f"

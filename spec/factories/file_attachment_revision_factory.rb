@@ -11,6 +11,7 @@ FactoryBot.define do
       fixture { "text-file-74bytes.txt" }
       title { SecureRandom.hex(8) }
       asset { nil }
+      paper_number { nil }
     end
 
     after(:build) do |revision, evaluator|
@@ -30,6 +31,7 @@ FactoryBot.define do
           title: evaluator.title,
           isbn: evaluator.isbn,
           unique_reference: evaluator.unique_reference,
+          paper_number: evaluator.paper_number,
         )
       end
     end
@@ -55,6 +57,7 @@ FactoryBot.define do
           title: evaluator.title,
           isbn: evaluator.isbn,
           unique_reference: evaluator.unique_reference,
+          paper_number: evaluator.paper_number,
         )
       end
     end

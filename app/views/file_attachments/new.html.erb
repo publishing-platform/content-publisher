@@ -1,0 +1,42 @@
+<% content_for :back_link, render_back_link(href: featured_attachments_path(@edition.document)) %>
+<% content_for :title, t("file_attachments.new.title", title: @edition.title_or_fallback) %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <%= form_tag(
+      file_attachments_path(@edition.document),
+      multipart: true,
+    ) do %>
+      <%= hidden_field_tag(:wizard, params[:wizard]) %>
+
+      <%= render_markdown(t("file_attachments.new.description_markdown")) %>
+
+      <%= render "publishing_platform_publishing_components/components/inset_text", {
+        text: render_markdown(
+          t("file_attachments.new.callout_markdown")
+        ),
+      } %>
+
+      <%= label_tag :file, t("file_attachments.new.attachment_file.heading"), class: "form-label fw-bold" %>
+
+      <div class="mb-3">        
+        <%= file_field_tag :file, class: "form-control" %>
+      </div>        
+
+      <% has_error = @issues&.has_key?(:file_attachment_title) %>
+
+      <%= label_tag :title, t("file_attachments.index.attachment_title.heading"), class: "form-label fw-bold" %>
+      <%= text_field_tag :title,
+            params[:title],
+            aria: { describedby: has_error ? "file_attachment_title-errors" : nil },
+            class: "form-control mb-3 #{(has_error ? "is-invalid" : nil)}" %>
+      
+      <%= render "components/errors", {
+        field: :file_attachment_title,
+        classes: "mb-3"
+      } %>          
+      
+      <%= submit_tag "Save and continue", class: "btn btn-primary" %>          
+    <% end %>
+  </div>
+</div>

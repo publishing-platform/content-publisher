@@ -17,6 +17,7 @@ FactoryBot.define do
       update_type { "major" }
       change_note { nil }
       change_history { [] }
+      featured_attachment_ordering { [] }
     end
   end
 
@@ -48,6 +49,7 @@ FactoryBot.define do
           created_by: revision.created_by,
           document_type_id: evaluator.document_type_id,
           change_history: evaluator.change_history,
+          featured_attachment_ordering: evaluator.featured_attachment_ordering,
         )
       end
 

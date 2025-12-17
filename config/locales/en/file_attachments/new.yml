@@ -1,0 +1,16 @@
+en:
+  file_attachments:
+    new:
+      title: "Add attachment to ‘%{title}’"
+      description_markdown: |
+        All files must be accessible.
+
+        Files must be uploaded in an open standards file format.
+        For example, .odt not .docx.
+      callout_markdown: |
+        Attachments must be in English
+      attachment_file:
+        heading: Choose a file
+      attachment_title:
+        heading: Attachment title
+        hint_text: Use the full title of the document

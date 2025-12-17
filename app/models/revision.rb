@@ -53,6 +53,7 @@ class Revision < ApplicationRecord
            :major?,
            :minor?,
            :document_type,
+           :featured_attachment_ordering,
            to: :metadata_revision
 
   delegate :tags,
@@ -69,5 +70,11 @@ class Revision < ApplicationRecord
 
   def assets
     image_revisions.flat_map(&:assets) + file_attachment_revisions.map(&:asset)
+  end
+
+  def featured_attachments
+    file_attachment_revisions.sort_by do |attachment_revision|
+      featured_attachment_ordering.find_index(attachment_revision.file_attachment_id) || Float::INFINITY
+    end
   end
 end

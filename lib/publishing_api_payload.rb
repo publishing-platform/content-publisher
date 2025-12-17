@@ -52,15 +52,13 @@ private
   def details
     details = {
       change_history: history.change_history,
-      # TODO
-      # attachments:,
+      attachments:,
+      featured_attachments: edition.featured_attachments.map(&:file_attachment_id),
     }
 
     if document_type.lead_image? && edition.lead_image_revision.present?
       details[:image] = image
     end
-
-    details[:documents] = [] if document_type.attachments.featured?
 
     details
   end
@@ -69,12 +67,11 @@ private
     publishing_metadata.schema_name == "publication"
   end
 
-  # TODO
-  # def attachments
-  #   file_attachments = edition.file_attachment_revisions
+  def attachments
+    file_attachments = edition.file_attachment_revisions
 
-  #   file_attachments.map do |attachment|
-  #     FileAttachmentPayload.new(attachment, edition).payload
-  #   end
-  # end
+    file_attachments.map do |attachment|
+      FileAttachmentPayload.new(attachment, edition).payload
+    end
+  end
 end

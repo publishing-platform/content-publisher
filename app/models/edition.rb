@@ -70,6 +70,8 @@ class Edition < ApplicationRecord
            :file_attachment_revisions,
            :assets,
            :primary_publishing_organisation_id,
+           :featured_attachments,
+           :featured_attachment_ordering,
            to: :revision
 
   scope :find_current, lambda { |document_id: nil|
