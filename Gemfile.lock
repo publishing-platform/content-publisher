@@ -286,7 +286,7 @@ GEM
       date
       stringio
     public_suffix (6.0.2)
-    publishing_platform_api_adapters (0.11.0)
+    publishing_platform_api_adapters (0.12.0)
       addressable
       link_header
       null_logger
