@@ -15,34 +15,33 @@ RSpec.describe Versioning::RevisionUpdater::FileAttachment do
         .to contain_exactly(attachment_revision, new_attachment)
     end
 
-    # TODO: feature attachments
-    # it "appends to the ordering when there are featured attachments" do
-    #   document_type = build :document_type, attachments: "featured"
-    #   attachments = [attachment_revision, create(:file_attachment_revision)]
-    #   ordering = attachments.map(&:featured_attachment_id)
-    #   new_attachment = create :file_attachment_revision
+    it "appends to the ordering when there are featured attachments" do
+      document_type = build :document_type, attachments: "featured"
+      attachments = [attachment_revision, create(:file_attachment_revision)]
+      ordering = attachments.map(&:file_attachment_id)
+      new_attachment = create :file_attachment_revision
 
-    #   revision = create :revision,
-    #                     document_type:,
-    #                     file_attachment_revisions: attachments,
-    #                     featured_attachment_ordering: ordering
+      revision = create :revision,
+                        document_type:,
+                        file_attachment_revisions: attachments,
+                        featured_attachment_ordering: ordering
 
-    #   updater = Versioning::RevisionUpdater.new(revision, user)
-    #   updater.add_file_attachment(new_attachment)
+      updater = Versioning::RevisionUpdater.new(revision, user)
+      updater.add_file_attachment(new_attachment)
 
-    #   next_revision = updater.next_revision
-    #   expect(next_revision.featured_attachment_ordering)
-    #     .to eq ordering + [new_attachment.featured_attachment_id]
-    # end
+      next_revision = updater.next_revision
+      expect(next_revision.featured_attachment_ordering)
+        .to eq ordering + [new_attachment.file_attachment_id]
+    end
 
-    # it "preserves the ordering when there are no featured attachments" do
-    #   revision = create :revision
-    #   updater = Versioning::RevisionUpdater.new(revision, user)
-    #   updater.add_file_attachment(attachment_revision)
+    it "preserves the ordering when there are no featured attachments" do
+      revision = create :revision
+      updater = Versioning::RevisionUpdater.new(revision, user)
+      updater.add_file_attachment(attachment_revision)
 
-    #   next_revision = updater.next_revision
-    #   expect(next_revision.featured_attachment_ordering).to be_empty
-    # end
+      next_revision = updater.next_revision
+      expect(next_revision.featured_attachment_ordering).to be_empty
+    end
 
     it "raises an error if a revision exists for the same attachment" do
       revision = create :revision, file_attachment_revisions: [attachment_revision]
@@ -66,22 +65,21 @@ RSpec.describe Versioning::RevisionUpdater::FileAttachment do
       expect(next_revision.file_attachment_revisions).to contain_exactly(other_attachment_revision)
     end
 
-    # TODO: feature attachments
-    # it "updates the ordering when there are featured attachments" do
-    #   document_type = build :document_type, attachments: "featured"
-    #   ordering = [attachment_revision.featured_attachment_id]
+    it "updates the ordering when there are featured attachments" do
+      document_type = build :document_type, attachments: "featured"
+      ordering = [attachment_revision.file_attachment_id]
 
-    #   revision = create :revision,
-    #                     document_type:,
-    #                     file_attachment_revisions: [attachment_revision],
-    #                     featured_attachment_ordering: ordering
+      revision = create :revision,
+                        document_type:,
+                        file_attachment_revisions: [attachment_revision],
+                        featured_attachment_ordering: ordering
 
-    #   updater = Versioning::RevisionUpdater.new(revision, user)
-    #   updater.remove_file_attachment(attachment_revision)
+      updater = Versioning::RevisionUpdater.new(revision, user)
+      updater.remove_file_attachment(attachment_revision)
 
-    #   next_revision = updater.next_revision
-    #   expect(next_revision.featured_attachment_ordering).to be_empty
-    # end
+      next_revision = updater.next_revision
+      expect(next_revision.featured_attachment_ordering).to be_empty
+    end
   end
 
   describe "#update_file_attachment" do
