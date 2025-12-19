@@ -21,7 +21,7 @@ class DocumentType::TitleAndBasePathField
     { title:, base_path: }
   end
 
-  def form_issues(_edition, params)
+  def form_issues(edition, params)
     issues = Requirements::CheckerIssues.new
 
     if params[:title].blank?
@@ -36,14 +36,13 @@ class DocumentType::TitleAndBasePathField
       issues.create(:title, :multiline)
     end
 
-    # TODO
-    # begin
-    #   if base_path_conflict?(edition, params)
-    #     issues.create(:title, :conflict)
-    #   end
-    # rescue PublishingPlatformApi::BaseError => e
-    #   PublishingPlatformError.notify(e)
-    # end
+    begin
+      if base_path_conflict?(edition, params)
+        issues.create(:title, :conflict)
+      end
+    rescue PublishingPlatformApi::BaseError => e
+      PublishingPlatformError.notify(e)
+    end
 
     issues
   end
@@ -61,14 +60,13 @@ class DocumentType::TitleAndBasePathField
 private
 
   def base_path_conflict?(edition, params)
-    # TODO
-    # base_path_owner = PublishingPlatformApi.publishing_api.lookup_content_id(
-    #   base_path: params[:base_path],
-    #   with_drafts: true,
-    #   exclude_document_types: [],
-    #   exclude_unpublishing_types: [],
-    # )
+    base_path_owner = PublishingPlatformApi.publishing_api.lookup_content_id(
+      base_path: params[:base_path],
+      with_drafts: true,
+      exclude_document_types: [],
+      exclude_unpublishing_types: [],
+    )
 
-    # base_path_owner && base_path_owner != edition.content_id
+    base_path_owner && base_path_owner != edition.content_id
   end
 end

@@ -42,9 +42,9 @@ RSpec.describe DocumentType::TitleAndBasePathField do
   describe "form_issues" do
     let(:edition) { build :edition }
 
-    # before do
-    #   stub_publishing_api_has_lookups(edition.base_path => nil)
-    # end
+    before do
+      stub_publishing_api_has_lookups(edition.base_path => nil)
+    end
 
     it "returns no issues if there are none" do
       params = { title: edition.title }
@@ -71,26 +71,26 @@ RSpec.describe DocumentType::TitleAndBasePathField do
       expect(issues).to have_issue(:title, :multiline)
     end
 
-    # it "returns no issues if the document owns the path" do
-    #   stub_publishing_api_has_lookups(edition.base_path => edition.content_id)
-    #   params = { title: edition.title, base_path: edition.base_path }
-    #   issues = described_class.new.form_issues(edition, params)
-    #   expect(issues).to be_empty
-    # end
+    it "returns no issues if the document owns the path" do
+      stub_publishing_api_has_lookups(edition.base_path => edition.content_id)
+      params = { title: edition.title, base_path: edition.base_path }
+      issues = described_class.new.form_issues(edition, params)
+      expect(issues).to be_empty
+    end
 
-    # it "returns an issue if the base_path conflicts" do
-    #   stub_publishing_api_has_lookups(edition.base_path => SecureRandom.uuid)
-    #   params = { title: edition.title, base_path: edition.base_path }
-    #   issues = described_class.new.form_issues(edition, params)
-    #   expect(issues).to have_issue(:title, :conflict)
-    # end
+    it "returns an issue if the base_path conflicts" do
+      stub_publishing_api_has_lookups(edition.base_path => SecureRandom.uuid)
+      params = { title: edition.title, base_path: edition.base_path }
+      issues = described_class.new.form_issues(edition, params)
+      expect(issues).to have_issue(:title, :conflict)
+    end
 
-    # it "returns no issues when the Publishing API is down" do
-    #   stub_publishing_api_isnt_available
-    #   params = { title: edition.title, base_path: edition.base_path }
-    #   issues = described_class.new.form_issues(edition, params)
-    #   expect(issues.items_for(:title)).to be_empty
-    # end
+    it "returns no issues when the Publishing API is down" do
+      stub_publishing_api_isnt_available
+      params = { title: edition.title, base_path: edition.base_path }
+      issues = described_class.new.form_issues(edition, params)
+      expect(issues.items_for(:title)).to be_empty
+    end
   end
 
   describe "#publish_issues" do
