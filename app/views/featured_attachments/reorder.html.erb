@@ -1,0 +1,32 @@
+<% content_for :back_link, render_back_link(href: featured_attachments_path(@edition.document)) %>
+<% content_for :title, t("featured_attachments.reorder.title", title: @edition.title_or_fallback) %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <p class="app-js-only">
+      <%= t("featured_attachments.reorder.description") %>
+    </p>
+
+    <p class="app-no-js">
+      <%= t("featured_attachments.reorder.nojs_description") %>
+    </p>
+
+    <%= form_tag(
+      reorder_featured_attachments_path(@edition.document),
+      method: :patch,
+    ) do %>
+      <%= render "publishing_platform_publishing_components/components/reorderable_list", {
+        input_name: "attachments[ordering]",
+        items: @edition.featured_attachments.map do |attachment|
+          {
+            title: attachment.title,
+            description: render("components/attachment_meta", { attachment: file_attachment_attributes(attachment, @edition) }),
+            id: attachment.file_attachment_id,
+          }
+        end
+      } %>
+
+      <%= submit_tag "Save attachment order", class: "btn btn-primary" %>      
+    <% end %>
+  </div>
+</div>

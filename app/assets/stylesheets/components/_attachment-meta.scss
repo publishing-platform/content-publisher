@@ -1,0 +1,18 @@
+.app-c-attachment-meta {
+  @include clearfix;
+  position: relative;
+}
+
+.app-c-attachment-meta__metadata {
+  font-size: $small-font-size;
+  margin: 0 0 15px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.app-c-attachment-meta__abbr {
+  text-decoration: none !important;
+  cursor: help;
+}

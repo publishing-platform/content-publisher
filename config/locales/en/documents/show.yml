@@ -8,7 +8,10 @@ en:
           change_note: Change note
         update_type:
           minor: There’s no change to the published information. For example, spelling corrections.
-          major: There’s a change to the published information.    
+          major: There’s a change to the published information.  
+      featured_attachments:
+        none: No attachments.
+        title: Attachments            
       flashes:
         pre_preview_issues:
           warning: To preview this document you need to

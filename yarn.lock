@@ -115,12 +115,13 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@publishing-platform/publishing-platform-publishing-components@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@publishing-platform/publishing-platform-publishing-components/-/publishing-platform-publishing-components-0.6.0.tgz#55607483422296fba26feea5dfb4df4f187f805c"
-  integrity sha512-4AKYKW+3wIEAat6Un9luoDJMLB3AbxsIOINTN9nJmkjvhzmR25VYkTu9NHwzxoMW+QfuhfH7L6eXyRx69241bg==
+"@publishing-platform/publishing-platform-publishing-components@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@publishing-platform/publishing-platform-publishing-components/-/publishing-platform-publishing-components-0.7.0.tgz#6df0dddce4fedee85f00bd536f0e261d30c1740d"
+  integrity sha512-J2IQuLSWh/f4FdFNYCWF8RAQUvls7iYAz3BhSFTUmRsV2r/M0M1N3mv7eqGN6UKFel2bq6wWzqWfQJ/nf5suvw==
   dependencies:
     bootstrap "^5.3.3"
+    sortablejs "^1.15.6"
 
 "@rollup/plugin-node-resolve@^16.0.1":
   version "16.0.3"
@@ -2425,6 +2426,11 @@ slice-ansi@^4.0.0:
     ansi-styles "^4.0.0"
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
+
+sortablejs@^1.15.6:
+  version "1.15.6"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.15.6.tgz#ff93699493f5b8ab8d828f933227b4988df1d393"
+  integrity sha512-aNfiuwMEpfBM/CN6LY0ibyhxPfPbyFeBTYJKCvzkJ2GkUpazIt3H+QIPAMHwqQ7tMKaHz1Qj+rJJCqljnf4p3A==
 
 source-map-js@^1.0.1, source-map-js@^1.2.1:
   version "1.2.1"

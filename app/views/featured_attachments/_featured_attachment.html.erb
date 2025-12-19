@@ -1,0 +1,33 @@
+<% actions = [] %>
+
+<% actions << link_to(
+  "Edit attachment",
+  replace_file_attachment_path(edition.document,
+                               attachment.file_attachment_id,
+                               wizard: "featured-attachment-replace"),
+) %>
+
+<% actions << link_to(
+  "Edit details",
+  edit_file_attachment_path(edition.document, attachment.file_attachment_id),
+) %>
+
+<% actions << link_to(
+  "Download",
+  download_file_attachment_path(edition.document, attachment.file_attachment),
+) %>
+
+<% actions << link_to(
+  "Delete attachment",
+  confirm_delete_file_attachment_path(edition.document,
+                                      attachment.file_attachment_id,
+                                      wizard: "featured-attachment-delete"),
+  class: "link-danger",
+) %>
+
+<%= render "components/media_with_actions", actions: actions do %>
+  <%= render "publishing_platform_publishing_components/components/attachment", {
+    attachment: file_attachment_attributes(attachment, edition),
+    target: "_blank",
+  } %>
+<% end %>

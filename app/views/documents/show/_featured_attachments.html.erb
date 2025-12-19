@@ -1,0 +1,26 @@
+<% attributes = {
+  id: "attachments",
+  title: t("documents.show.featured_attachments.title"),
+  edit: (
+    if @edition.editable?
+      { href: featured_attachments_path(@edition.document) }
+    end
+  )
+} %>
+
+<% if @edition.featured_attachments.any? %>
+  <%= render "publishing_platform_publishing_components/components/summary_list", attributes.merge(
+    items: @edition.featured_attachments.each_with_index.map do |attachment, index|
+      {
+        field: index + 1,
+        value: sanitize(
+          "<h4 class='h5'>#{attachment.title}</h4>#{render('components/attachment_meta', { attachment: file_attachment_attributes(attachment, @edition) })}"
+        ),
+      }
+    end
+  ) %>
+<% else %>
+  <%= render "publishing_platform_publishing_components/components/summary_list", attributes.merge(
+    block: t("documents.show.featured_attachments.none")
+  ) %>
+<% end %>

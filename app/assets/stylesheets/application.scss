@@ -1,6 +1,7 @@
 @import "publishing_platform_publishing_components/all_components";
 @import "objects/side";
 @import "objects/pane";
+@import "components/attachment-meta";
 @import "components/page-preview";
 @import "components/callout";
 @import "components/metadata";
@@ -8,6 +9,7 @@
 @import "components/image-with-metadata";
 @import "components/formatted-text";
 @import "components/image-cropper";
+@import "utilities/display";
 
 .container {
   max-width: 960px;

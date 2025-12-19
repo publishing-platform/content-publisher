@@ -1,0 +1,45 @@
+<% content_for :back_link, render_back_link(href: document_path(@edition.document)) %>
+<% content_for :title, t("featured_attachments.index.title", title: @edition.title_or_fallback) %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <p>
+      <%= t("featured_attachments.index.upload.description_markdown") %>
+    </p>
+
+    <%= link_to t("featured_attachments.index.upload.title"), 
+      new_file_attachment_path(@edition.document, wizard: "featured-attachment-upload"),
+      class: "btn btn-primary mb-4"     
+    %>
+
+    <% attachments = @edition.featured_attachments %>
+
+    <h2>
+      <%= t("featured_attachments.index.featured_attachments.title") %>
+    </h2>
+
+    <% if attachments.any? %>
+      <p>
+        <%= t("featured_attachments.index.featured_attachments.description_markdown") %>
+      </p>
+
+      <% if attachments.count > 1 %>
+        <p>
+          <%= link_to(
+            "Reorder attachments",
+            reorder_featured_attachments_path(@edition.document),
+          ) %>
+        </p>
+      <% end %>
+
+      <% attachments.each do |attachment| %>
+        <%= render "featured_attachment", edition: @edition, attachment: attachment %>
+      <% end %>
+
+    <% else %>
+      <p>
+        <%= t("featured_attachments.index.no_attachments") %>
+      </p>
+    <% end %>
+  </div>
+</div>
