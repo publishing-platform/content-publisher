@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from EditionAssertions::FeatureError do |e|
     raise ActionController::RoutingError, e.message
-  end  
+  end
 
   def rendering_context
     request.headers["Content-Publisher-Rendering-Context"] || "application"
