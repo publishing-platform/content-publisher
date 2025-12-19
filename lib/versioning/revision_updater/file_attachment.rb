@@ -39,11 +39,10 @@ module Versioning
       end
 
       def update_attachment_ordering
-        # TODO: featured attachments
-        # return unless revision.document_type.attachments.featured?
+        return unless revision.document_type.attachments.featured?
 
-        # new_ordering = next_revision.featured_attachments.map(&:featured_attachment_id)
-        # assign(featured_attachment_ordering: new_ordering)
+        new_ordering = next_revision.featured_attachments.map(&:file_attachment_id)
+        assign(featured_attachment_ordering: new_ordering)
       end
     end
   end
