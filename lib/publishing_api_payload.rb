@@ -53,8 +53,11 @@ private
     details = {
       change_history: history.change_history,
       attachments:,
-      featured_attachments: edition.featured_attachments.map(&:file_attachment_id),
     }
+
+    if document_type.attachments.featured?
+      details[:featured_attachments] = edition.featured_attachments.map(&:file_attachment_id)
+    end
 
     if document_type.lead_image? && edition.lead_image_revision.present?
       details[:image] = image

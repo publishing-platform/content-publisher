@@ -148,7 +148,26 @@ RSpec.describe PublishingApiPayload do
       expect(payload[:details][:image]).to eq(payload_hash)
     end
 
-    it "includes ordered featured attachments" do
+    it "includes ordered featured attachments if document type supports them" do
+      file_attachment1 = create(:file_attachment_revision)
+      file_attachment2 = create(:file_attachment_revision)
+      file_attachment3 = create(:file_attachment_revision)
+      attachments = [file_attachment1, file_attachment2, file_attachment3]
+      ordering = [file_attachment2, file_attachment3].map(&:file_attachment_id).reverse
+
+      document_type = build :document_type, attachments: "featured"
+      edition = build(:edition,
+                      document: create(:document),
+                      document_type:,
+                      file_attachment_revisions: attachments,
+                      featured_attachment_ordering: ordering)
+
+      payload = described_class.new(edition).payload
+
+      expect(payload[:details][:featured_attachments]).to eq(attachments.map(&:file_attachment_id).reverse)
+    end
+
+    it "doesn't include ordered featured attachments if document type does not support them" do
       file_attachment1 = create(:file_attachment_revision)
       file_attachment2 = create(:file_attachment_revision)
       file_attachment3 = create(:file_attachment_revision)
@@ -162,7 +181,7 @@ RSpec.describe PublishingApiPayload do
 
       payload = described_class.new(edition).payload
 
-      expect(payload[:details][:featured_attachments]).to eq(attachments.map(&:file_attachment_id).reverse)
+      expect(payload).to match a_hash_including(details: hash_excluding(:featured_attachments))
     end
   end
 end
