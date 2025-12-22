@@ -26,7 +26,6 @@ private
 
   def put_draft_assets
     edition.image_revisions.each(&:ensure_assets)
-    # TODO
-    # edition.assets.each { |asset| PreviewAssetService.call(edition, asset) }
+    edition.assets.each { |asset| PreviewAssetService.call(edition, asset) }
   end
 end
