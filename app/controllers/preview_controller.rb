@@ -4,12 +4,12 @@ class PreviewController < ApplicationController
     # issues, preview_failed = result.to_h.values_at(:issues, :preview_failed)
 
     # if issues
-    #   redirect_to document_path(params[:document]), tried_to_preview: true
+    #   redirect_to document_path(params[:document_id]), tried_to_preview: true
     # elsif preview_failed
-    #   redirect_to document_path(params[:document]),
+    #   redirect_to document_path(params[:document_id]),
     #               alert_with_description: t("documents.show.flashes.preview_error")
     # else
-    #   redirect_to preview_document_path(params[:document])
+    #   redirect_to preview_document_path(params[:document_id])
     # end
   end
 
