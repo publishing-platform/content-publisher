@@ -1,0 +1,51 @@
+RSpec.describe Editions::DestroyInteractor do
+  describe ".call" do
+    let(:edition) { create(:edition) }
+    let(:user) { create :user }
+
+    let(:params) do
+      ActionController::Parameters.new(document_id: edition.document_id)
+    end
+
+    before do
+      stub_publishing_api_discard_draft(edition.content_id)
+    end
+
+    it "discards an edition" do
+      result = described_class.call(params:, user:)
+      expect(result).to be_success
+      expect(result.edition).to be_discarded
+    end
+
+    it "delegates to the DiscardDraftEditionService" do
+      expect(DiscardDraftEditionService)
+        .to receive(:call)
+        .with(edition, user)
+      described_class.call(params:, user:)
+    end
+
+    context "when the Publishing API is down" do
+      before { stub_publishing_api_isnt_available }
+
+      it "fails with an api_error flag" do
+        result = described_class.call(params:, user:)
+        expect(result).to be_failure
+        expect(result.api_error).to be(true)
+      end
+
+      it "marks the edition as revision not synced" do
+        result = described_class.call(params:, user:)
+        expect(result.edition).not_to be_revision_synced
+      end
+    end
+
+    context "when the edition isn't editable" do
+      let(:edition) { create(:edition, :published) }
+
+      it "raises a state error" do
+        expect { described_class.call(params:, user:) }
+          .to raise_error(EditionAssertions::StateError)
+      end
+    end
+  end
+end

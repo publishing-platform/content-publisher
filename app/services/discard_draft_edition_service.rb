@@ -1,0 +1,48 @@
+class DiscardDraftEditionService
+  include Callable
+
+  def initialize(edition, user, **)
+    @edition = edition
+    @user = user
+  end
+
+  def call
+    raise "Only current editions can be deleted" unless edition.current?
+    raise "Trying to delete a live edition" if edition.live?
+
+    DeleteDraftAssetsService.call(edition)
+    discard_draft(edition)
+    reset_live_edition if document.live_edition
+    document.reload_current_edition
+  end
+
+private
+
+  attr_reader :edition, :user
+
+  delegate :document, to: :edition
+
+  def reset_live_edition
+    document.live_edition.update!(current: true)
+    document.reload_live_edition
+  end
+
+  def discard_draft(edition)
+    begin
+      PublishingPlatformApi.publishing_api.discard_draft(edition.content_id)
+    rescue PublishingPlatformApi::HTTPNotFound
+      Rails.logger.warn("No draft to discard for content id #{edition.content_id}")
+    rescue PublishingPlatformApi::HTTPUnprocessableEntity => e
+      no_draft_message = "There is not a draft edition of this document to discard"
+
+      if e.error_details.respond_to?(:dig) && e.error_details.dig("error", "message") == no_draft_message
+        Rails.logger.warn("No draft to discard for content id #{edition.content_id}")
+      else
+        raise
+      end
+    end
+
+    AssignEditionStatusService.call(edition, user:, state: :discarded)
+    edition.update!(current: false)
+  end
+end

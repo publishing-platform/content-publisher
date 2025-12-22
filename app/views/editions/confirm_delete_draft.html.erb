@@ -1,0 +1,15 @@
+<% content_for :title, t("editions.confirm_delete_draft.title", title: @edition.title_or_fallback) %>
+<% content_for :back_link, render_back_link(href: document_path(@edition.document)) %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+      <%= form_tag destroy_draft_path(@edition.document),
+                    method: :delete do %>
+      <%= render_markdown(t("editions.confirm_delete_draft.description_markdown")) %>
+
+      <%= submit_tag "Yes, delete draft", class: "btn btn-danger me-3 mb-3 mb-md-0" %>
+      <%= link_to "Cancel", document_path(@edition.document) %>            
+    <% end %>
+    </div>
+  </div>
+</div>
