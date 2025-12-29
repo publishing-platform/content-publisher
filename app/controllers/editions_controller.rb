@@ -9,7 +9,7 @@ class EditionsController < ApplicationController
 
     if result.api_error
       redirect_to document_path(params[:document_id]),
-                  alert_with_description: t("documents.show.flashes.delete_draft_error")
+                  alert: t("documents.show.flashes.delete_draft_error.description")
     else
       redirect_to documents_path
     end

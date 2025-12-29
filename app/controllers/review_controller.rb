@@ -5,7 +5,7 @@ class ReviewController < ApplicationController
 
     if api_error
       redirect_to document_path(params[:document_id]),
-                  alert_with_description: t("documents.show.flashes.2i_error")
+                  alert: t("documents.show.flashes.2i_error.description")
     elsif issues
       redirect_to document_path(params[:document_id]), tried_to_publish: true
     else

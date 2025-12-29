@@ -11,6 +11,7 @@ class PublishingApiPayload::FileAttachmentPayload
 
   def payload
     payload = {
+      id: attachment.file_attachment_id.to_s,
       attachment_type: "file",
       url: attachment.asset_url,
     }

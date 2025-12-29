@@ -11,7 +11,7 @@ RSpec.describe PublishingApiPayload::FileAttachmentPayload do
         content_type: attachment.content_type,
         file_size: attachment.byte_size,
         filename: attachment.filename,
-        id: attachment.file_attachment_id,
+        id: attachment.file_attachment_id.to_s,
         number_of_pages: attachment.number_of_pages,
         title: attachment.title,
         url: attachment.asset_url,

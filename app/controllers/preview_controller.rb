@@ -1,16 +1,16 @@
 class PreviewController < ApplicationController
   def create
-    # result = Preview::CreateInteractor.call(params:, user: current_user)
-    # issues, preview_failed = result.to_h.values_at(:issues, :preview_failed)
+    result = Preview::CreateInteractor.call(params:, user: current_user)
+    issues, preview_failed = result.to_h.values_at(:issues, :preview_failed)
 
-    # if issues
-    #   redirect_to document_path(params[:document_id]), tried_to_preview: true
-    # elsif preview_failed
-    #   redirect_to document_path(params[:document_id]),
-    #               alert_with_description: t("documents.show.flashes.preview_error")
-    # else
-    #   redirect_to preview_document_path(params[:document_id])
-    # end
+    if issues
+      redirect_to document_path(params[:document_id]), tried_to_preview: true
+    elsif preview_failed
+      redirect_to document_path(params[:document_id]),
+                  alert: t("documents.show.flashes.preview_error.description")
+    else
+      redirect_to preview_document_path(params[:document_id])
+    end
   end
 
   def show

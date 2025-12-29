@@ -42,7 +42,7 @@ private
   def image
     {
       high_resolution_url: edition.lead_image_revision.asset_url("high_resolution"),
-      url: edition.lead_image_revision.asset_url("300"),
+      url: edition.lead_image_revision.asset_url("300") || "https://assets.dev.publishing-platform.co.uk/testing.jpg", # TODO: remove this OR, it is only for testing
       alt_text: edition.lead_image_revision.alt_text,
       caption: edition.lead_image_revision.caption,
       credit: edition.lead_image_revision.credit,
