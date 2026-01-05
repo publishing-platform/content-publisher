@@ -1,14 +1,10 @@
 <div class="row">
   <div class="col-xs-12 col-md-8">
-    <div data-module="copy-to-clipboard">
-      <div class="mb-3">
-        <%= label_tag :url, 
-              "Send this link to someone so they can see a preview of how the document will appear on the Publishing Platform. No password is needed.", 
-              class: "form-label" %> 
-        <%= text_field_tag :url, url, class: "form-control copy-to-clipboard-target", readonly: true %> 
-      </div>
-      <%= button_tag "Copy link", class: "btn btn-secondary copy-to-clipboard-button mb-3" %> 
-    </div>
+    <%= render("components/copy_to_clipboard",
+        label: "Send this link to someone so they can see a preview of how the document will appear on the Publishing Platform. No password is needed.",
+        copyable_content: url,
+        button_text: "Copy link"
+    ) %>
   </div>
 </div>
 
