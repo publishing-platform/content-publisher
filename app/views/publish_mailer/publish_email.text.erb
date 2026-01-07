@@ -1,0 +1,32 @@
+<%= @edition.document_type.label %> ‘<%= @edition.title %>’
+
+<% if @edition.first? -%>
+  <%= t("publish_mailer.publish_email.details.publish",
+        datetime: @status.created_at.to_fs(:time_on_date),
+        user: @status.created_by&.name || I18n.t!("documents.unknown_user")) %>
+<% else -%>
+  <%= t("publish_mailer.publish_email.details.update",
+        datetime: @status.created_at.to_fs(:time_on_date),
+        user: @status.created_by&.name || I18n.t!("documents.unknown_user")) %>
+<% end -%>
+
+<%= t("publish_mailer.publish_email.delay_warning") %>
+
+<%= t("publish_mailer.publish_email.page_address") %>
+<%= edition_public_url(@edition) %>
+
+<% unless @edition.first? -%>
+<% if @edition.major? -%>
+<%= t("publish_mailer.publish_email.change_note") %>
+<%= @edition.change_note %>
+<% else -%>
+<%= t("publish_mailer.publish_email.minor_update") %>
+<% end -%>
+<% end -%>
+
+<% if @status.published_but_needs_2i? -%>
+<%= t("publish_mailer.publish_email.2i_warning") %>
+<% end -%>
+
+<%= t("publish_mailer.publish_email.edit_in_app") %>
+<%= document_url(@edition.document) %>

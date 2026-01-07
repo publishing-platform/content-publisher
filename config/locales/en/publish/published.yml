@@ -1,0 +1,20 @@
+en:
+  publish:
+    published:
+      title: Content published
+      reviewed:
+        title: Content has been published
+        body_markdown: |
+          ‘%{title}’ has been published on Publishing Platform.
+
+          It may take 5 minutes to appear live.
+
+      published_without_review:
+        title: Content has been published but still needs 2i review
+        body_markdown: |
+          ‘%{title}’ has been published on Publishing Platform.
+
+          It may take 5 minutes to appear live.
+        send_label: Send this document to another publisher for them to review. You or they can then approve it or create a new edition to make changes.
+        what_to_do_markdown: |
+          ## What to do next

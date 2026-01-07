@@ -1,0 +1,44 @@
+<% if @edition.status.published_but_needs_2i? %>
+  <% content_for :back_link, render_back_link(href: document_path(@edition.document)) %>
+<% else %>
+  <% content_for :back_link, render_back_link(href: documents_path) %>
+<% end %>
+
+<% content_for :title, t("publish.published.title") %>
+<% public_url = edition_public_url(@edition) %>
+<% published_edition_link = render("publishing_platform_publishing_components/components/inset_text", {
+    text: link_to(strip_scheme_from_url(public_url), public_url)
+}) %>
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+
+    <% if @edition.status.published_but_needs_2i? %>
+
+      <%= tag.div(class: "alert alert-success mb-3", role: "alert") do %>
+        <h2 class="alert-heading"><%= t("publish.published.published_without_review.title") %></h2>
+      <% end %>  
+
+      <%= render_markdown(t("publish.published.published_without_review.body_markdown", title: @edition.title)) %>
+
+      <%= published_edition_link %>
+
+      <%= render_markdown(t("publish.published.published_without_review.what_to_do_markdown")) %>
+
+      <%= render("components/copy_to_clipboard",
+          label: t("publish.published.published_without_review.send_label"),
+          copyable_content: document_url(@edition.document),
+          button_text: "Copy link"
+      ) %>      
+
+    <% else %>
+      <%= tag.div(class: "alert alert-success mb-3", role: "alert") do %>
+        <h2 class="alert-heading"><%= t("publish.published.reviewed.title") %></h2>
+      <% end %>  
+
+      <%= render_markdown(t("publish.published.reviewed.body_markdown", title: @edition.title)) %>
+
+      <%= published_edition_link %>
+    <% end %>
+  </div>
+</div>

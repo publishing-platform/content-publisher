@@ -7,7 +7,7 @@
 
   <% has_error = @issues&.has_key?(:document_type_selection) %>
 
-  <%= field_set_tag nil, aria: { describedby: has_error ? "document_type-errors" : nil }, class: "mb-3" do %>
+  <%= field_set_tag nil, aria: { describedby: has_error ? "document_type_selection-errors" : nil }, class: "mb-3" do %>
     <% @document_type_selection.options.each do |option| %>
       <%= tag.div class: "form-check #{(has_error ? "is-invalid" : nil)}" do %>
         <%= radio_button_tag :selected_option_id, 
@@ -20,7 +20,7 @@
     <% end %>
 
     <%= render "components/errors", {
-      field: :selected_option_id
+      field: :document_type_selection
     } %>    
   <% end %>
 
