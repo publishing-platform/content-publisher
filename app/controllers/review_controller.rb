@@ -16,7 +16,7 @@ class ReviewController < ApplicationController
   def approve
     Review::ApproveInteractor.call(params:, user: current_user)
 
-    redirect_to document_path(params[:document]),
+    redirect_to document_path(params[:document_id]),
                 notice: t("documents.show.flashes.approved")
   end
 end
