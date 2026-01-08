@@ -4,7 +4,7 @@
   <% content_for :back_link, render_back_link(href: documents_path) %>
 <% end %>
 
-<% content_for :title, t("publish.published.title") %>
+<% content_for :browser_title, t("publish.published.title") %>
 <% public_url = edition_public_url(@edition) %>
 <% published_edition_link = render("publishing_platform_publishing_components/components/inset_text", {
     text: link_to(strip_scheme_from_url(public_url), public_url)

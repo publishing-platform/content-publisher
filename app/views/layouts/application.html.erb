@@ -1,5 +1,5 @@
 <%= render "publishing_platform_publishing_components/components/layout", {
-  title: "#{yield(:title)} - Publishing Platform Content Publisher",
+  title: "#{yield(:browser_title).presence || yield(:title)} - Publishing Platform Content Publisher",
   logo_text: "Content Publisher",
   navigation_items:
 } do %>
@@ -29,10 +29,12 @@
 
   <div class="row">
     <div class="col-xs-12 <%= yield(:top_right).present? ? 'col-md-6' : 'col-md-8' %>">
-      <div class="pb-md-4">
-        <%= yield(:context) %>
-        <h1><%= yield(:title) %></h1>
-      </div>               
+      <% if yield(:title).present? %>      
+        <div class="pb-md-4">
+          <%= yield(:context) %>
+          <h1><%= yield(:title) %></h1>
+        </div>  
+      <% end %>             
     </div>
     <% if yield(:top_right).present? %>
       <div class="col-xs-12 col-md-6">

@@ -1,7 +1,7 @@
 en:
   publish:
     published:
-      title: Content published
+      title: Content has been published
       reviewed:
         title: Content has been published
         body_markdown: |
