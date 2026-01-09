@@ -1,7 +1,7 @@
 class EditionsController < ApplicationController
   def create
-    # Editions::CreateInteractor.call(params:, user: current_user)
-    # redirect_to content_path(params[:document_id])
+    Editions::CreateInteractor.call(params:, user: current_user)
+    redirect_to content_path(params[:document_id])
   end
 
   def destroy_draft
