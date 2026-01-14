@@ -1,0 +1,29 @@
+<% content_for :title, t("remove.new.title", title: @edition.title) %>
+<% content_for :back_link, render_back_link(href: document_path(@edition.document)) %>
+
+
+<div class="row">
+  <div class="col-xs-12 col-md-8">
+    <%= render_markdown(t("remove.new.intro_markdown")) %>
+
+    <%= form_tag remove_path(@edition.document), method: :post do %>
+
+      <% has_error = @issues&.has_key?(:redirect_url) %>
+
+      <%= label_tag "redirect_url-field", t("remove.new.form_labels.redirect_url"), class: "form-label" %>
+      <%= text_field_tag :redirect_url,
+            params[:redirect_url],
+            id: "redirect_url-field",
+            aria: { describedby: has_error ? "redirect_url-errors" : nil },
+            class: "form-control mb-3 #{(has_error ? "is-invalid" : nil)}" %>
+      
+      <%= render "components/errors", {
+        field: :redirect_url,
+        classes: "mb-3"
+      } %>       
+
+      <%= submit_tag "Remove document", class: "btn btn-danger me-3 mb-3 mb-md-0" %>
+      <%= link_to "Cancel", document_path(@edition.document) %>
+    <% end %>    
+  </div>
+</div>

@@ -1,0 +1,12 @@
+en:
+  remove:
+    new:
+      title: "Remove '%{title}'"
+      flashes:
+        publishing_api_error: Something went wrong when removing this document. Please try again. 
+      intro_markdown: |
+        Removed content is unpublished and will no longer be available.
+
+        Enter a redirect URL if you wish users to be redirected to another page on the Publishing Platform. For example: `https://www.publishing-platform.co.uk/redirect-to-replacement-page`
+      form_labels:
+        :redirect_url: Redirect URL
