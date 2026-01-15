@@ -12,7 +12,7 @@ en:
       label: Guidance and regulation
       description: To help the user do something or understand what they need to do
       guidance:
-        body_markdown: |
+        markdown: |
           For example, manuals, or statutory guidance  
     news:
       label: News and communications
