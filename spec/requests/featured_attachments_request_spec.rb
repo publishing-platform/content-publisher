@@ -1,4 +1,6 @@
-RSpec.describe "Featured Attachments" do
+require "rails_helper"
+
+RSpec.describe "Featured Attachments", type: :request do
   it_behaves_like "requests that assert edition state",
                   "accessing featured attachments for a non editable edition",
                   routes: { featured_attachments_path: %i[get],

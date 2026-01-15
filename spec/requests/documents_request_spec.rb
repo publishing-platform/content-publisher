@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Documents" do
+RSpec.describe "Documents", type: :request do
   it_behaves_like "requests that assert edition state",
                   "modifying a non editable edition",
                   routes: { content_path: %i[patch get],

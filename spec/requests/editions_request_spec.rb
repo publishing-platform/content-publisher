@@ -1,4 +1,6 @@
-RSpec.describe "Editions" do
+require "rails_helper"
+
+RSpec.describe "Editions", type: :request do
   it_behaves_like "requests that assert edition state",
                   "discarding a non editable edition",
                   routes: {
