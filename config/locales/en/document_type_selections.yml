@@ -2,6 +2,18 @@ en:
   document_type_selections:
     root:
       label: "What is the content for?"
+    guidance:
+      label: Non-statutory guidance publication
+      description: Publications like manuals, handbooks, and other documents that offer advice. Use for content produced as a standalone hard-copy publicaton. For web-original content use 'detailed guide'.                       
+    guidance_publications:
+      label: Guidance
+      description: Guidance to help the user do something or understand what they need to do.
+    guidance_and_regulation:
+      label: Guidance and regulation
+      description: To help the user do something or understand what they need to do
+      guidance:
+        body_markdown: |
+          For example, manuals, or statutory guidance  
     news:
       label: News and communications
       description: To tell users about something has been or will be done
@@ -13,4 +25,7 @@ en:
       description: "News written for Publishing Platform which users need, can act on, and cannot get from other sources."
     press_release:
       label: Press release
-      description: "Unedited press releases as sent to the media, and official statements from the organisation."      
+      description: "Unedited press releases as sent to the media, and official statements from the organisation."             
+    statutory_guidance:
+      label: Statutory guidance publication
+      description: Guidance that sets out what users must do to comply with the law.      

@@ -13,6 +13,20 @@ news_article: &news_article
   tags:
     - primary_publishing_organisation
 
+publication: &publication
+  path_prefix: /publications
+  lead_image: false
+  attachments: featured
+  publishing_metadata:
+    schema_name: publication
+    rendering_app: frontend
+  contents:
+    - title_and_base_path
+    - summary
+    - body
+  tags:
+    - primary_publishing_organisation 
+
 document_types:
   - id: news_story
     <<: *news_article 
@@ -21,5 +35,13 @@ document_types:
   - id: press_release
     <<: *news_article 
     label: Press release
+
+  - id: guidance
+    <<: *publication
+    label: Non statutory guidance  
+
+  - id: statutory_guidance
+    <<: *publication
+    label: Statutory guidance     
     
   
