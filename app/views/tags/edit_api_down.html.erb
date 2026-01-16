@@ -1,0 +1,6 @@
+<% content_for :back_link, render_back_link(href: document_path(@edition.document)) %>
+<% content_for :title, t("tags.edit.title", title: @edition.title_or_fallback) %>
+
+<p>
+  <%= t("tags.edit.api_down") %>
+</p>
