@@ -23,17 +23,6 @@ require "publishing_platform_api/test_helpers/asset_manager"
 require "publishing_platform_test"
 PublishingPlatformTest.configure
 
-Capybara.register_driver :headless_chrome do |app|
-  chrome_options = PublishingPlatformTest.headless_chrome_selenium_options
-  chrome_options.add_argument("--no-sandbox")
-
-  Capybara::Selenium::Driver.new(
-    app,
-    browser: :chrome,
-    options: chrome_options,
-  )
-end
-
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end

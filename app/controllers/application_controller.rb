@@ -2,9 +2,6 @@ class ApplicationController < ActionController::Base
   include PublishingPlatform::SSO::ControllerMethods
   include EditionAssertions
 
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
-
   helper_method :rendering_context
   layout -> { rendering_context }
 
