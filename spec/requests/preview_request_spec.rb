@@ -7,7 +7,7 @@ RSpec.describe "Preview", type: :request do
     let(:edition) { create(:edition, :published) }
   end
 
-  describe "GET /documents/:document/preview" do
+  describe "GET /documents/:document_id/preview" do
     it "returns successfully with an editable edition" do
       edition = create(:edition)
       get preview_path(edition.document)
@@ -15,7 +15,7 @@ RSpec.describe "Preview", type: :request do
     end
   end
 
-  describe "POST /documents/:document/preview" do
+  describe "POST /documents/:document_id/preview" do
     it "redirects to the preview page on success" do
       edition = create(:edition)
       stub_publishing_api_put_content(edition.content_id, {})

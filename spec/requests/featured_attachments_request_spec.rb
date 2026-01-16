@@ -17,7 +17,7 @@ RSpec.describe "Featured Attachments", type: :request do
     let(:route_params) { [edition.document] }
   end
 
-  describe "GET /documents/:document/attachments" do
+  describe "GET /documents/:document_id/attachments" do
     it "returns successfully" do
       document_type = build(:document_type, attachments: "featured")
       edition = create(:edition, document_type:)
@@ -27,7 +27,7 @@ RSpec.describe "Featured Attachments", type: :request do
     end
   end
 
-  describe "GET /documents/:document/attachments/reorder" do
+  describe "GET /documents/:document_id/attachments/reorder" do
     it "returns successfully" do
       document_type = build(:document_type, attachments: "featured")
       edition = create(:edition, document_type:)
@@ -37,7 +37,7 @@ RSpec.describe "Featured Attachments", type: :request do
     end
   end
 
-  describe "PATCH /documents/:document/attachments/reorder" do
+  describe "PATCH /documents/:document_id/attachments/reorder" do
     it "redirects to the attachments index" do
       file_attachment = build(:file_attachment_revision)
       document_type = build(:document_type, attachments: "featured")

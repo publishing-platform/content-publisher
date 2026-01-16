@@ -7,7 +7,7 @@ RSpec.describe "Publish", type: :request do
     let(:edition) { create(:edition, :published) }
   end
 
-  describe "GET /documents/:document/publish" do
+  describe "GET /documents/:document_id/publish" do
     it "returns sucessfully when edition is publishable" do
       edition = create(:edition, :publishable)
       get publish_path(edition.document)
@@ -29,7 +29,7 @@ RSpec.describe "Publish", type: :request do
     end
   end
 
-  describe "POST /documents/:document/publish" do
+  describe "POST /documents/:document_id/publish" do
     before do
       stub_any_publishing_api_put_content
       stub_any_publishing_api_publish
@@ -69,7 +69,7 @@ RSpec.describe "Publish", type: :request do
     end
   end
 
-  describe "GET /documents/:document/published" do
+  describe "GET /documents/:document_id/published" do
     it_behaves_like "requests that assert edition state",
                     "viewing published status of a non-published edition",
                     routes: { published_path: %i[get] } do

@@ -16,7 +16,7 @@ RSpec.describe "Editions", type: :request do
     let(:edition) { create(:edition) }
   end
 
-  describe "POST /document/:document/editions" do
+  describe "POST /document/:document_id/editions" do
     it "redirects to edit document" do
       edition = create(:edition, :published)
       stub_publishing_api_put_content(edition.content_id, {})
@@ -26,7 +26,7 @@ RSpec.describe "Editions", type: :request do
     end
   end
 
-  describe "GET /documents/:document/delete-draft" do
+  describe "GET /documents/:document_id/delete-draft" do
     it "returns successfully" do
       edition = create(:edition)
       get confirm_delete_draft_path(edition.document)
@@ -35,7 +35,7 @@ RSpec.describe "Editions", type: :request do
     end
   end
 
-  describe "DELETE /documents/:document/draft" do
+  describe "DELETE /documents/:document_id/draft" do
     let(:edition) { create(:edition) }
 
     it "redirects to document index on success" do

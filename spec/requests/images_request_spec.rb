@@ -29,7 +29,7 @@ RSpec.describe "Images", type: :request do
     let(:route_params) { [edition.document, image_revision] }
   end
 
-  describe "POST /documents/:document/images" do
+  describe "POST /documents/:document_id/images" do
     let(:edition) { create(:edition) }
 
     before { stub_publishing_api_put_content(edition.content_id, {}) }
@@ -57,7 +57,7 @@ RSpec.describe "Images", type: :request do
     end
   end
 
-  describe "GET /documents/:document/images/:image_id/crop" do
+  describe "GET /documents/:document_id/images/:image_id/crop" do
     it "returns successfully for an image belonging to the edition" do
       image_revision = create(:image_revision)
       edition = create(:edition, image_revisions: [image_revision])
@@ -67,7 +67,7 @@ RSpec.describe "Images", type: :request do
     end
   end
 
-  describe "PATCH /documents/:document/images/:image_id/crop" do
+  describe "PATCH /documents/:document_id/images/:image_id/crop" do
     before do
       stub_asset_manager_receives_an_asset
       stub_any_publishing_api_put_content
@@ -94,7 +94,7 @@ RSpec.describe "Images", type: :request do
     end
   end
 
-  describe "GET /documents/:document/images/:image_id/edit" do
+  describe "GET /documents/:document_id/images/:image_id/edit" do
     it "returns successfully for an image belonging to the edition" do
       image_revision = create(:image_revision)
       edition = create(:edition, image_revisions: [image_revision])
@@ -104,7 +104,7 @@ RSpec.describe "Images", type: :request do
     end
   end
 
-  describe "PATCH /documents/:document/images/:image_id/edit" do
+  describe "PATCH /documents/:document_id/images/:image_id/edit" do
     before do
       stub_asset_manager_receives_an_asset
       stub_any_publishing_api_put_content
@@ -165,7 +165,7 @@ RSpec.describe "Images", type: :request do
     end
   end
 
-  describe "GET /documents/:document/images/:image_id/delete" do
+  describe "GET /documents/:document_id/images/:image_id/delete" do
     it "returns successfully" do
       image_revision = create(:image_revision)
       edition = create(:edition, lead_image_revision: image_revision)
@@ -174,7 +174,7 @@ RSpec.describe "Images", type: :request do
     end
   end
 
-  describe "DELETE /documents/:document/images/:image_id" do
+  describe "DELETE /documents/:document_id/images/:image_id" do
     before { stub_any_publishing_api_put_content }
 
     let(:image_revision) { create(:image_revision) }
@@ -202,7 +202,7 @@ RSpec.describe "Images", type: :request do
     end
   end
 
-  describe "GET /documents/:document/images/:image_id/download" do
+  describe "GET /documents/:document_id/images/:image_id/download" do
     it "provides an image download" do
       image_revision = create(:image_revision)
       edition = create(:edition, image_revisions: [image_revision])

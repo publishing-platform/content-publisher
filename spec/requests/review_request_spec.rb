@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Review", type: :request do
-  describe "POST /documents/:document/submit-for-2i" do
+  describe "POST /documents/:document_id/submit-for-2i" do
     it_behaves_like "requests that assert edition state",
                     "submitting a non-draft for 2i review",
                     routes: { submit_for_2i_path: %i[post] } do
@@ -30,7 +30,7 @@ RSpec.describe "Review", type: :request do
     end
   end
 
-  describe "POST /documents/:document/approve" do
+  describe "POST /documents/:document_id/approve" do
     it_behaves_like "requests that assert edition state",
                     "approving an edition that isn't published but needs 2i review",
                     routes: { approve_path: %i[post] } do

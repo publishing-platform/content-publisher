@@ -70,7 +70,7 @@ RSpec.describe "File Attachments", type: :request do
     let(:route_params) { [edition.document, file_attachment_revision] }
   end
 
-  describe "GET /documents/:document/file-attachments/new" do
+  describe "GET /documents/:document_id/file-attachments/new" do
     it "returns successfully" do
       document_type = build(:document_type, attachments: "featured")
       edition = create(:edition, document_type:)
@@ -80,7 +80,7 @@ RSpec.describe "File Attachments", type: :request do
     end
   end
 
-  describe "GET /documents/:document/file-attachments/:file_attachment_id" do
+  describe "GET /documents/:document_id/file-attachments/:file_attachment_id" do
     it "shows the file attachment when it exists on the edition" do
       file_attachment_revision = create(:file_attachment_revision)
       edition = create(:edition,
@@ -93,7 +93,7 @@ RSpec.describe "File Attachments", type: :request do
     end
   end
 
-  describe "GET /documents/:document/file-attachments/:file_attachment_id/delete" do
+  describe "GET /documents/:document_id/file-attachments/:file_attachment_id/delete" do
     it "returns successfully" do
       file_attachment_revision = create(:file_attachment_revision)
       edition = create(:edition,
@@ -104,7 +104,7 @@ RSpec.describe "File Attachments", type: :request do
     end
   end
 
-  describe "GET /documents/:document/file-attachments/:file_attachment_id/preview" do
+  describe "GET /documents/:document_id/file-attachments/:file_attachment_id/preview" do
     it "redirects to the file when it's available" do
       file_attachment_revision = create(:file_attachment_revision, :on_asset_manager)
       asset = file_attachment_revision.asset
@@ -150,7 +150,7 @@ RSpec.describe "File Attachments", type: :request do
     end
   end
 
-  describe "POST /documents/:document/file-attachments" do
+  describe "POST /documents/:document_id/file-attachments" do
     let(:edition) { create(:edition) }
 
     before { stub_publishing_api_put_content(edition.content_id, {}) }
@@ -193,7 +193,7 @@ RSpec.describe "File Attachments", type: :request do
     end
   end
 
-  describe "DELETE /documents/:document/file-attachments/:file_attachment_id" do
+  describe "DELETE /documents/:document_id/file-attachments/:file_attachment_id" do
     before { stub_publishing_api_put_content(edition.content_id, {}) }
 
     let(:file_attachment_revision) { create(:file_attachment_revision) }
@@ -209,7 +209,7 @@ RSpec.describe "File Attachments", type: :request do
     end
   end
 
-  describe "GET /documents/:document/file-attachments/:file_attachment_id/replace" do
+  describe "GET /documents/:document_id/file-attachments/:file_attachment_id/replace" do
     let(:file_attachment_revision) { create(:file_attachment_revision) }
 
     it "shows the file attachment when it exists on the edition" do
@@ -224,7 +224,7 @@ RSpec.describe "File Attachments", type: :request do
     end
   end
 
-  describe "PATCH /documents/:document/file-attachments/:file_attachment_id/replace" do
+  describe "PATCH /documents/:document_id/file-attachments/:file_attachment_id/replace" do
     before do
       stub_publishing_api_put_content(edition.content_id, {})
       stub_asset_manager_update_asset(file_attachment_revision.asset.asset_manager_id)
@@ -294,7 +294,7 @@ RSpec.describe "File Attachments", type: :request do
     end
   end
 
-  describe "GET /documents/:document/file-attachments/:file_attachment_id/edit" do
+  describe "GET /documents/:document_id/file-attachments/:file_attachment_id/edit" do
     it "returns successfully" do
       file_attachment_revision = create(:file_attachment_revision)
       document_type = build(:document_type, attachments: "featured")
@@ -308,7 +308,7 @@ RSpec.describe "File Attachments", type: :request do
     end
   end
 
-  describe "PATCH /documents/:document/file-attachments/:file_attachment_id/edit" do
+  describe "PATCH /documents/:document_id/file-attachments/:file_attachment_id/edit" do
     let(:document_type) { build(:document_type, attachments: "featured") }
     let(:file_attachment_revision) { create(:file_attachment_revision) }
     let(:edition) do
@@ -340,7 +340,7 @@ RSpec.describe "File Attachments", type: :request do
     end
   end
 
-  describe "GET /documents/:document/file_attachments/:file_attachment_id/download" do
+  describe "GET /documents/:document_id/file_attachments/:file_attachment_id/download" do
     it "provides a file attachment download" do
       file_attachment_revision = create(:file_attachment_revision)
       edition = create(:edition, file_attachment_revisions: [file_attachment_revision])

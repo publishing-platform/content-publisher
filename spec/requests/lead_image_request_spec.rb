@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Lead Image", type: :request do
-  describe "POST /documents/:document/lead-image/:image_id" do
+  describe "POST /documents/:document_id/lead-image/:image_id" do
     before do
       stub_asset_manager_receives_an_asset
       stub_any_publishing_api_put_content
@@ -48,7 +48,7 @@ RSpec.describe "Lead Image", type: :request do
     end
   end
 
-  describe "DELETE /documents/:document/lead-image" do
+  describe "DELETE /documents/:document_id/lead-image" do
     before do
       stub_asset_manager_receives_an_asset
       stub_any_publishing_api_put_content

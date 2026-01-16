@@ -7,7 +7,7 @@ RSpec.describe "Tags", type: :request do
     let(:edition) { create(:edition, :published) }
   end
 
-  describe "GET /documents/:document/tags" do
+  describe "GET /documents/:document_id/tags" do
     let(:tag_field) { DocumentType::PrimaryPublishingOrganisationField.new }
     let(:edition) do
       document_type = build(:document_type, tags: [tag_field])
@@ -35,7 +35,7 @@ RSpec.describe "Tags", type: :request do
     end
   end
 
-  describe "PATCH /documents/:document/tags" do
+  describe "PATCH /documents/:document_id/tags" do
     before { stub_any_publishing_api_put_content }
 
     it "redirects to document path on successful request" do

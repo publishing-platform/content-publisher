@@ -108,7 +108,7 @@ RSpec.describe "Documents", type: :request do
     end
   end
 
-  describe "GET /documents/:document/generate-path" do
+  describe "GET /documents/:document_id/generate-path" do
     it "returns a text response of a path" do
       edition = create(:edition, title: "A title")
       prefix = edition.document_type.path_prefix
