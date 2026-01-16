@@ -99,6 +99,7 @@ RSpec.configure do |config|
   config.include ActiveSupport::Testing::TimeHelpers
   config.include PublishingPlatformApi::TestHelpers::PublishingApi
   config.include PublishingPlatformApi::TestHelpers::AssetManager
+  config.include Capybara::RSpecMatchers, type: ->(spec) { spec.in?(%i[system request]) }
   config.include AuthenticationHelper, type: ->(spec) { spec.in?(%i[system request]) }
 
   config.before(:all) do
