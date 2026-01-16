@@ -1,4 +1,8 @@
 class DocumentsController < ApplicationController
+  rescue_from DocumentTypeSelection::NotFoundError do |e|
+    raise ActionController::RoutingError, e.message
+  end
+
   def index
     if filter_params.empty? && current_user.organisation_content_id
       redirect_to documents_path(organisation: current_user.organisation_content_id)
