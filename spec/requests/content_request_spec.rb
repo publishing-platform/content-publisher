@@ -29,7 +29,7 @@ RSpec.describe "Content", type: :request do
     it "returns issues and an unprocessable response when there are requirement issues" do
       edition = create(:edition, summary: "Valid summary")
       patch content_path(edition.document), params: { summary: "new\nline" }
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body)
         .to match(I18n.t!("requirements.summary.multiline.form_message"))
     end

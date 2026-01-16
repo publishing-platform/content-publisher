@@ -50,7 +50,7 @@ RSpec.describe "Images", type: :request do
       post images_path(edition.document),
            params: { image: not_image }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to match(
         I18n.t!("requirements.image_upload.unsupported_type.form_message"),
       )
@@ -151,7 +151,7 @@ RSpec.describe "Images", type: :request do
       patch edit_image_path(edition.document, image_revision.image_id),
             params: { image_revision: { alt_text: long_string } }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body)
         .to include(I18n.t!("requirements.image_alt_text.blank.form_message"))
     end

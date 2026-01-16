@@ -22,7 +22,7 @@ class RemoveController < ApplicationController
              assigns: { edition:,
                         redirect_url: params[:redirect_url],
                         issues: },
-             status: :unprocessable_entity
+             status: :unprocessable_content
     elsif api_error
       flash.now["alert"] = t("remove.new.flashes.publishing_api_error")
 

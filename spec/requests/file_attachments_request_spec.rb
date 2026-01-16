@@ -187,7 +187,7 @@ RSpec.describe "File Attachments", type: :request do
       post file_attachments_path(edition.document),
            params: { file:, title: "File" }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       issue = I18n.t!("requirements.file_attachment_upload.unsupported_type.form_message")
       expect(response.body).to match(issue)
     end
@@ -287,7 +287,7 @@ RSpec.describe "File Attachments", type: :request do
       patch replace_file_attachment_path(edition.document, file_attachment_id),
             params: { file_attachment: { title: "" } }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to match(
         I18n.t!("requirements.file_attachment_title.blank.form_message"),
       )
@@ -333,7 +333,7 @@ RSpec.describe "File Attachments", type: :request do
                                       file_attachment_revision.file_attachment_id),
             params: { file_attachment: { isbn: "invalid_isbn" } }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to match(
         I18n.t!("requirements.file_attachment_isbn.invalid.form_message"),
       )

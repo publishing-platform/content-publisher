@@ -91,7 +91,7 @@ class FileAttachmentsController < ApplicationController
       render params[:wizard] == "featured-attachment-upload" ? :new : :index,
              assigns: { edition:,
                         issues: },
-             status: :unprocessable_entity
+             status: :unprocessable_content
     elsif params[:wizard] == "featured-attachment-upload"
       redirect_to edit_file_attachment_path(edition.document,
                                             attachment_revision.file_attachment,
@@ -125,7 +125,7 @@ class FileAttachmentsController < ApplicationController
              assigns: { edition:,
                         attachment: attachment_revision,
                         issues: },
-             status: :unprocessable_entity
+             status: :unprocessable_content
     else
       redirect_to featured_attachments_path(edition.document)
     end
@@ -152,7 +152,7 @@ class FileAttachmentsController < ApplicationController
              assigns: { edition:,
                         issues:,
                         attachment: attachment_revision },
-             status: :unprocessable_entity
+             status: :unprocessable_content
     elsif params[:wizard] == "featured-attachment-replace"
       redirect_to featured_attachments_path(edition.document)
     elsif params[:wizard] == "featured-attachment-upload"

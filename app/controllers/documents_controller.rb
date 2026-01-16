@@ -33,7 +33,7 @@ class DocumentsController < ApplicationController
                issues: result.issues,
                document_type_selection: result.document_type_selection,
              },
-             status: :unprocessable_entity
+             status: :unprocessable_content
     else
       destination = if result.document
                       content_path(result.document)

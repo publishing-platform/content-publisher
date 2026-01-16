@@ -19,7 +19,7 @@ class TagsController < ApplicationController
       }
       render :edit,
              assigns: { edition:, issues: },
-             status: :unprocessable_entity
+             status: :unprocessable_content
     else
       redirect_to document_path(params[:document_id])
     end

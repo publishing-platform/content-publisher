@@ -22,7 +22,7 @@ class PublishController < ApplicationController
 
       render :confirmation,
              assigns: { issues:, edition: },
-             status: :unprocessable_entity
+             status: :unprocessable_content
     elsif publish_failed
       redirect_to document_path(edition.document),
                   alert: t("documents.show.flashes.publish_error.description")

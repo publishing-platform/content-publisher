@@ -62,7 +62,7 @@ RSpec.describe "Publish", type: :request do
       post publish_path(edition.document),
            params: { review_status: "" }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to have_content(
         I18n.t!("requirements.review_status.not_selected.form_message"),
       )

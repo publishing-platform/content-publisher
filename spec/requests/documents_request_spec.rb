@@ -96,7 +96,7 @@ RSpec.describe "Documents", type: :request do
     it "returns an unprocessable response with an issue when a document type isn't selected" do
       post documents_path, params: { type: "news" }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to match(
         I18n.t("requirements.document_type_selection.not_selected.form_message"),
       )

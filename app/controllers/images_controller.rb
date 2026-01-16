@@ -15,7 +15,7 @@ class ImagesController < ApplicationController
 
       render :index,
              assigns: { edition: },
-             status: :unprocessable_entity
+             status: :unprocessable_content
     else
       redirect_to crop_image_path(params[:document_id],
                                   image_revision.image_id,
@@ -64,7 +64,7 @@ class ImagesController < ApplicationController
              assigns: { edition:,
                         image_revision:,
                         issues: },
-             status: :unprocessable_entity
+             status: :unprocessable_content
     elsif lead_selected
       redirect_to document_path(params[:document_id]),
                   notice: t("documents.show.flashes.lead_image.selected", file: image_revision.filename)
