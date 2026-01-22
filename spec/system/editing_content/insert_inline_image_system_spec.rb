@@ -26,7 +26,6 @@ RSpec.describe "Insert inline image", type: :system do
   end
 
   def then_i_see_the_image_markdown_snippet
-    switch_to_window(page.windows.last)
     snippet = I18n.t("images.index.meta.inline_code.value", filename: @image_revision.filename)
     expect(page).to have_content(snippet)
   end

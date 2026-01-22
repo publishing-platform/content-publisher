@@ -28,7 +28,6 @@ RSpec.describe "Insert inline file attachment", type: :system do
   end
 
   def and_i_choose_one_of_the_file_attachments
-    switch_to_window(page.windows.last)
     click_on "Insert attachment"
   end
 

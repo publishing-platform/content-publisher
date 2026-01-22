@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Shows a preview of the URL", type: :system do
+RSpec.describe "Shows a preview of the URL", :js, type: :system do
   scenario do
     given_there_is_an_edition
     when_i_go_to_edit_the_edition

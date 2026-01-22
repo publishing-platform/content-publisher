@@ -33,7 +33,7 @@ RSpec.describe "Edit an edition", type: :system do
 
   def and_i_see_i_was_the_last_user_to_edit_the_edition
     editor = current_user.name
-    last_edited = I18n.t!("documents.show.metadata.last_edited_by") + "\n#{editor}"
+    last_edited = I18n.t!("documents.show.metadata.last_edited_by") + " #{editor}"
     expect(page).to have_content(last_edited)
   end
 end
