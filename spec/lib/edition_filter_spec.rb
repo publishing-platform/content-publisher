@@ -44,13 +44,13 @@ RSpec.describe EditionFilter do
       edition1 = create(:edition, state: "draft")
       edition2 = create(:edition, state: "submitted_for_review")
 
-      editions = described_class.new(filters: { status: " " }).editions
+      editions = described_class.new(filters: { state: " " }).editions
       expect(editions).to contain_exactly(edition1, edition2)
 
-      editions = described_class.new(filters: { status: "non-existant" }).editions
+      editions = described_class.new(filters: { state: "non-existant" }).editions
       expect(editions).to be_empty
 
-      editions = described_class.new(filters: { status: "draft" }).editions
+      editions = described_class.new(filters: { state: "draft" }).editions
       expect(editions).to eq([edition1])
     end
 
@@ -58,10 +58,10 @@ RSpec.describe EditionFilter do
       edition1 = create(:edition, state: "published")
       edition2 = create(:edition, state: "published_but_needs_2i")
 
-      editions = described_class.new(filters: { status: "published" }).editions
+      editions = described_class.new(filters: { state: "published" }).editions
       expect(editions).to contain_exactly(edition1, edition2)
 
-      editions = described_class.new(filters: { status: "published_but_needs_2i" }).editions
+      editions = described_class.new(filters: { state: "published_but_needs_2i" }).editions
       expect(editions).to eq([edition2])
     end
 

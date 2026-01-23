@@ -33,7 +33,7 @@ private
                    "%#{sanitize_sql_like(value)}%")
       when :document_type
         memo.where("metadata_revisions.document_type_id": value)
-      when :status
+      when :state
         if value == "published"
           memo.where("statuses.state": %w[published published_but_needs_2i])
         else
