@@ -86,6 +86,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include ActiveSupport::Testing::TimeHelpers
+  config.include ActiveJob::TestHelper
   config.include PublishingPlatformApi::TestHelpers::PublishingApi
   config.include PublishingPlatformApi::TestHelpers::AssetManager
   config.include Capybara::RSpecMatchers, type: ->(spec) { spec.in?(%i[system request]) }
