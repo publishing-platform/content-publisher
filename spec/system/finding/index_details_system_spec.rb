@@ -16,7 +16,6 @@ RSpec.describe "Index details", type: :system do
   end
 
   def when_i_visit_the_index_page
-    puts current_user
     visit documents_path
   end
 
