@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_05_152700) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_26_142632) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -219,6 +219,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_05_152700) do
     t.index ["created_by_id"], name: "index_metadata_revisions_on_created_by_id"
   end
 
+  create_table "removals", force: :cascade do |t|
+    t.string "explanatory_note"
+    t.string "alternative_url"
+    t.boolean "redirect", default: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "removed_at", precision: nil, null: false
+  end
+
   create_table "revisions", force: :cascade do |t|
     t.integer "number", null: false
     t.datetime "created_at", precision: nil, null: false
@@ -272,7 +280,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_05_152700) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "edition_id"
+    t.string "details_type"
+    t.bigint "details_id"
     t.index ["created_by_id"], name: "index_statuses_on_created_by_id"
+    t.index ["details_type", "details_id"], name: "index_statuses_on_details"
     t.index ["edition_id"], name: "index_statuses_on_edition_id"
     t.index ["revision_at_creation_id"], name: "index_statuses_on_revision_at_creation_id"
   end
