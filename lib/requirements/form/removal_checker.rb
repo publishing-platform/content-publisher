@@ -19,7 +19,7 @@ private
   def validate_redirect(redirect_url)
     return true if redirect_url.blank?
 
-    regex = /^\/[a-z0-9]+(?:-[a-z0-9]+)*$/
+    regex = /^(\/[a-z0-9]+(-[a-z0-9]+)*)*$/
     redirect_url =~ regex
   end
 end
