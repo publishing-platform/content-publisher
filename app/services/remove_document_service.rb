@@ -1,9 +1,9 @@
 class RemoveDocumentService
   include Callable
 
-  def initialize(edition, redirect_url: nil, user: nil)
+  def initialize(edition, removal, user: nil)
     @edition = edition
-    @redirect_url = redirect_url
+    @removal = removal
     @user = user
   end
 
@@ -11,6 +11,7 @@ class RemoveDocumentService
     Document.transaction do
       edition.document.lock!
       check_removeable
+      set_removed_at
       unpublish_edition
       update_edition_status
     end
@@ -20,14 +21,15 @@ class RemoveDocumentService
 
 private
 
-  attr_reader :edition, :redirect_url, :user
+  attr_reader :edition, :removal, :user
 
   def unpublish_edition
     PublishingPlatformApi.publishing_api.unpublish(
       edition.content_id,
-      type: redirect_url.present? ? "redirect" : "gone",
-      alternative_path: redirect_url,
-      unpublished_at: Time.zone.now,
+      type: removal.redirect? ? "redirect" : "gone",
+      explanation: removal.explanatory_note,
+      alternative_path: removal.alternative_url,
+      unpublished_at: removal.removed_at,
       discard_drafts: true,
     )
   end
@@ -35,6 +37,7 @@ private
   def update_edition_status
     AssignEditionStatusService.call(edition,
                                     state: :removed,
+                                    status_details: removal,
                                     user:)
     edition.save!
   end
@@ -43,6 +46,14 @@ private
     unless edition.live?
       raise "attempted to remove an edition other than the live edition"
     end
+  end
+
+  def set_removed_at
+    removal.removed_at = if edition.removed?
+                           edition.status.details.removed_at
+                         else
+                           Time.zone.now
+                         end
   end
 
   def delete_assets

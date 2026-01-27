@@ -9,6 +9,8 @@ class Status < ApplicationRecord
 
   belongs_to :edition, optional: true
 
+  belongs_to :details, polymorphic: true, optional: true
+
   has_and_belongs_to_many :revisions
 
   enum :state, { draft: "draft",

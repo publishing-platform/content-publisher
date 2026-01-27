@@ -47,6 +47,16 @@ RSpec.describe AssignEditionStatusService do
       end
     end
 
+    it "can set details on the status" do
+      removal = build(:removal)
+      described_class.call(edition,
+                           user:,
+                           state: :removed,
+                           status_details: removal)
+
+      expect(edition.status.details).to eq(removal)
+    end
+
     describe "updates the edition editors" do
       it "adds an edition user if they are not already listed as an editor" do
         edition = build(:edition)

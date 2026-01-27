@@ -30,9 +30,11 @@ private
   end
 
   def remove_edition
+    removal = Removal.new(alternative_url: relative_redirect_url,
+                          redirect: relative_redirect_url.present?)
     RemoveDocumentService.call(edition,
-                               user:,
-                               redirect_url: relative_redirect_url)
+                               removal,
+                               user:)
   rescue PublishingPlatformApi::BaseError => e
     PublishingPlatformError.notify(e)
     context.fail!(api_error: true)

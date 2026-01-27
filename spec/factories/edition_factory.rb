@@ -111,12 +111,17 @@ FactoryBot.define do
     trait :removed do
       live { true }
 
+      transient do
+        removal { nil }
+      end
+
       after(:build) do |edition, evaluator|
         edition.status = evaluator.association(
           :status,
           :removed,
           created_by: edition.created_by,
           revision_at_creation: edition.revision,
+          details: evaluator.removal,
         )
       end
     end

@@ -4,17 +4,20 @@ class AssignEditionStatusService
   def initialize(edition,
                  state:,
                  user: nil,
-                 record_edit: true)
+                 record_edit: true,
+                 status_details: nil)
     @edition = edition
     @user = user
     @state = state
     @record_edit = record_edit
+    @status_details = status_details
   end
 
   def call
     edition.status = Status.new(created_by: user,
                                 state:,
-                                revision_at_creation: edition.revision)
+                                revision_at_creation: edition.revision,
+                                details: status_details)
 
     if record_edit
       edition.last_edited_by = user
@@ -25,5 +28,5 @@ class AssignEditionStatusService
 
 private
 
-  attr_reader :edition, :user, :state, :record_edit
+  attr_reader :edition, :user, :state, :record_edit, :status_details
 end
