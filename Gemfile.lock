@@ -314,6 +314,10 @@ GEM
       rubocop-rails (= 2.33.3)
       rubocop-rake (= 0.7.1)
       rubocop-rspec (= 3.7.0)
+    publishing_platform_sidekiq (0.5.0)
+      publishing_platform_api_adapters
+      redis-client (>= 0.22.2)
+      sidekiq (~> 7.0, < 8)
     publishing_platform_sso (0.5.0)
       oauth2 (~> 2.0)
       omniauth (~> 2.1)
@@ -378,6 +382,8 @@ GEM
       erb
       psych (>= 4.0.0)
       tsort
+    redis-client (0.26.4)
+      connection_pool
     regexp_parser (2.11.3)
     reline (0.6.2)
       io-console (~> 0.5)
@@ -472,6 +478,15 @@ GEM
     sentry-ruby (5.28.1)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
+    sentry-sidekiq (5.28.1)
+      sentry-ruby (~> 5.28.1)
+      sidekiq (>= 3.0)
+    sidekiq (7.3.10)
+      base64
+      connection_pool (>= 2.3.0, < 3)
+      logger
+      rack (>= 2.2.4, < 3.3)
+      redis-client (>= 0.23.0, < 1)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -558,11 +573,13 @@ DEPENDENCIES
   publishing_platform_markdown
   publishing_platform_publishing_components
   publishing_platform_rubocop
+  publishing_platform_sidekiq
   publishing_platform_sso
   publishing_platform_test
   rails (= 8.0.3)
   rspec-rails
   rubyzip
+  sentry-sidekiq
   simplecov
   sprockets-rails
   terser

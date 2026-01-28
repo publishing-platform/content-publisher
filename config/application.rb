@@ -33,6 +33,7 @@ module ContentPublisher
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
+    config.active_job.queue_adapter = :sidekiq
     config.time_zone = "London"
     # config.eager_load_paths << Rails.root.join("extras")
 
