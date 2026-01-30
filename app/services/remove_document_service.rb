@@ -30,7 +30,6 @@ private
       explanation: removal.explanatory_note,
       alternative_path: removal.alternative_url,
       unpublished_at: removal.removed_at,
-      discard_drafts: true,
     )
   end
 

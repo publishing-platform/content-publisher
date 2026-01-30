@@ -26,7 +26,6 @@ RSpec.describe "Remove a document", type: :system do
       body = {
         type: "gone",
         unpublished_at: Time.zone.now,
-        discard_drafts: true,
       }
 
       stub_asset_manager_deletes_any_asset

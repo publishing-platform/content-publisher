@@ -67,7 +67,7 @@ RSpec.describe ResyncDocumentService do
             explanation:,
             alternative_path: removal.alternative_url,
             unpublished_at: removal.removed_at,
-            discard_drafts: true,
+            allow_draft: true,
           }
 
           request = stub_publishing_api_unpublish(edition.content_id, body: remove_params)
@@ -84,7 +84,7 @@ RSpec.describe ResyncDocumentService do
           remove_params = {
             type: "gone",
             unpublished_at: edition.status.details.removed_at,
-            discard_drafts: true,
+            allow_draft: true,
           }
 
           request = stub_publishing_api_unpublish(edition.content_id, body: remove_params)

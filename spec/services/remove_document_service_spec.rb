@@ -46,7 +46,6 @@ RSpec.describe RemoveDocumentService do
               explanation: "explanation",
               type: "redirect",
               unpublished_at: Time.zone.now.utc,
-              discard_drafts: true,
             },
           )
           described_class.call(edition, removal, user:)
@@ -70,7 +69,6 @@ RSpec.describe RemoveDocumentService do
               explanation: "explanation",
               type: "gone",
               unpublished_at: Time.zone.now,
-              discard_drafts: true,
             },
           )
           described_class.call(edition, removal, user:)
