@@ -48,6 +48,9 @@ jobs:
           chrome-version: 128
           install-chromedriver: true
           install-dependencies: true
+      
+      - name: Install ImageMagick
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
               
       - name: Setup Postgres
         id: setup-postgres
