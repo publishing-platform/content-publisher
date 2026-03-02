@@ -12,8 +12,8 @@ module FileAttachmentHelper
       content_type: attachment_revision.content_type,
       file_size: attachment_revision.byte_size,
       number_of_pages: attachment_revision.number_of_pages,
-      isbn: attachment_revision.isbn,
-      unique_reference: attachment_revision.unique_reference,
+      isbn: attachment_revision.isbn.presence,
+      unique_reference: attachment_revision.unique_reference.presence,
       paper_number: attachment_revision.paper_number,
       url: preview_file_attachment_path(edition.document, attachment_revision.file_attachment),
     }

@@ -125,7 +125,7 @@ RSpec.describe PublishingApiPayload do
       expect(payload[:details][:image]).to match a_hash_including(payload_hash)
     end
 
-    it "doesn't present nil image attributes" do
+    it "doesn't present nil or empty image attributes" do
       image_revision = build(:image_revision,
                              :on_asset_manager,
                              alt_text: nil,
@@ -142,7 +142,6 @@ RSpec.describe PublishingApiPayload do
       payload_hash = {
         url: image_revision.asset_url("300"),
         high_resolution_url: image_revision.asset_url("high_resolution"),
-        caption: "",
       }
 
       expect(payload[:details][:image]).to eq(payload_hash)
@@ -164,7 +163,7 @@ RSpec.describe PublishingApiPayload do
 
       payload = described_class.new(edition).payload
 
-      expect(payload[:details][:featured_attachments]).to eq(attachments.map(&:file_attachment_id).reverse)
+      expect(payload[:details][:featured_attachments]).to eq(attachments.map { |a| a.file_attachment_id.to_s }.reverse)
     end
 
     it "doesn't include ordered featured attachments if document type does not support them" do

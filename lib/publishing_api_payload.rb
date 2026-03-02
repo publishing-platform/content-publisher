@@ -44,8 +44,8 @@ private
       high_resolution_url: edition.lead_image_revision.asset_url("high_resolution"),
       url: edition.lead_image_revision.asset_url("300") || "https://assets.dev.publishing-platform.co.uk/testing.jpg", # TODO: remove this OR, it is only for testing
       alt_text: edition.lead_image_revision.alt_text,
-      caption: edition.lead_image_revision.caption,
-      credit: edition.lead_image_revision.credit,
+      caption: edition.lead_image_revision.caption.presence,
+      credit: edition.lead_image_revision.credit.presence,
     }.compact
   end
 
@@ -56,7 +56,7 @@ private
     }
 
     if document_type.attachments.featured?
-      details[:featured_attachments] = edition.featured_attachments.map(&:file_attachment_id)
+      details[:featured_attachments] = edition.featured_attachments.map { |f| f.file_attachment_id.to_s }
     end
 
     if document_type.lead_image? && edition.lead_image_revision.present?

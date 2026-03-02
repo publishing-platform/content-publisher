@@ -18,7 +18,9 @@ RSpec.describe "Choose a lead image", type: :system do
 
   def given_there_is_an_edition_with_images
     document_type = build(:document_type, :with_lead_image)
-    @image_revision = create(:image_revision, :on_asset_manager)
+    @image_revision = create(:image_revision,
+                             :on_asset_manager,
+                             alt_text: "image alt text")
     @edition = create(:edition,
                       document_type:,
                       image_revisions: [@image_revision])
