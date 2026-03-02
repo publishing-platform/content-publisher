@@ -12,6 +12,10 @@ class Requirements::Form::ImageMetadataChecker
   end
 
   def check
+    if params[:alt_text].blank?
+      issues.create(:image_alt_text, :blank)
+    end
+
     if params[:alt_text].to_s.length > ALT_TEXT_MAX_LENGTH
       issues.create(:image_alt_text, :too_long, max_length: ALT_TEXT_MAX_LENGTH)
     end
