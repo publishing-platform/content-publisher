@@ -7,8 +7,10 @@ class DocumentType::BodyField
     {
       details: {
         body: [
-          content_type: "text/markdown",
-          content: edition.contents[id],
+          {
+            content_type: "text/markdown",
+            content: edition.contents[id],
+          },
         ],
       },
     }
