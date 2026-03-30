@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Index filtering", type: :system do
+RSpec.feature "Index filtering", type: :feature do
   before do
     # Ensure there is a current user for the duration of the test
     create(:user, organisation_content_id: SecureRandom.uuid)
@@ -80,6 +80,7 @@ RSpec.describe "Index filtering", type: :system do
 
   def when_i_clear_the_filters
     click_on "Clear all filters"
+    expect(page).to have_content(I18n.t!("documents.index.title"))
   end
 
   def then_i_only_see_my_organisations_editions
@@ -89,11 +90,6 @@ RSpec.describe "Index filtering", type: :system do
   def then_i_only_see_other_organisations_editions
     expect(page).to have_content("1 document")
     expect(page).to have_content(@other_organisation_edition.title)
-  end
-
-  def when_i_filter_by_all_organisations
-    select "", from: "organisation"
-    click_on "Filter"
   end
 
   def then_i_see_all_editions

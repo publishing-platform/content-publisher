@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Edit tags", type: :system do
+RSpec.feature "Edit tags", type: :feature do
   let(:initial_tag_content) { "Initial tag" }
   let(:initial_tag_content_id) { SecureRandom.uuid }
   let(:tag_to_select_content) { "Tag to select" }
@@ -40,6 +40,7 @@ RSpec.describe "Edit tags", type: :system do
 
   def when_i_visit_the_summary_page
     visit document_path(@edition.document)
+    expect(page).to have_content(@edition.title)
   end
 
   def and_i_click_on_edit_tags

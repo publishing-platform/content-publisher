@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Remove a document", type: :system do
+RSpec.feature "Remove a document", type: :feature do
   scenario do
     given_there_is_a_published_edition
     when_i_visit_the_summary_page
@@ -15,6 +15,7 @@ RSpec.describe "Remove a document", type: :system do
 
   def when_i_visit_the_summary_page
     visit document_path(@edition.document)
+    expect(page).to have_content(@edition.title)
   end
 
   def and_i_click_on_remove
@@ -23,6 +24,8 @@ RSpec.describe "Remove a document", type: :system do
 
   def and_i_confirm_the_removal
     freeze_time do
+      expect(page).to have_content(I18n.t!("remove.new.title", title: @edition.title))
+
       body = {
         type: "gone",
         unpublished_at: Time.zone.now,

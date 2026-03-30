@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Index details", type: :system do
+RSpec.feature "Index details", type: :feature do
   before do
     stub_publishing_api_has_linkables([], document_type: "organisation")
   end
