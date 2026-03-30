@@ -30,6 +30,7 @@ RSpec.feature "Reorder attachments", type: :feature do
 
   def when_i_go_to_the_attachments_page
     visit featured_attachments_path(@edition.document)
+    expect(page).to have_content("Attachments for ‘#{@edition.title}’")
   end
 
   def and_i_click_to_reorder_the_attachments
@@ -39,7 +40,8 @@ RSpec.feature "Reorder attachments", type: :feature do
   end
 
   def then_i_see_the_current_attachment_order
-    expect(all(".gem-c-reorderable-list__title").map(&:text)).to eq([
+    expect(page).to have_content("Reorder attachments for ‘#{@edition.title}’")
+    expect(all(".gem-c-reorderable-list__title", count: 2).map(&:text)).to eq([
       @attachment_revision1.title, @attachment_revision2.title
     ])
   end
@@ -56,7 +58,7 @@ RSpec.feature "Reorder attachments", type: :feature do
   end
 
   def then_i_see_the_order_is_updated
-    expect(all(".gem-c-attachment__title").map(&:text)).to eq([
+    expect(all(".gem-c-attachment__title", count: 2).map(&:text)).to eq([
       @attachment_revision2.title,
       @attachment_revision1.title,
     ])
