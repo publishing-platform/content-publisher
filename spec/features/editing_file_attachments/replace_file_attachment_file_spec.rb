@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Replace a file attachment file", type: :system do
+RSpec.feature "Replace a file attachment file", type: :feature do
   scenario "inline" do
     given_there_is_an_edition_with_an_attachment
     when_i_click_to_insert_an_attachment
@@ -38,12 +38,16 @@ RSpec.describe "Replace a file attachment file", type: :system do
 
   def when_i_click_to_insert_an_attachment
     visit content_path(@edition.document)
+    expect(page).to have_selector("form textarea[name=body]")
+
     click_on "Insert attachment"
     expect(page).to have_content("74 Bytes")
   end
 
   def when_i_go_to_edit_an_attachment
     visit featured_attachments_path(@edition.document)
+    expect(page).to have_content("Attachments for ‘#{@edition.title}’")
+
     click_on "Edit attachment"
   end
 
@@ -54,6 +58,7 @@ RSpec.describe "Replace a file attachment file", type: :system do
   def and_i_upload_a_replacement_attachment_file
     stub_publishing_api_put_content(@edition.content_id, {})
     stub_asset_manager_receives_an_asset(filename: attachment_filename)
+
     find('form input[type="file"]').set(Rails.root.join(file_fixture(attachment_filename)))
   end
 

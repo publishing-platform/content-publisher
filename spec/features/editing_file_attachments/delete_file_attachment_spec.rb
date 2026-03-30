@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Delete a file attachment", type: :system do
+RSpec.feature "Delete a file attachment", type: :feature do
   scenario "inline" do
     given_there_is_an_edition_with_attachments
     when_i_insert_an_attachment
@@ -36,11 +36,15 @@ RSpec.describe "Delete a file attachment", type: :system do
 
   def when_i_insert_an_attachment
     visit content_path(@edition.document)
+    expect(page).to have_selector("form textarea[name=body]")
+
     click_on "Insert attachment"
   end
 
   def when_i_go_to_change_an_attachment
     visit document_path(@edition.document)
+    expect(page).to have_selector("a", text: "Change Attachments")
+
     click_on "Change Attachments"
   end
 
@@ -51,6 +55,7 @@ RSpec.describe "Delete a file attachment", type: :system do
   end
 
   def and_i_confirm_the_deletion
+    expect(page).to have_content("Are you sure you want to delete this attachment?")
     click_on "Yes, delete attachment"
   end
 

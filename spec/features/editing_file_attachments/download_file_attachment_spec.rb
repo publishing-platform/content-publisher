@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Download a file attachment", type: :system do
+RSpec.feature "Download a file attachment", type: :feature do
   scenario "featured" do
     given_there_is_an_edition_with_featured_attachments
     when_i_visit_the_attachments_index_page
@@ -34,10 +34,13 @@ RSpec.describe "Download a file attachment", type: :system do
 
   def when_i_visit_the_attachments_index_page
     visit featured_attachments_path(@edition.document)
+    expect(page).to have_content("Attachments for ‘#{@edition.title}’")
   end
 
   def when_i_click_to_insert_an_attachment
     visit content_path(@edition.document)
+    expect(page).to have_selector("form textarea[name=body]")
+
     click_on "Insert attachment"
     expect(page).to have_content("74 Bytes")
   end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Upload file attachment", type: :system do
+RSpec.feature "Upload file attachment", type: :feature do
   scenario "inline attachment" do
     given_there_is_an_edition
     when_i_go_to_edit_the_edition
@@ -32,7 +32,10 @@ RSpec.describe "Upload file attachment", type: :system do
 
   def when_i_go_to_edit_the_edition
     visit document_path(@edition.document)
+    expect(page).to have_content(@edition.title)
+
     click_on "Change Content"
+    expect(page).to have_selector("form textarea[name=body]")
   end
 
   def when_i_visit_the_summary_page
@@ -44,10 +47,12 @@ RSpec.describe "Upload file attachment", type: :system do
   end
 
   def and_i_go_to_change_an_attachment
+    expect(page).to have_selector("a", text: "Change Attachments")
     click_on "Change Attachments"
   end
 
   def and_i_go_to_add_an_attachment
+    expect(page).to have_selector("a", text: "Upload file attachment")
     click_on "Upload file attachment"
   end
 
@@ -68,6 +73,8 @@ RSpec.describe "Upload file attachment", type: :system do
 
   def and_i_enter_attachment_metadata
     click_on "Save and continue"
+    expect(page).to have_content("Update attachment details for ‘#{@edition.title}’")
+
     unique_ref = "REF"
     isbn = "9788700631625"
     @metadata = "Ref: ISBN #{isbn}, #{unique_ref}"

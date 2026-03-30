@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Preview file attachment", :js, type: :system do
+RSpec.feature "Preview file attachment", :js, type: :feature do
   scenario do
     given_there_is_an_edition_with_attachments
     and_the_attachment_is_available

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Edit a file attachment", type: :system do
+RSpec.feature "Edit a file attachment", type: :feature do
   scenario do
     given_there_is_an_edition_with_featured_attachments
     when_i_go_to_edit_an_attachment
@@ -18,7 +18,10 @@ RSpec.describe "Edit a file attachment", type: :system do
 
   def when_i_go_to_edit_an_attachment
     visit featured_attachments_path(@edition.document)
+    expect(page).to have_content("Attachments for ‘#{@edition.title}’")
+
     click_on "Edit details"
+    expect(page).to have_content("Update attachment details for ‘#{@edition.title}’")
   end
 
   def and_i_edit_the_attachment_metadata
