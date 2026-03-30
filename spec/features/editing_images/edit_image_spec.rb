@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Edit image", :js, type: :system do
+RSpec.feature "Edit image", :js, type: :feature do
   scenario "lead image" do
     given_there_is_an_edition_with_a_lead_image
     when_i_visit_the_images_page
@@ -50,6 +50,7 @@ RSpec.describe "Edit image", :js, type: :system do
 
   def when_i_visit_the_images_page
     visit images_path(@edition.document)
+    expect(page).to have_content("Images for ‘#{@edition.title}’")
   end
 
   def and_i_edit_the_image_crop
@@ -59,9 +60,8 @@ RSpec.describe "Edit image", :js, type: :system do
     crop_box = find(".cropper-crop-box")
     crop_box.drag_to(find("header"))
 
-    # TODO: figure out why dragging the handle to crop doesn't work
-    # bottom_right_handle = find(".cropper-point.point-se")
-    # bottom_right_handle.drag_to(find("header"))
+    bottom_right_handle = find(".cropper-point.point-se")
+    bottom_right_handle.drag_to(find("header"))
 
     stub_any_publishing_api_put_content
     stub_asset_manager_receives_an_asset
@@ -90,8 +90,7 @@ RSpec.describe "Edit image", :js, type: :system do
     image_revision = @edition.reload.image_revisions[0]
     expect(image_revision.crop_y).to be <= 1
     expect(image_revision.crop_x).to be <= 1
-    # TODO: Below assertions are commented out as cropping does not seem to work
-    # expect(image_revision.crop_width).to eq(960)
-    # expect(image_revision.crop_height).to eq(640)
+    expect(image_revision.crop_width).to eq(960)
+    expect(image_revision.crop_height).to eq(640)
   end
 end

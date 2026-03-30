@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Remove a lead image", type: :system do
+RSpec.feature "Remove a lead image", type: :feature do
   scenario "on the index page" do
     given_there_is_an_edition_with_a_lead_image
     when_i_visit_the_images_page
@@ -10,8 +10,7 @@ RSpec.describe "Remove a lead image", type: :system do
 
   scenario "on the metadata page" do
     given_there_is_an_edition_with_a_lead_image
-    when_i_visit_the_images_page
-    and_i_edit_the_image_metadata
+    when_i_visit_the_edit_image_metadata_page
     and_i_untick_the_image_is_the_lead_image
     then_the_edition_has_no_lead_image
   end
@@ -28,6 +27,7 @@ RSpec.describe "Remove a lead image", type: :system do
 
   def when_i_visit_the_images_page
     visit images_path(@edition.document)
+    expect(page).to have_content("Images for ‘#{@edition.title}’")
   end
 
   def and_i_remove_the_lead_image
@@ -36,7 +36,7 @@ RSpec.describe "Remove a lead image", type: :system do
     click_on "Remove lead image"
   end
 
-  def and_i_edit_the_image_metadata
+  def when_i_visit_the_edit_image_metadata_page
     stub_publishing_api_put_content(@edition.content_id, {})
     stub_asset_manager_updates_any_asset
     visit edit_image_path(@edition.document, @image_revision.image_id)

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Delete an image", type: :system do
+RSpec.feature "Delete an image", type: :feature do
   scenario "non-lead image" do
     given_there_is_an_edition_with_images
     when_i_visit_the_images_page
@@ -12,7 +12,7 @@ RSpec.describe "Delete an image", type: :system do
   scenario "lead image" do
     given_there_is_an_edition_with_a_lead_image
     when_i_visit_the_images_page
-    when_i_delete_the_lead_image
+    and_i_delete_the_lead_image
     and_i_confirm_the_deletion
     then_i_see_the_lead_image_is_gone
   end
@@ -45,10 +45,12 @@ RSpec.describe "Delete an image", type: :system do
 
   def when_i_visit_the_images_page
     visit images_path(@edition.document)
+    expect(page).to have_content("Images for ‘#{@edition.title}’")
   end
 
   def when_i_insert_an_inline_image
     visit content_path(@edition.document)
+    expect(page).to have_selector("form textarea[name=body]")
 
     click_on "Insert image"
   end
@@ -58,12 +60,13 @@ RSpec.describe "Delete an image", type: :system do
     click_on "Delete image"
   end
 
-  def when_i_delete_the_lead_image
+  def and_i_delete_the_lead_image
     stub_publishing_api_put_content(@edition.content_id, {})
     click_on "Delete lead image"
   end
 
   def and_i_confirm_the_deletion
+    expect(page).to have_content("Are you sure you want to delete this image?")
     click_on "Yes, delete image"
   end
 

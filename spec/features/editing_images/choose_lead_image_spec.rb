@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Choose a lead image", type: :system do
+RSpec.feature "Choose a lead image", type: :feature do
   scenario "on the index page" do
     given_there_is_an_edition_with_images
     when_i_visit_the_images_page
@@ -10,8 +10,7 @@ RSpec.describe "Choose a lead image", type: :system do
 
   scenario "on the metadata page" do
     given_there_is_an_edition_with_images
-    when_i_visit_the_images_page
-    and_i_edit_the_image_metadata
+    when_i_visit_the_edit_image_metadata_page
     and_i_tick_the_image_is_the_lead_image
     then_the_edition_has_a_lead_image
   end
@@ -30,9 +29,10 @@ RSpec.describe "Choose a lead image", type: :system do
     visit images_path(@edition.document)
   end
 
-  def and_i_edit_the_image_metadata
+  def when_i_visit_the_edit_image_metadata_page
     stub_publishing_api_put_content(@edition.content_id, {})
     stub_asset_manager_updates_any_asset
+
     visit edit_image_path(@edition.document, @image_revision.image_id)
   end
 

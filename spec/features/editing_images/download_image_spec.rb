@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Download a image", type: :system do
+RSpec.feature "Download a image", type: :feature do
   scenario do
     given_there_is_an_edition_with_images
     when_i_visit_the_image_index_page
@@ -19,6 +19,7 @@ RSpec.describe "Download a image", type: :system do
 
   def when_i_visit_the_image_index_page
     visit images_path(@edition.document)
+    expect(page).to have_content("Images for ‘#{@edition.title}’")
   end
 
   def and_i_download_the_image
