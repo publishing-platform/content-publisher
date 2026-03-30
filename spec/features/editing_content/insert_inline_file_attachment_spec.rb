@@ -1,11 +1,12 @@
 require "rails_helper"
 
-RSpec.describe "Insert inline file attachment", type: :system do
+RSpec.feature "Insert inline file attachment", type: :feature do
   scenario "without javascript" do
     given_there_is_an_edition_with_file_attachments
     when_i_go_to_edit_the_edition
     and_i_click_to_insert_a_file_attachment
-    and_i_choose_one_of_the_file_attachments
+    then_i_see_previously_uploaded_file_attachments
+    when_i_choose_one_of_the_file_attachments
     then_i_see_the_attachment_markdown_snippet
     and_i_see_the_attachment_link_markdown_snippet
   end
@@ -21,14 +22,19 @@ RSpec.describe "Insert inline file attachment", type: :system do
 
   def when_i_go_to_edit_the_edition
     visit content_path(@edition.document)
+    expect(page).to have_selector("form textarea[name=body]")
   end
 
   def and_i_click_to_insert_a_file_attachment
     click_on "Insert attachment"
   end
 
-  def and_i_choose_one_of_the_file_attachments
+  def when_i_choose_one_of_the_file_attachments
     click_on "Insert attachment"
+  end
+
+  def then_i_see_previously_uploaded_file_attachments
+    expect(page).to have_selector(".app-c-media-with-actions", count: 1)
   end
 
   def then_i_see_the_attachment_markdown_snippet

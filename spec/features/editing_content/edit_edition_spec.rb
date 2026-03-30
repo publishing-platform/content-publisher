@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Edit an edition", type: :system do
+RSpec.feature "Edit an edition", type: :feature do
   scenario do
     given_there_is_an_edition
     when_i_go_to_edit_the_edition
@@ -18,7 +18,9 @@ RSpec.describe "Edit an edition", type: :system do
   def when_i_go_to_edit_the_edition
     visit document_path(@edition.document)
     expect(page).to have_content("Existing body")
+
     click_on "Change Content"
+    expect(page).to have_selector("form textarea[name=body]")
   end
 
   def and_i_fill_in_the_content_fields

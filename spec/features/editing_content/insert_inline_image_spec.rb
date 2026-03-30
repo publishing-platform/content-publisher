@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Insert inline image", type: :system do
+RSpec.feature "Insert inline image", type: :feature do
   scenario "without javascript" do
     given_there_is_an_edition_with_images
     when_i_go_to_edit_the_edition
@@ -19,6 +19,7 @@ RSpec.describe "Insert inline image", type: :system do
 
   def when_i_go_to_edit_the_edition
     visit content_path(@edition.document)
+    expect(page).to have_selector("form textarea[name=body]")
   end
 
   def and_i_click_to_insert_an_image
