@@ -73,7 +73,7 @@ RSpec.feature "Upload file attachment", type: :feature do
 
   def and_i_enter_attachment_metadata
     click_on "Save and continue"
-    expect(page).to have_content("Update attachment details for ‘#{@edition.title}’")
+    expect(page).to have_content(I18n.t!("file_attachments.edit.title", title: @edition.title))
 
     unique_ref = "REF"
     isbn = "9788700631625"

@@ -30,7 +30,7 @@ RSpec.feature "Reorder attachments", type: :feature do
 
   def when_i_go_to_the_attachments_page
     visit featured_attachments_path(@edition.document)
-    expect(page).to have_content("Attachments for ‘#{@edition.title}’")
+    expect(page).to have_content(I18n.t!("featured_attachments.index.title", title: @edition.title))
   end
 
   def and_i_click_to_reorder_the_attachments

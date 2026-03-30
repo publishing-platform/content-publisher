@@ -34,7 +34,7 @@ RSpec.feature "Download a file attachment", type: :feature do
 
   def when_i_visit_the_attachments_index_page
     visit featured_attachments_path(@edition.document)
-    expect(page).to have_content("Attachments for ‘#{@edition.title}’")
+    expect(page).to have_content(I18n.t!("featured_attachments.index.title", title: @edition.title))
   end
 
   def when_i_click_to_insert_an_attachment

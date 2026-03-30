@@ -46,7 +46,7 @@ RSpec.feature "Replace a file attachment file", type: :feature do
 
   def when_i_go_to_edit_an_attachment
     visit featured_attachments_path(@edition.document)
-    expect(page).to have_content("Attachments for ‘#{@edition.title}’")
+    expect(page).to have_content(I18n.t!("featured_attachments.index.title", title: @edition.title))
 
     click_on "Edit attachment"
   end

@@ -27,7 +27,7 @@ RSpec.feature "Remove a lead image", type: :feature do
 
   def when_i_visit_the_images_page
     visit images_path(@edition.document)
-    expect(page).to have_content("Images for ‘#{@edition.title}’")
+    expect(page).to have_content(I18n.t!("images.index.title", title: @edition.title))
   end
 
   def and_i_remove_the_lead_image
