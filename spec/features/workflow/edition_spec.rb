@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Editions", type: :system do
+RSpec.feature "Editions", type: :feature do
   scenario "first edition" do
     given_there_is_a_published_edition
     when_i_visit_the_summary_page
@@ -50,6 +50,7 @@ RSpec.describe "Editions", type: :system do
 
   def when_i_visit_the_summary_page
     visit document_path(@published_edition.document)
+    expect(page).to have_content(@published_edition.title)
   end
 
   def then_i_see_it_is_the_first_edition
@@ -60,7 +61,9 @@ RSpec.describe "Editions", type: :system do
 
   def and_i_click_to_create_a_new_edition
     stub_any_publishing_api_put_content
+
     click_on "Create new edition"
+    expect(page).to have_content(I18n.t!("content.edit.title", title: @published_edition.title))
   end
 
   def and_i_make_a_minor_change

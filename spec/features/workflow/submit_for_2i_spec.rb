@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Submit for 2i", type: :system do
+RSpec.feature "Submit for 2i", type: :feature do
   scenario do
     given_there_is_a_draft_edition
     when_i_visit_the_summary_page
@@ -15,6 +15,7 @@ RSpec.describe "Submit for 2i", type: :system do
 
   def when_i_visit_the_summary_page
     visit document_path(@edition.document)
+    expect(page).to have_content(@edition.title)
   end
 
   def and_i_click_submit_for_2i

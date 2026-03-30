@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publishing an edition", type: :system do
+RSpec.feature "Publishing an edition", type: :feature do
   scenario do
     given_there_is_an_edition_in_draft
     when_i_visit_the_summary_page
@@ -23,23 +23,27 @@ RSpec.describe "Publishing an edition", type: :system do
 
   def when_i_visit_the_summary_page
     visit document_path(@edition.document)
+    expect(page).to have_content(@edition.title)
   end
 
   def and_i_publish_the_edition
     perform_enqueued_jobs do
       travel_to(@publish_time = Time.zone.now) do
-        click_on "Publish"
-        choose I18n.t!("publish.confirmation.has_been_reviewed")
         stub_any_publishing_api_put_content
         @content_request = stub_publishing_api_publish(@edition.content_id, {})
+
+        click_on "Publish"
+        expect(page).to have_content(I18n.t!("publish.confirmation.title"))
+
+        choose I18n.t!("publish.confirmation.has_been_reviewed")
         click_on "Confirm publish"
       end
     end
   end
 
   def then_i_see_the_publish_succeeded
-    expect(@content_request).to have_been_requested
     expect(page).to have_content(I18n.t!("publish.published.reviewed.title"))
+    expect(@content_request).to have_been_requested
   end
 
   def and_the_content_is_shown_as_published

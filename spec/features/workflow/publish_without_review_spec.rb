@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Publish without review", type: :system do
+RSpec.feature "Publish without review", type: :feature do
   scenario do
     given_there_is_an_edition
     when_i_visit_the_summary_page
@@ -29,6 +29,7 @@ RSpec.describe "Publish without review", type: :system do
 
   def when_i_visit_the_summary_page
     visit document_path(@edition.document)
+    expect(page).to have_content(@edition.title)
   end
 
   def when_i_click_the_approve_button
@@ -38,10 +39,13 @@ RSpec.describe "Publish without review", type: :system do
   def and_i_publish_without_review
     perform_enqueued_jobs do
       travel_to(@publish_time = Time.zone.now) do
-        click_on "Publish"
-        choose I18n.t!("publish.confirmation.should_be_reviewed")
         stub_any_publishing_api_put_content
         stub_any_publishing_api_publish
+
+        click_on "Publish"
+        expect(page).to have_content(I18n.t!("publish.confirmation.title"))
+
+        choose I18n.t!("publish.confirmation.should_be_reviewed")
         click_on "Confirm publish"
       end
     end

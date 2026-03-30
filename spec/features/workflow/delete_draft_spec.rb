@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Delete draft", type: :system do
+RSpec.feature "Delete draft", type: :feature do
   before do
     stub_publishing_api_has_linkables([], document_type: "organisation")
   end
@@ -21,6 +21,7 @@ RSpec.describe "Delete draft", type: :system do
 
   def when_i_visit_the_summary_page
     visit document_path(@edition.document)
+    expect(page).to have_content(@edition.title)
   end
 
   def and_i_delete_the_draft
@@ -28,6 +29,8 @@ RSpec.describe "Delete draft", type: :system do
     @image_request = stub_asset_manager_deletes_any_asset
 
     click_on "Delete draft"
+    expect(page).to have_content("Are you sure you want to delete this draft?")
+
     click_on "Yes, delete draft"
   end
 
