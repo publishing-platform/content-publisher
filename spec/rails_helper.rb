@@ -100,22 +100,14 @@ RSpec.configure do |config|
   config.include ActiveJob::TestHelper
   config.include PublishingPlatformApi::TestHelpers::PublishingApi
   config.include PublishingPlatformApi::TestHelpers::AssetManager
-  config.include Capybara::RSpecMatchers, type: ->(spec) { spec.in?(%i[system request]) }
-  config.include AuthenticationHelper, type: ->(spec) { spec.in?(%i[system request]) }
+  config.include Capybara::RSpecMatchers, type: ->(spec) { spec.in?(%i[feature request]) }
+  config.include AuthenticationHelper, type: ->(spec) { spec.in?(%i[feature request]) }
 
   config.before(:all) do
     DocumentType.clear
   end
 
-  config.after :each, type: ->(spec) { spec.in?(%i[system request]) } do
+  config.after :each, type: ->(spec) { spec.in?(%i[feature request]) } do
     reset_authentication
-  end
-
-  config.before(:each, type: :system) do
-    driven_by :rack_test
-  end
-
-  config.before(:each, :js, type: :system) do
-    driven_by :headless_chrome
   end
 end
