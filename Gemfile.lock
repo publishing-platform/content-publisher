@@ -322,11 +322,11 @@ GEM
       publishing_platform_api_adapters
       redis-client (>= 0.22.2)
       sidekiq (~> 7.0, < 8)
-    publishing_platform_sso (0.6.0)
+    publishing_platform_sso (0.6.1)
       oauth2 (~> 2.0)
       omniauth (~> 2.1)
       omniauth-oauth2 (~> 1.8)
-      publishing_platform_location
+      publishing_platform_location (~> 0.3)
       rails (>= 7)
       warden (~> 1.2)
       warden-oauth2 (~> 0.0.1)
