@@ -296,7 +296,7 @@ GEM
       null_logger
       publishing_platform_location (~> 0.3)
       rest-client (~> 2.0)
-    publishing_platform_app_config (0.4.0)
+    publishing_platform_app_config (0.4.1)
       puma (>= 5.6, < 8.0)
       sentry-rails (>= 5.3, < 7.0)
       sentry-ruby (~> 5.3)
@@ -343,7 +343,7 @@ GEM
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
       rack (>= 3.0.0, < 4)
-    rack-session (2.1.1)
+    rack-session (2.1.2)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
     rack-test (2.2.0)
