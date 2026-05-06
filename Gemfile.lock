@@ -304,7 +304,7 @@ GEM
     publishing_platform_markdown (0.3.2)
       kramdown (>= 2.3.1, < 2.5.3)
       sanitize (>= 6, < 8)
-    publishing_platform_publishing_components (0.9.1)
+    publishing_platform_publishing_components (0.9.2)
       kramdown
       publishing_platform_app_config
       rails (>= 8.0.0)
