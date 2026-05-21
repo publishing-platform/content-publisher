@@ -9,12 +9,11 @@ RSpec.describe PublishAssetsService do
                        file_attachment_revisions: [file_attachment_revision],
                        image_revisions: [image_revision])
 
-      request = stub_asset_manager_updates_any_asset # rubocop:disable Lint/UselessAssignment
+      request = stub_asset_manager_updates_any_asset
       described_class.call(edition)
       expect(image_revision.assets.map(&:state).uniq).to eq(%w[live])
       expect(file_attachment_revision.asset).to be_live
-      # TODO
-      # expect(request).to have_been_requested.at_least_once
+      expect(request).to have_been_requested.at_least_once
     end
 
     it "doesn't republish the assets that are already live" do
@@ -61,13 +60,12 @@ RSpec.describe PublishAssetsService do
                        file_attachment_revisions: [],
                        document: live_edition.document)
 
-      delete_request = stub_asset_manager_deletes_any_asset # rubocop:disable Lint/UselessAssignment
+      delete_request = stub_asset_manager_deletes_any_asset
 
       described_class.call(edition, superseded_edition: live_edition)
       expect(image_revision_to_remove.assets.map(&:state).uniq).to eq(%w[absent])
       expect(file_attachment_revision_to_remove.asset).to be_absent
-      # TODO
-      # expect(delete_request).to have_been_requested.at_least_once
+      expect(delete_request).to have_been_requested.at_least_once
     end
   end
 
@@ -108,11 +106,10 @@ RSpec.describe PublishAssetsService do
                      file_attachment_revisions: [new_file_attachment_revision],
                      document: live_edition.document)
 
-    request = stub_asset_manager_updates_any_asset # rubocop:disable Lint/UselessAssignment
+    request = stub_asset_manager_updates_any_asset
     described_class.call(edition, superseded_edition: live_edition)
     expect(old_image_revision.assets.map(&:state).uniq).to eq(%w[superseded])
     expect(old_file_attachment_revision.asset).to be_superseded
-    # TODO
-    # expect(request).to have_been_requested.at_least_once
+    expect(request).to have_been_requested.at_least_once
   end
 end

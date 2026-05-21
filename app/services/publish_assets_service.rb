@@ -20,13 +20,12 @@ private
     raise "Expected asset to be on asset manager" if asset.absent?
     return unless asset.draft?
 
-    # TODO
-    # PublishingPlatformApi.asset_manager.update_asset(
-    #   asset.asset_manager_id,
-    #   draft: false,
-    #   auth_bypass_ids: [],
-    #   redirect_url: nil,
-    # )
+    PublishingPlatformApi.asset_manager.update_asset(
+      asset.asset_manager_id,
+      draft: false,
+      auth_bypass_ids: [],
+      redirect_url: nil,
+    )
 
     asset.live!
   end
@@ -76,9 +75,8 @@ private
     return if live_asset == current_asset
 
     begin
-      # TODO
-      # PublishingPlatformApi.asset_manager.update_asset(live_asset.asset_manager_id,
-      #                                   redirect_url: current_asset.file_url)
+      PublishingPlatformApi.asset_manager.update_asset(live_asset.asset_manager_id,
+                                                       redirect_url: current_asset.file_url)
 
       live_asset.update!(state: :superseded, superseded_by: current_asset)
     rescue PublishingPlatformApi::HTTPNotFound
@@ -91,8 +89,7 @@ private
     return if live_asset.absent?
 
     begin
-      # TODO
-      # PublishingPlatformApi.asset_manager.delete_asset(live_asset.asset_manager_id)
+      PublishingPlatformApi.asset_manager.delete_asset(live_asset.asset_manager_id)
     rescue PublishingPlatformApi::HTTPNotFound
       Rails.logger.warn("No asset to delete for id #{live_asset.asset_manager_id}")
     end

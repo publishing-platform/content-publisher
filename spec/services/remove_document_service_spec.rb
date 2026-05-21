@@ -114,7 +114,6 @@ RSpec.describe RemoveDocumentService do
     end
 
     context "when an edition has assets" do
-      # rubocop:disable RSpec/RepeatedExample
       it "removes assets that aren't absent" do
         image_revision = create(:image_revision, :on_asset_manager, state: :live)
         file_attachment_revision = create(:file_attachment_revision, :on_asset_manager, state: :live)
@@ -123,13 +122,11 @@ RSpec.describe RemoveDocumentService do
                          lead_image_revision: image_revision,
                          file_attachment_revisions: [file_attachment_revision])
 
-        # TODO
-        # delete_request = stub_asset_manager_deletes_any_asset
+        delete_request = stub_asset_manager_deletes_any_asset
 
         described_class.call(edition, build(:removal), user:)
 
-        # TODO
-        # expect(delete_request).to have_been_requested.at_least_once
+        expect(delete_request).to have_been_requested.at_least_once
         expect(image_revision.assets.map(&:state).uniq).to eq(%w[absent])
         expect(file_attachment_revision.asset).to be_absent
       end
@@ -142,17 +139,14 @@ RSpec.describe RemoveDocumentService do
                          lead_image_revision: image_revision,
                          file_attachment_revisions: [file_attachment_revision])
 
-        # TODO
-        # delete_request = stub_asset_manager_deletes_any_asset.to_return(status: 404)
+        delete_request = stub_asset_manager_deletes_any_asset.to_return(status: 404)
 
         described_class.call(edition, build(:removal), user:)
 
-        # TODO
-        # expect(delete_request).to have_been_requested.at_least_once
+        expect(delete_request).to have_been_requested.at_least_once
         expect(image_revision.assets.map(&:state).uniq).to eq(%w[absent])
         expect(file_attachment_revision.asset).to be_absent
       end
-      # rubocop:enable RSpec/RepeatedExample
 
       it "ignores assets that are absent" do
         image_revision = create(:image_revision, :on_asset_manager, state: :absent)
@@ -170,24 +164,23 @@ RSpec.describe RemoveDocumentService do
       end
     end
 
-    # TODO
-    # context "when an edition has assets and Asset Manager is down" do
-    #   before { stub_asset_manager_isnt_available }
+    context "when an edition has assets and Asset Manager is down" do
+      before { stub_asset_manager_isnt_available }
 
-    #   it "removes the edition" do
-    #     image_revision = create(:image_revision, :on_asset_manager)
-    #     file_attachment_revision = create(:file_attachment_revision, :on_asset_manager)
-    #     edition = create(:edition,
-    #                      :published,
-    #                      lead_image_revision: image_revision,
-    #                      file_attachment_revisions: [file_attachment_revision])
+      it "removes the edition" do
+        image_revision = create(:image_revision, :on_asset_manager)
+        file_attachment_revision = create(:file_attachment_revision, :on_asset_manager)
+        edition = create(:edition,
+                         :published,
+                         lead_image_revision: image_revision,
+                         file_attachment_revisions: [file_attachment_revision])
 
-    #     expect { described_class.call(edition, user:) }
-    #       .to raise_error(PublishingPlatformApi::BaseError)
+        expect { described_class.call(edition, build(:removal), user:) }
+          .to raise_error(PublishingPlatformApi::BaseError)
 
-    #     expect(edition.reload.state).to eq("removed")
-    #   end
-    # end
+        expect(edition.reload.state).to eq("removed")
+      end
+    end
 
     context "when the given edition is a draft" do
       it "raises an error" do

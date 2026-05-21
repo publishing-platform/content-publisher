@@ -7,6 +7,10 @@ RSpec.describe FileAttachments::PreviewInteractor do
       { document_id: edition.document_id, file_attachment_id: file_attachment.id }
     end
 
+    before do
+      allow(PreviewAssetService).to receive(:call)
+    end
+
     context "when the asset is present on Asset Manager" do
       let(:attachment_revision) do
         create :file_attachment_revision, :on_asset_manager, file_attachment:
