@@ -60,8 +60,7 @@ private
       next if asset.absent?
 
       begin
-        # TODO
-        # PublishingPlatformApi.asset_manager.delete_asset(asset.asset_manager_id)
+        PublishingPlatformApi.asset_manager.delete_asset(asset.asset_manager_id)
       rescue PublishingPlatformApi::HTTPNotFound
         Rails.logger.warn("No asset to delete for id #{asset.asset_manager_id}")
       end
