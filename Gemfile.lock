@@ -212,7 +212,7 @@ GEM
     mime-types (3.7.0)
       logger
       mime-types-data (~> 3.2025, >= 3.2025.0507)
-    mime-types-data (3.2026.0414)
+    mime-types-data (3.2026.0701)
     mini_magick (5.3.1)
       logger
     mini_mime (1.1.5)
@@ -321,7 +321,7 @@ GEM
       rubocop-rails (= 2.36.0)
       rubocop-rake (= 0.7.1)
       rubocop-rspec (= 3.10.2)
-    publishing_platform_sidekiq (0.6.5)
+    publishing_platform_sidekiq (0.6.6)
       publishing_platform_api_adapters (~> 0.10)
       redis-client (>= 0.22.2)
       sidekiq (~> 7.0, < 8)
