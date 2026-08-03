@@ -14,7 +14,7 @@
     }
   },
   "dependencies": {    
-    "@publishing-platform/publishing-platform-publishing-components": "^0.9.4",
+    "@publishing-platform/publishing-platform-publishing-components": "^0.9.6",
     "cropperjs": "^1.6.2",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "rollup": "^4.62.3"
